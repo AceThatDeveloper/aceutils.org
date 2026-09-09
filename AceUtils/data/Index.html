@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AceUtils | Data</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #050505;
+            color: #fff;
+            font-family: "Inter", sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           BUBBLE BACKGROUND
+        ========================= */
+
+        .bubbles {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: -3;
+        }
+
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(255, 255, 255, 0.045);
+
+            box-shadow:
+                inset 0 0 30px rgba(255,255,255,0.015),
+                0 0 40px rgba(255,255,255,0.015);
+
+            animation: floatBubble linear infinite;
+        }
+
+        .bubble:nth-child(1) {
+            width: 180px;
+            height: 180px;
+            left: 5%;
+            animation-duration: 22s;
+            animation-delay: -4s;
+        }
+
+        .bubble:nth-child(2) {
+            width: 90px;
+            height: 90px;
+            left: 20%;
+            animation-duration: 17s;
+            animation-delay: -9s;
+        }
+
+        .bubble:nth-child(3) {
+            width: 240px;
+            height: 240px;
+            left: 38%;
+            animation-duration: 27s;
+            animation-delay: -15s;
+        }
+
+        .bubble:nth-child(4) {
+            width: 120px;
+            height: 120px;
+            left: 58%;
+            animation-duration: 20s;
+            animation-delay: -7s;
+        }
+
+        .bubble:nth-child(5) {
+            width: 210px;
+            height: 210px;
+            left: 75%;
+            animation-duration: 25s;
+            animation-delay: -18s;
+        }
+
+        .bubble:nth-child(6) {
+            width: 70px;
+            height: 70px;
+            left: 90%;
+            animation-duration: 16s;
+            animation-delay: -5s;
+        }
+
+        .bubble:nth-child(7) {
+            width: 140px;
+            height: 140px;
+            left: 47%;
+            animation-duration: 23s;
+            animation-delay: -12s;
+        }
+
+        @keyframes floatBubble {
+            0% {
+                transform: translateY(115vh) translateX(0) scale(.8);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateY(45vh) translateX(80px) scale(1);
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-30vh) translateX(-80px) scale(.85);
+                opacity: 0;
+            }
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+
+            background-image:
+                linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+
+            background-size: 58px 58px;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 700px;
+            height: 700px;
+            top: -300px;
+            left: -250px;
+
+            background: radial-gradient(
+                circle,
+                rgba(255,255,255,.08),
+                transparent 70%
+            );
+
+            filter: blur(25px);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            position: fixed;
+            z-index: 1000;
+
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+
+            width: min(1100px, calc(100% - 40px));
+            height: 64px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 18px;
+
+            background: rgba(7,7,7,.88);
+            border: 1px solid rgba(255,255,255,.10);
+            border-radius: 18px;
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 15px 50px rgba(0,0,0,.35),
+                inset 0 1px rgba(255,255,255,.025);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-icon {
+            width: 32px;
+            height: 32px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #fff;
+            color: #050505;
+
+            border-radius: 9px;
+
+            font-size: 13px;
+            font-weight: 900;
+        }
+
+        .brand-name {
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: -.5px;
+        }
+
+        .nav-links {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+
+            display: flex;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            color: #777;
+            font-size: 12px;
+            text-decoration: none;
+
+            transition: .2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links .active {
+            color: #fff;
+        }
+
+        .discord {
+            padding: 10px 17px;
+
+            border-radius: 11px;
+
+            background: #fff;
+            color: #050505;
+
+            font-size: 10px;
+            font-weight: 900;
+
+            text-decoration: none;
+
+            transition: .2s;
+        }
+
+        .discord:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,255,255,.12);
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .container {
+            width: min(1100px, calc(100% - 40px));
+            margin: auto;
+
+            padding: 155px 0 80px;
+        }
+
+        .top {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+
+            gap: 30px;
+
+            margin-bottom: 40px;
+        }
+
+        .label {
+            color: #666;
+
+            font-size: 10px;
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 14px;
+        }
+
+        h1 {
+            font-size: clamp(70px, 10vw, 140px);
+            line-height: .82;
+
+            letter-spacing: -9px;
+
+            font-weight: 900;
+        }
+
+        .description {
+            max-width: 400px;
+
+            color: #666;
+
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           DATA BOX
+        ========================= */
+
+        .data-wrapper {
+            position: relative;
+
+            background: rgba(8,8,8,.72);
+
+            border: 1px solid rgba(255,255,255,.09);
+
+            border-radius: 24px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 30px 100px rgba(0,0,0,.35),
+                inset 0 1px rgba(255,255,255,.025);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .data-header {
+            height: 58px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 18px;
+
+            border-bottom: 1px solid rgba(255,255,255,.07);
+
+            background: rgba(255,255,255,.015);
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            color: #666;
+
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .file-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #aaa;
+            box-shadow: 0 0 12px rgba(255,255,255,.3);
+        }
+
+        .pretty-button {
+            border: 1px solid rgba(255,255,255,.1);
+
+            background: rgba(255,255,255,.04);
+            color: #aaa;
+
+            border-radius: 9px;
+
+            padding: 9px 13px;
+
+            font-family: inherit;
+            font-size: 10px;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                background .2s,
+                color .2s,
+                transform .2s;
+        }
+
+        .pretty-button:hover {
+            background: rgba(255,255,255,.09);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .pretty-button:active {
+            transform: translateY(0);
+        }
+
+        .data-area {
+            padding: 25px;
+
+            max-height: 700px;
+            overflow: auto;
+
+            scrollbar-width: thin;
+            scrollbar-color: #333 transparent;
+        }
+
+        .data-area::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        .data-area::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .data-area::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 20px;
+        }
+
+        #dataText {
+            display: block;
+
+            color: #aaa;
+
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                "Liberation Mono",
+                monospace;
+
+            font-size: 13px;
+            line-height: 1.75;
+
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .footer {
+            margin-top: 25px;
+
+            display: flex;
+            justify-content: space-between;
+
+            color: #444;
+
+            font-size: 10px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 750px) {
+
+            .navbar {
+                width: calc(100% - 24px);
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .container {
+                width: calc(100% - 24px);
+                padding-top: 125px;
+            }
+
+            .top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            h1 {
+                letter-spacing: -6px;
+            }
+
+            .data-area {
+                padding: 18px;
+            }
+
+            #dataText {
+                font-size: 11px;
+            }
+
+            .footer {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- FLOATING BUBBLES -->
+    <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+    </div>
+
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <a href="/" class="brand">
+
+            <div class="brand-icon">
+                A
+            </div>
+
+            <div class="brand-name">
+                AceUtils
+            </div>
+
+        </a>
+
+        <div class="nav-links">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/#features">
+                Features
+            </a>
+
+            <a href="/data/" class="active">
+                Data
+            </a>
+
+            <a href="/#community">
+                Community
+            </a>
+
+        </div>
+
+        <a
+            href="https://discord.gg/5zrcJRqQd5"
+            target="_blank"
+            class="discord"
+        >
+            JOIN DISCORD
+        </a>
+
+    </nav>
+
+
+    <!-- CONTENT -->
+    <main class="container">
+
+        <div class="top">
+
+            <div>
+
+                <div class="label">
+                    ACEUTILS / DATA
+                </div>
+
+                <h1>
+                    Data.
+                </h1>
+
+            </div>
+
+            <p class="description">
+                AceUtils data collection. View the current
+                database below using the formatted text viewer.
+            </p>
+
+        </div>
+
+
+        <!-- DATA -->
+        <div class="data-wrapper">
+
+            <div class="data-header">
+
+                <div class="file-info">
+                    <span class="file-dot"></span>
+                    data.json
+                </div>
+
+                <button
+                    class="pretty-button"
+                    id="prettyPrint"
+                >
+                    PRETTY PRINT
+                </button>
+
+            </div>
+
+
+            <div class="data-area">
+
+                <pre id="dataText">{
+  "knownCheats": {
+    "ObsidianMC": "Obsidian",
+    "genesis": "Genesis",
+    "elux": "Elux",
+    "VioletFreeUser": "Violet Free",
+    "Hidden Menu": "Hidden",
+    "void": "Void",
+    "cronos": "Cronos",
+    "ORBIT": "Orbit (Weeb)",
+    "Violet On Top": "Violet",
+    "ElixirMenu": "Elixir",
+    "Elixir": "Elixir",
+    "VioletPaidUser": "Violet Paid",
+    "EmoteWheel": "Emotes",
+    "MistUser": "Mist",
+    "Untitled": "Untitled",
+    "void_menu_open": "Void",
+    "dark": "ShibaGT Dark",
+    "oblivionuser": "Oblivion",
+    "eyerock reborn": "EyeRock",
+    "asteroidlite": "Asteroid Lite",
+    "cokecosmetics": "Coke Cosmetx",
+    "ØƦƁƖƬ": "Orbit (Weeb)",
+    "Atlas": "Atlas",
+    "Euphoric": "Euphoria",
+    "CurrentEmote": "Vortex Emotes",
+    "Explicit": "Explicit Menu",
+    "envision build transform flourish": "Envision",
+    "https://chqser.lol/": "Chqser",
+    "y u lookin in here wei": "Malachi",
+    "explicit": "Explicit",
+    "Track Track Track Sahur": "Track Track Track Sahur Tracker",
+    "R3_MENU": "R3 Menu",
+    "ZlothYDances": "ZlothY Dances",
+    "1y u lookin in here weirdo": "Malachi Menu",
+    "UsingGalacticMenu": "Galactic Menu",
+    "AtlasNetworkedConsent": "Atlas",
+    "ShizukuModMenu": "Shizuku Menu",
+    "Femboy Client": "Femboy Client"
+  },
+  "knownMods": {
+    "GFaces": "GFaces",
+    "github.com/maroon-shadow/SimpleBoards": "Simple Boards",
+    "github.com/ZlothY29IQ/GorillaMediaDisplay": "Gorilla Media Display",
+    "GTrials": "GTrials",
+    "github.com/ZlothY29IQ/TooMuchInfo": "TMI Zlothy",
+    "github.com/ZlothY29IQ/RoomUtils-IW": "Room Utils",
+    "github.com/ZlothY29IQ/MonkeClick": "Monke Click",
+    "github.com/ZlothY29IQ/MonkeClick-CI": "Monke Click CI",
+    "github.com/ZlothY29IQ/MonkeRealism": "Monke Realism",
+    "MediaPad": "Media Pad",
+    "GorillaCinema": "GCinema",
+    "FPS-Nametags for Zlothy": "FPS Nametags",
+    "ChainedTogetherActive": "Chained Together",
+    "GPronouns": "GPronouns",
+    "Fusioned": "Fusioned",
+    "CSVersion": "Custom Skin",
+    "github.com/ZlothY29IQ/Zloth-RecRoomRig": "Zlothy Body Estimation",
+    "ShirtProperties": "GShirts Old",
+    "GorillaShirts": "GShirts",
+    "GS": "Old GShirts",
+    "HP_Left": "Holdable Pad",
+    "GrateVersion": "Grate",
+    "BananaOS": "BananaOS",
+    "GC": "GCraft",
+    "CarName": "Vehicles",
+    "MonkePhone": "Monke Phone",
+    "Body Tracking": "Body Tracking",
+    "GorillaWatch": "GWatch",
+    "InfoWatch": "Info Watch",
+    "Vivid": "Vivid",
+    "BananaPhone": "Banana Phone",
+    "CustomMaterial": "Custom Cosmetics",
+    "cheese is gouda": "WhoIsThatMonke",
+    "WhoIsThatMonke": "WhoIsThatMonke Recode",
+    "WhoIsThatMonke Version": "WhoIsThatMonke",
+    "GorillaNametags": "GNametags",
+    "DeeTags": "Dee Tags",
+    "Boy Do I Love Information": "BDILI",
+    "NametagsPlusPlus": "Nametags++",
+    "WalkSimulator": "WalkSim ZlothY Fix",
+    "Dingus": "dingus",
+    "Graze Heath System": "Health System",
+    "Gorilla Track Packed": "Gorilla Track",
+    "drowsiiiGorillaInfoBoard": "GInfo Board",
+    "MonkeCosmetics::Material": "Monke Cosmetics",
+    "github.com/arielthemonke/GorillaCraftAutoBuilder": "GCraft Auto Builder",
+    "usinggphys": "GPhys",
+    "Gorilla Track 2.3.0": "GTrack",
+    "GorillaTorsoEstimator": "Torso Estimation",
+    "Body Estimation": "HAN Body Estimation",
+    "tictactoe": "TicTacToe",
+    "ccolor": "Index",
+    "chainedtogether": "Chained Together",
+    "goofywalkversion": "Goofy Walk",
+    "msp": "Monke Smart phone",
+    "gorillastats": "Gorilla Stats",
+    "silliness": "Silliness",
+    "DTAOI": "DTAOI",
+    "GorillaShop": "Gorilla Shop",
+    "DTASLOI": "DTASLOI",
+    "GorillaChatBox": "Gorilla Chat Box",
+    "fallmonke_prop": "Fall Monke",
+    "GorillaShirtsFeb26": "GorillaShirts26",
+    "BarkVersion": "Bark",
+    "FN_Vertex": "Fancy Nametags"
+  },
+  "knownPeople": {
+    "9DBC90CF7449EF64": "StyledSnail",
+    "6FE5FF4D5DF68843": "Pine",
+    "10D31D3BDCCE5B1F": "Deezey",
+    "BAC5807405123060": "britishmonke",
+    "A6FFC7318E1301AF": "jmancurly",
+    "3B9FD2EEF24ACB3": "VMT",
+    "04005517920EBO": "K9?",
+    "33FFA45DBFD33B01": "will",
+    "D6971CA01F82A975": "Elliot",
+    "636D8846E76C9B5A": "Clown",
+    "65CB0CCF1AED2BF": "Ethyb",
+    "48437FE432DE48BE": "BBVR",
+    "61AD990FF3A423B7": "Boda 1",
+    "AAB44BFD0BA34829": "Boda 2",
+    "6713DA80D2E9BFB5": "AHauntedArmy",
+    "B4A3FF01312B55B1": "Pluto",
+    "339E0D392565DC39": "kishark",
+    "F08CE3118F9E793E": "TurboAlligator",
+    "D6E20BE9655C798": "TTTPIG 1",
+    "71AA09D13C0F408D": "TTTPIG 2",
+    "1D6E20BE9655C798": "TTTPIG 3",
+    "22A7BCEFFD7A0BBA": "TTTPIG 4",
+    "C3878B068886F6C3": "ZZEN",
+    "6F79BE7CB34642AC": "CodyO'Quinn",
+    "5AA1231973BE8A62": "Apollo",
+    "7F31BEEC604AE189": "ElectronicWall 1",
+    "42C809327652ECDD": "ElectronicWall 2",
+    "ECDE8A2FF8510934": "Antoca",
+    "80279945E7D3B57D": "Jolyne",
+    "7E44E8337DF02CC1": "Nunya",
+    "F5B5C64914C13B83": "HatGirl",
+    "660814E013F31EFA": "HOLLOWZZGT",
+    "2E408ED946D55D51": "Haunted",
+    "498D4C2F23853B37": "POGTROLL",
+    "BC9764E1EADF8BE0": "Circuit",
+    "D0CB396539676DD8": "FrogIlla",
+    "A1A99D33645E4A94": "STEAMVRAVTS/YEAT",
+    "CBCCBBB6C28A94CF": "PTMstar",
+    "6DC06EEFFE9DBD39": "Lucio",
+    "4ACA3C76B334B17F": "Wihz",
+    "571776944B6162F1": "CubCub",
+    "BC99FA914F506AB8": "Lemming Steam",
+    "3A16560CA65A51DE": "Lemming Quest",
+    "59F3FE769DE93AB9": "Lemming Unity",
+    "EE9FB127CF7DBBD5": "NOTMARK",
+    "54DCB69545BE0800": "Biffbish",
+    "A04005517920EB0": "K9",
+    "5CCCAA8A225A468B": "furina",
+    "ABD60175B46E45C5": "Saltwater",
+    "964C4A68F65A804C": "YottaBite",
+    "4D5EB238C8253D04": "Person",
+    "B4E45E48C5CE0656": "ZBR",
+    "8A062E735BBC89ED": "GLTCH",
+    "A100E9E6C4D91E75": "MYCRAFTS",
+    "7952F9E08FEF8E83": "MYCRAFTS",
+    "10E12F25533C13F2": "KIRPI4",
+    "10621E029A675705": "AA_MIKE",
+    "F8FF7B812B0B2F72": "FOGGY",
+    "1E8298E1E1F40CB2": "FAADU",
+    "289C8FAD58A09D6D": "PIXEL",
+    "172E4982BEE4A8AD": "H4KPY",
+    "A339740A8ED97FC2": "COFFEEPERSON",
+    "502575B001FE6FCD": "MIKEYOURMAN",
+    "2FB3C7950D2159AF": "CLYDE",
+    "378D7E14A11734FF": "ERIK1515",
+    "FD39927817389160": "FOOJ",
+    "184F12FF07A0BC9E": "CHAOSVR",
+    "A2EADA9BE5CF6238": "MANJO",
+    "6790C05198B8F76B": "ITZTAPU",
+    "F5A7710573B60137": "ZEEP",
+    "52529F0635BE0CDF": "PapaSmurf",
+    "28579AFACDE1FB19": "Pepsi Dee",
+    "DF64F7147DDA2783": "EddieGt",
+    "D1E4A70539D65788": "Horizon",
+    "CCB1C711632603E2": "The Doctor",
+    "7C0234D9AAEA2D04": "StarBoyVR",
+    "C8D2B81BCA39663D": "The Great Aqua",
+    "D2E5322571FBE776": "ZoomMeta",
+    "24654A0098DEC89": "Zellix",
+    "6DC3706AB3CDCD71": "Ghosty",
+    "E5C93C594117714D": "OliverSage",
+    "CCE1DFF266E49868": "MooseVR",
+    "36FD11C9FB61E50B": "Cryptik",
+    "93F1FB8CA70CEC7A": "Archie",
+    "62AF723065924DDF": "Jawdat",
+    "49711FD5F83DE549": "Juan",
+    "37A90E7453C556DE": "Shroom",
+    "D51261E11BBA1099": "FishTaco",
+    "592FBBCDBED74C11": "Goat",
+    "1F4C2B7569C0A633": "Razzle",
+    "6E1B5925485E2540": "TBM Jay",
+    "35019113279BF26C": "Waterman",
+    "F1A846A0B44E9C69": "Cat Craze",
+    "D1B352029BB4F9E3": "Zellix"
+  }
+}</pre>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer">
+
+            <span>
+                © 2026 AceUtils
+            </span>
+
+            <span>
+                Data
+            </span>
+
+        </div>
+
+    </main>
+
+
+    <script>
+        const prettyButton = document.getElementById("prettyPrint");
+        const dataText = document.getElementById("dataText");
+
+        let pretty = false;
+
+        prettyButton.addEventListener("click", () => {
+
+            try {
+
+                if (!pretty) {
+
+                    const parsed = JSON.parse(dataText.textContent);
+
+                    dataText.textContent =
+                        JSON.stringify(parsed, null, 2);
+
+                    prettyButton.textContent = "RAW TEXT";
+
+                    pretty = true;
+
+                } else {
+
+                    prettyButton.textContent = "PRETTY PRINT";
+
+                    pretty = false;
+
+                }
+
+            } catch (error) {
+
+                console.error(error);
+
+                prettyButton.textContent = "INVALID DATA";
+
+                setTimeout(() => {
+                    prettyButton.textContent = "PRETTY PRINT";
+                }, 1500);
+            }
+
+        });
+    </script>
+
+</body>
+</html>
