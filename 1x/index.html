@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>1x — About Me</title>
+
+    <meta name="description" content="1x — Gorilla Tag mod developer, coder, and software developer.">
+    <meta name="theme-color" content="#050505">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #050505;
+            --white: #f5f5f5;
+            --text: #d8d8d8;
+            --muted: #777;
+            --dim: #444;
+            --border: rgba(255,255,255,.09);
+            --card: rgba(255,255,255,.035);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--white);
+            font-family: "Inter", sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* =========================
+           BACKGROUND
+        ========================= */
+
+        .background {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -10;
+            overflow: hidden;
+        }
+
+        .grid {
+            position: absolute;
+            inset: 0;
+
+            background-image:
+                linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+
+            background-size: 55px 55px;
+
+            mask-image: linear-gradient(to bottom, black, transparent 85%);
+        }
+
+        .glow {
+            position: absolute;
+            width: 550px;
+            height: 550px;
+            border-radius: 50%;
+            filter: blur(130px);
+            opacity: .09;
+        }
+
+        .glow.one {
+            background: white;
+            top: -300px;
+            left: -250px;
+        }
+
+        .glow.two {
+            background: #777;
+            right: -300px;
+            top: 35%;
+        }
+
+        .glow.three {
+            background: white;
+            left: 25%;
+            bottom: -450px;
+        }
+
+        .bubble {
+            position: absolute;
+            border: 1px solid rgba(255,255,255,.06);
+            border-radius: 50%;
+            animation: float 12s ease-in-out infinite;
+        }
+
+        .bubble.one {
+            width: 180px;
+            height: 180px;
+            top: 20%;
+            left: 7%;
+        }
+
+        .bubble.two {
+            width: 90px;
+            height: 90px;
+            top: 65%;
+            right: 10%;
+            animation-delay: -4s;
+        }
+
+        .bubble.three {
+            width: 50px;
+            height: 50px;
+            top: 35%;
+            right: 25%;
+            animation-delay: -8s;
+        }
+
+        @keyframes float {
+            0%,100% {
+                transform: translateY(0) translateX(0);
+            }
+
+            50% {
+                transform: translateY(-25px) translateX(12px);
+            }
+        }
+
+        /* =========================
+           NAV
+        ========================= */
+
+        nav {
+            position: fixed;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+
+            width: min(1100px, calc(100% - 30px));
+
+            padding: 12px 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: rgba(5,5,5,.72);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            z-index: 100;
+            transition: .25s;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .brand-icon {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid rgba(255,255,255,.14);
+            border-radius: 10px;
+
+            background: rgba(255,255,255,.05);
+
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .nav-links a {
+            color: #888;
+            text-decoration: none;
+            font-size: 13px;
+            transition: .2s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .nav-button {
+            padding: 9px 14px;
+
+            color: #050505 !important;
+            background: white;
+
+            border-radius: 10px;
+
+            font-weight: 700 !important;
+        }
+
+        .nav-button:hover {
+            background: #ddd;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        main {
+            width: min(1100px, calc(100% - 30px));
+            margin: auto;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+
+            padding-top: 110px;
+            padding-bottom: 80px;
+        }
+
+        .hero-content {
+            width: 100%;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 8px 12px;
+
+            border: 1px solid var(--border);
+            border-radius: 999px;
+
+            background: rgba(255,255,255,.03);
+
+            color: #aaa;
+            font-size: 12px;
+            font-weight: 600;
+
+            margin-bottom: 25px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+
+            background: #8cff9a;
+            border-radius: 50%;
+
+            box-shadow: 0 0 12px rgba(140,255,154,.7);
+        }
+
+        h1 {
+            max-width: 850px;
+
+            font-size: clamp(64px, 11vw, 140px);
+            line-height: .82;
+            letter-spacing: -8px;
+
+            font-weight: 800;
+        }
+
+        .hero-subtitle {
+            margin-top: 35px;
+
+            max-width: 650px;
+
+            color: #999;
+
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .hero-subtitle strong {
+            color: white;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+
+            margin-top: 32px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 13px 18px;
+
+            border-radius: 12px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            transition: .2s;
+        }
+
+        .button.primary {
+            color: #050505;
+            background: white;
+        }
+
+        .button.primary:hover {
+            transform: translateY(-2px);
+            background: #ddd;
+        }
+
+        .button.secondary {
+            color: white;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.035);
+        }
+
+        .button.secondary:hover {
+            transform: translateY(-2px);
+            background: rgba(255,255,255,.07);
+        }
+
+        /* =========================
+           SECTIONS
+        ========================= */
+
+        section {
+            padding: 110px 0;
+        }
+
+        .section-label {
+            color: #666;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            letter-spacing: 2px;
+            text-transform: uppercase;
+
+            margin-bottom: 14px;
+        }
+
+        .section-title {
+            font-size: clamp(34px, 5vw, 60px);
+            letter-spacing: -3px;
+            line-height: 1;
+
+            margin-bottom: 45px;
+        }
+
+        /* =========================
+           CARDS
+        ========================= */
+
+        .card {
+            padding: 30px;
+
+            border: 1px solid var(--border);
+            border-radius: 22px;
+
+            background: var(--card);
+
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+
+            transition: .25s;
+        }
+
+        .card:hover {
+            border-color: rgba(255,255,255,.16);
+            transform: translateY(-3px);
+        }
+
+        /* =========================
+           ABOUT
+        ========================= */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 18px;
+        }
+
+        .about-card p {
+            color: #999;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .about-card p + p {
+            margin-top: 18px;
+        }
+
+        .side-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 260px;
+        }
+
+        .side-number {
+            font-size: 80px;
+            line-height: .8;
+            font-weight: 800;
+            letter-spacing: -6px;
+        }
+
+        .side-description {
+            color: #777;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* =========================
+           DISCORD
+        ========================= */
+
+        .discord-card {
+            position: relative;
+            overflow: hidden;
+
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 22px;
+
+            padding: 25px;
+        }
+
+        .discord-card::before {
+            content: "";
+
+            position: absolute;
+            width: 260px;
+            height: 260px;
+
+            right: -100px;
+            top: -140px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,.035);
+
+            filter: blur(20px);
+
+            pointer-events: none;
+        }
+
+        .discord-avatar {
+            position: relative;
+
+            width: 78px;
+            height: 78px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            border: 2px solid rgba(255,255,255,.12);
+
+            background: #111;
+        }
+
+        .discord-avatar-wrap {
+            position: relative;
+        }
+
+        .discord-status-dot {
+            position: absolute;
+
+            right: 2px;
+            bottom: 3px;
+
+            width: 19px;
+            height: 19px;
+
+            border-radius: 50%;
+
+            border: 4px solid #080808;
+
+            background: #777;
+        }
+
+        .discord-info {
+            min-width: 0;
+        }
+
+        .discord-name-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            margin-bottom: 5px;
+        }
+
+        .discord-name {
+            font-size: 20px;
+            font-weight: 800;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .discord-status-text {
+            color: #777;
+            font-size: 12px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .discord-activity {
+            color: #999;
+
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .discord-activity strong {
+            color: white;
+        }
+
+        .discord-details {
+            color: #666;
+            font-size: 12px;
+
+            margin-top: 4px;
+        }
+
+        .discord-button {
+            position: relative;
+            z-index: 2;
+
+            padding: 11px 15px;
+
+            color: #050505;
+            background: white;
+
+            border-radius: 11px;
+
+            text-decoration: none;
+
+            font-size: 12px;
+            font-weight: 800;
+
+            white-space: nowrap;
+
+            transition: .2s;
+        }
+
+        .discord-button:hover {
+            background: #ddd;
+            transform: translateY(-2px);
+        }
+
+        .discord-loading {
+            color: #777;
+        }
+
+        .discord-error {
+            color: #777;
+        }
+
+        .spotify {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            margin-top: 10px;
+        }
+
+        .spotify img {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 7px;
+
+            object-fit: cover;
+        }
+
+        .spotify-text {
+            min-width: 0;
+        }
+
+        .spotify-song {
+            color: white;
+            font-weight: 700;
+            font-size: 12px;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .spotify-artist {
+            color: #666;
+            font-size: 11px;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* =========================
+           INTERESTS
+        ========================= */
+
+        .interest-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .interest {
+            min-height: 190px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+
+            padding: 25px;
+        }
+
+        .interest-icon {
+            font-size: 28px;
+            margin-bottom: auto;
+        }
+
+        .interest h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .interest p {
+            color: #777;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           PROJECTS
+        ========================= */
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .project {
+            min-height: 220px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .project-number {
+            color: #555;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .project h3 {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        .project p {
+            color: #777;
+            line-height: 1.65;
+            font-size: 14px;
+            max-width: 450px;
+        }
+
+        .project-tag {
+            display: inline-block;
+
+            margin-top: 20px;
+            padding: 6px 9px;
+
+            border: 1px solid var(--border);
+            border-radius: 7px;
+
+            color: #888;
+            font-size: 10px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* =========================
+           SKILLS
+        ========================= */
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill {
+            padding: 11px 15px;
+
+            border: 1px solid var(--border);
+            border-radius: 10px;
+
+            color: #aaa;
+            background: rgba(255,255,255,.025);
+
+            font-size: 13px;
+
+            transition: .2s;
+        }
+
+        .skill:hover {
+            color: white;
+            border-color: rgba(255,255,255,.18);
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           CURRENTLY
+        ========================= */
+
+        .currently {
+            padding: 35px;
+
+            border: 1px solid var(--border);
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    rgba(255,255,255,.05),
+                    rgba(255,255,255,.015)
+                );
+        }
+
+        .currently-title {
+            color: #666;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .currently h2 {
+            font-size: clamp(30px, 5vw, 50px);
+            letter-spacing: -2px;
+            margin-bottom: 15px;
+        }
+
+        .currently p {
+            max-width: 650px;
+
+            color: #888;
+
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           SOCIALS
+        ========================= */
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .social {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            padding: 22px;
+
+            color: white;
+            text-decoration: none;
+
+            border: 1px solid var(--border);
+            border-radius: 16px;
+
+            background: rgba(255,255,255,.025);
+
+            transition: .2s;
+        }
+
+        .social:hover {
+            transform: translateY(-4px);
+            background: rgba(255,255,255,.06);
+            border-color: rgba(255,255,255,.18);
+        }
+
+        .social-name {
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .social-handle {
+            color: #666;
+            font-size: 12px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            padding: 50px 0 35px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            border-top: 1px solid var(--border);
+
+            color: #555;
+            font-size: 12px;
+        }
+
+        footer strong {
+            color: #888;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .nav-links a:not(.nav-button) {
+                display: none;
+            }
+
+            h1 {
+                letter-spacing: -5px;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .interest-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .projects {
+                grid-template-columns: 1fr;
+            }
+
+            .social-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .discord-card {
+                grid-template-columns: auto 1fr;
+            }
+
+            .discord-button {
+                grid-column: 1 / -1;
+                text-align: center;
+            }
+
+            section {
+                padding: 80px 0;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            nav {
+                top: 10px;
+            }
+
+            .hero {
+                padding-top: 120px;
+            }
+
+            h1 {
+                font-size: 62px;
+                letter-spacing: -4px;
+            }
+
+            .hero-subtitle {
+                font-size: 15px;
+            }
+
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 23px;
+            }
+
+            .discord-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .discord-avatar-wrap {
+                margin: auto;
+            }
+
+            .discord-name-row {
+                justify-content: center;
+            }
+
+            .discord-activity {
+                text-align: center;
+            }
+
+            .spotify {
+                justify-content: center;
+                text-align: left;
+            }
+
+            footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BACKGROUND -->
+
+    <div class="background">
+
+        <div class="grid"></div>
+
+        <div class="glow one"></div>
+        <div class="glow two"></div>
+        <div class="glow three"></div>
+
+        <div class="bubble one"></div>
+        <div class="bubble two"></div>
+        <div class="bubble three"></div>
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+
+    <nav>
+
+        <a class="nav-brand" href="/">
+
+            <div class="brand-icon">
+                1X
+            </div>
+
+            <span>1x</span>
+
+        </a>
+
+        <div class="nav-links">
+
+            <a href="#about">About</a>
+
+            <a href="#discord">Discord</a>
+
+            <a href="#projects">Projects</a>
+
+            <a href="#socials">Socials</a>
+
+            <a
+                class="nav-button"
+                href="https://discord.gg/RhUymsys9e"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Discord
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <main>
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="status">
+                    <span class="status-dot"></span>
+                    ONLINE / BUILDING
+                </div>
+
+                <h1>
+                    I'M<br>
+                    1X.
+                </h1>
+
+                <p class="hero-subtitle">
+                    I'm <strong>Ace</strong> — a developer and creator who
+                    makes <strong>Gorilla Tag mods</strong>, builds software,
+                    and spends way too much time coding things I think are cool.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a class="button primary" href="#about">
+                        ABOUT ME ↓
+                    </a>
+
+                    <a
+                        class="button secondary"
+                        href="https://github.com/AceThatDeveloper"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        GITHUB →
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ABOUT -->
+
+        <section id="about">
+
+            <div class="section-label">
+                01 / ABOUT
+            </div>
+
+            <h2 class="section-title">
+                A little about me.
+            </h2>
+
+            <div class="about-grid">
+
+                <div class="card about-card">
+
+                    <p>
+                        Hey, I'm <strong style="color:white;">Ace</strong>,
+                        also known online as <strong style="color:white;">1x</strong>.
+                        I'm a developer who enjoys creating software, websites,
+                        tools, and mods.
+                    </p>
+
+                    <p>
+                        A big part of what I do is creating
+                        <strong style="color:white;">legal Gorilla Tag mods</strong>.
+                        I like experimenting with ideas, making useful tools,
+                        and learning how different systems work.
+                    </p>
+
+                    <p>
+                        Outside of modding, I really enjoy
+                        <strong style="color:white;">coding and software development</strong>.
+                        Most of the time, if I have an idea, I'll probably try
+                        to turn it into a project.
+                    </p>
+
+                </div>
+
+
+                <div class="card side-card">
+
+                    <div class="side-number">
+                        1X
+                    </div>
+
+                    <p class="side-description">
+                        Developer.<br>
+                        Creator.<br>
+                        Gorilla Tag modder.<br>
+                        Always building something.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DISCORD -->
+
+        <section id="discord">
+
+            <div class="section-label">
+                02 / DISCORD
+            </div>
+
+            <h2 class="section-title">
+                What I'm doing.
+            </h2>
+
+            <div class="card discord-card">
+
+                <div class="discord-avatar-wrap">
+
+                    <img
+                        id="discordAvatar"
+                        class="discord-avatar"
+                        src="https://cdn.discordapp.com/embed/avatars/0.png"
+                        alt="Discord Avatar"
+                    >
+
+                    <div
+                        id="discordStatusDot"
+                        class="discord-status-dot"
+                    ></div>
+
+                </div>
+
+
+                <div class="discord-info">
+
+                    <div class="discord-name-row">
+
+                        <div
+                            id="discordName"
+                            class="discord-name"
+                        >
+                            Loading...
+                        </div>
+
+                        <div
+                            id="discordStatusText"
+                            class="discord-status-text"
+                        >
+                            Connecting
+                        </div>
+
+                    </div>
+
+                    <div
+                        id="discordActivity"
+                        class="discord-activity"
+                    >
+                        Getting Discord activity...
+                    </div>
+
+                    <div
+                        id="discordDetails"
+                        class="discord-details"
+                    ></div>
+
+                    <div
+                        id="spotifyContainer"
+                        style="display:none;"
+                    ></div>
+
+                </div>
+
+
+                <a
+                    class="discord-button"
+                    href="https://discord.gg/RhUymsys9e"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    JOIN DISCORD →
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- WHAT I DO -->
+
+        <section>
+
+            <div class="section-label">
+                03 / WHAT I DO
+            </div>
+
+            <h2 class="section-title">
+                Things I'm into.
+            </h2>
+
+            <div class="interest-grid">
+
+                <div class="card interest">
+
+                    <div class="interest-icon">
+                        ◈
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Gorilla Tag
+                        </h3>
+
+                        <p>
+                            Creating legal mods, utilities, tools,
+                            and experiments for Gorilla Tag.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card interest">
+
+                    <div class="interest-icon">
+                        &lt;/&gt;
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Coding
+                        </h3>
+
+                        <p>
+                            Writing code, learning new technologies,
+                            and turning ideas into actual projects.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card interest">
+
+                    <div class="interest-icon">
+                        ◆
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Software
+                        </h3>
+
+                        <p>
+                            Building applications, tools, websites,
+                            bots, and other software projects.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PROJECTS -->
+
+        <section id="projects">
+
+            <div class="section-label">
+                04 / PROJECTS
+            </div>
+
+            <h2 class="section-title">
+                Stuff I've built.
+            </h2>
+
+            <div class="projects">
+
+                <div class="card project">
+
+                    <div class="project-top">
+
+                        <div>
+
+                            <h3>
+                                AceUtils
+                            </h3>
+
+                            <p>
+                                A collection of tools, projects, resources,
+                                and other things I'm building.
+                            </p>
+
+                        </div>
+
+                        <span class="project-number">
+                            01
+                        </span>
+
+                    </div>
+
+                    <span class="project-tag">
+                        Website / Tools
+                    </span>
+
+                </div>
+
+
+                <div class="card project">
+
+                    <div class="project-top">
+
+                        <div>
+
+                            <h3>
+                                AceUtilsPad
+                            </h3>
+
+                            <p>
+                                A Gorilla Tag utility tablet and mod
+                                checker project built around useful
+                                in-game tools.
+                            </p>
+
+                        </div>
+
+                        <span class="project-number">
+                            02
+                        </span>
+
+                    </div>
+
+                    <span class="project-tag">
+                        Gorilla Tag
+                    </span>
+
+                </div>
+
+
+                <div class="card project">
+
+                    <div class="project-top">
+
+                        <div>
+
+                            <h3>
+                                WazyAI
+                            </h3>
+
+                            <p>
+                                A custom hard-coded AI project made
+                                for AceUtils with its own website interface.
+                            </p>
+
+                        </div>
+
+                        <span class="project-number">
+                            03
+                        </span>
+
+                    </div>
+
+                    <span class="project-tag">
+                        Web / AI
+                    </span>
+
+                </div>
+
+
+                <div class="card project">
+
+                    <div class="project-top">
+
+                        <div>
+
+                            <h3>
+                                Gorilla Tag Mods
+                            </h3>
+
+                            <p>
+                                Different legal mods, utilities,
+                                experiments, and tools made for
+                                Gorilla Tag.
+                            </p>
+
+                        </div>
+
+                        <span class="project-number">
+                            04
+                        </span>
+
+                    </div>
+
+                    <span class="project-tag">
+                        C# / Unity
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SKILLS -->
+
+        <section>
+
+            <div class="section-label">
+                05 / SKILLS
+            </div>
+
+            <h2 class="section-title">
+                What I work with.
+            </h2>
+
+            <div class="skills">
+
+                <span class="skill">C#</span>
+                <span class="skill">Python</span>
+                <span class="skill">HTML</span>
+                <span class="skill">CSS</span>
+                <span class="skill">JavaScript</span>
+                <span class="skill">Unity</span>
+                <span class="skill">.NET</span>
+                <span class="skill">Discord Bots</span>
+                <span class="skill">Web Development</span>
+                <span class="skill">Software Development</span>
+                <span class="skill">Gorilla Tag Modding</span>
+
+            </div>
+
+        </section>
+
+
+        <!-- CURRENTLY -->
+
+        <section>
+
+            <div class="currently">
+
+                <div class="currently-title">
+                    CURRENTLY WORKING ON
+                </div>
+
+                <h2>
+                    Building something new.
+                </h2>
+
+                <p>
+                    I'm always working on something. Right now I'm focused
+                    on improving my projects, making new Gorilla Tag mods,
+                    building software, and expanding AceUtils.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- SOCIALS -->
+
+        <section id="socials">
+
+            <div class="section-label">
+                06 / FIND ME
+            </div>
+
+            <h2 class="section-title">
+                Around the internet.
+            </h2>
+
+            <div class="social-grid">
+
+                <a
+                    class="social"
+                    href="https://www.youtube.com/@liamplaysgtag"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span class="social-name">
+                        YouTube
+                    </span>
+
+                    <span class="social-handle">
+                        @liamplaysgtag
+                    </span>
+                </a>
+
+
+                <a
+                    class="social"
+                    href="https://github.com/AceThatDeveloper"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span class="social-name">
+                        GitHub
+                    </span>
+
+                    <span class="social-handle">
+                        @AceThatDeveloper
+                    </span>
+                </a>
+
+
+                <a
+                    class="social"
+                    href="https://discord.gg/RhUymsys9e"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span class="social-name">
+                        Discord
+                    </span>
+
+                    <span class="social-handle">
+                        Join the server
+                    </span>
+                </a>
+
+
+                <a
+                    class="social"
+                    href="https://www.tiktok.com/@1xgtag"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span class="social-name">
+                        TikTok
+                    </span>
+
+                    <span class="social-handle">
+                        @1xgtag
+                    </span>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+
+        <footer>
+
+            <span>
+                © 2026 <strong>1x</strong>
+            </span>
+
+            <span>
+                Built with code.
+            </span>
+
+        </footer>
+
+    </main>
+
+
+    <script>
+
+        /* ==========================================
+           DISCORD / LANYARD
+        ========================================== */
+
+        const DISCORD_ID = "1451332404156563689";
+
+        const API_URL =
+            `https://api.lanyard.rest/v1/users/${DISCORD_ID}`;
+
+
+        const avatar =
+            document.getElementById("discordAvatar");
+
+        const name =
+            document.getElementById("discordName");
+
+        const statusText =
+            document.getElementById("discordStatusText");
+
+        const statusDot =
+            document.getElementById("discordStatusDot");
+
+        const activity =
+            document.getElementById("discordActivity");
+
+        const details =
+            document.getElementById("discordDetails");
+
+        const spotifyContainer =
+            document.getElementById("spotifyContainer");
+
+
+        /*
+            Discord status colors.
+        */
+
+        const statusColors = {
+
+            online: "#8cff9a",
+
+            idle: "#f0c75e",
+
+            dnd: "#ff6b6b",
+
+            offline: "#555"
+
+        };
+
+
+        /*
+            Turn Discord activity type into text.
+        */
+
+        function getActivityType(type) {
+
+            switch (type) {
+
+                case 0:
+                    return "Playing";
+
+                case 1:
+                    return "Streaming";
+
+                case 2:
+                    return "Listening to";
+
+                case 3:
+                    return "Watching";
+
+                case 4:
+                    return "Custom Status";
+
+                case 5:
+                    return "Competing in";
+
+                default:
+                    return "Doing";
+
+            }
+
+        }
+
+
+        /*
+            Make the activity timer.
+        */
+
+        function formatElapsed(startTime) {
+
+            if (!startTime) {
+                return "";
+            }
+
+            const elapsed =
+                Date.now() - startTime;
+
+            if (elapsed < 0) {
+                return "";
+            }
+
+            const totalSeconds =
+                Math.floor(elapsed / 1000);
+
+            const hours =
+                Math.floor(totalSeconds / 3600);
+
+            const minutes =
+                Math.floor((totalSeconds % 3600) / 60);
+
+            const seconds =
+                totalSeconds % 60;
+
+
+            if (hours > 0) {
+
+                return `${hours}h ${minutes}m ${seconds}s`;
+
+            }
+
+            if (minutes > 0) {
+
+                return `${minutes}m ${seconds}s`;
+
+            }
+
+            return `${seconds}s`;
+
+        }
+
+
+        /*
+            Update the Discord card.
+        */
+
+        function updateDiscord(data) {
+
+            if (!data || !data.success) {
+
+                name.textContent = "Discord unavailable";
+
+                statusText.textContent = "Unknown";
+
+                activity.textContent =
+                    "Discord activity could not be loaded.";
+
+                return;
+
+            }
+
+
+            const user =
+                data.data.discord_user;
+
+            const discordStatus =
+                data.data.discord_status || "offline";
+
+
+            /*
+                Username
+            */
+
+            name.textContent =
+                user.global_name ||
+                user.username ||
+                "1x";
+
+
+            /*
+                Status
+            */
+
+            statusText.textContent =
+                discordStatus;
+
+
+            statusDot.style.background =
+                statusColors[discordStatus] ||
+                statusColors.offline;
+
+
+            /*
+                Avatar
+            */
+
+            if (user.avatar) {
+
+                const extension =
+                    user.avatar.startsWith("a_")
+                        ? "gif"
+                        : "png";
+
+                avatar.src =
+                    `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${extension}?size=256`;
+
+            } else {
+
+                avatar.src =
+                    "https://cdn.discordapp.com/embed/avatars/0.png";
+
+            }
+
+
+            /*
+                Activities
+            */
+
+            const activities =
+                data.data.activities || [];
+
+
+            /*
+                Remove custom status from normal
+                activity list.
+            */
+
+            const realActivities =
+                activities.filter(
+                    a => a.type !== 4
+                );
+
+
+            if (realActivities.length > 0) {
+
+                const current =
+                    realActivities[0];
+
+
+                const type =
+                    getActivityType(current.type);
+
+
+                activity.innerHTML =
+                    `<strong>${type}</strong> ${escapeHTML(current.name || "something")}`;
+
+
+                let detailText = "";
+
+
+                if (current.details) {
+
+                    detailText +=
+                        escapeHTML(current.details);
+
+                }
+
+
+                if (current.state) {
+
+                    if (detailText) {
+                        detailText += " • ";
+                    }
+
+                    detailText +=
+                        escapeHTML(current.state);
+
+                }
+
+
+                if (current.timestamps &&
+                    current.timestamps.start) {
+
+                    const timer =
+                        formatElapsed(
+                            current.timestamps.start
+                        );
+
+                    if (timer) {
+
+                        if (detailText) {
+                            detailText += " • ";
+                        }
+
+                        detailText +=
+                            timer;
+
+                    }
+
+                }
+
+
+                details.textContent =
+                    detailText;
+
+            } else {
+
+                activity.textContent =
+                    discordStatus === "offline"
+                        ? "Currently offline"
+                        : "Not currently doing anything";
+
+                details.textContent = "";
+
+            }
+
+
+            /*
+                Spotify
+            */
+
+            if (data.data.listening_to_spotify &&
+                data.data.spotify) {
+
+                const spotify =
+                    data.data.spotify;
+
+
+                spotifyContainer.style.display =
+                    "block";
+
+
+                spotifyContainer.innerHTML = `
+
+                    <div class="spotify">
+
+                        <img
+                            src="${escapeAttribute(spotify.album_art_url || "")}"
+                            alt="Spotify artwork"
+                        >
+
+                        <div class="spotify-text">
+
+                            <div class="spotify-song">
+                                ${escapeHTML(spotify.song || "Unknown song")}
+                            </div>
+
+                            <div class="spotify-artist">
+                                ${escapeHTML(spotify.artist || "Unknown artist")}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            } else {
+
+                spotifyContainer.style.display =
+                    "none";
+
+                spotifyContainer.innerHTML =
+                    "";
+
+            }
+
+        }
+
+
+        /*
+            Basic HTML escaping.
+        */
+
+        function escapeHTML(value) {
+
+            return String(value)
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+
+        }
+
+
+        function escapeAttribute(value) {
+
+            return escapeHTML(value);
+
+        }
+
+
+        /*
+            Load Discord data.
+        */
+
+        async function loadDiscord() {
+
+            try {
+
+                const response =
+                    await fetch(API_URL, {
+                        cache: "no-store"
+                    });
+
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        `HTTP ${response.status}`
+                    );
+
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                updateDiscord(data);
+
+
+            } catch (error) {
+
+                console.error(
+                    "Discord presence error:",
+                    error
+                );
+
+
+                name.textContent =
+                    "1x";
+
+
+                statusText.textContent =
+                    "Unavailable";
+
+
+                statusDot.style.background =
+                    "#555";
+
+
+                activity.textContent =
+                    "Discord presence unavailable right now.";
+
+                details.textContent =
+                    "Try refreshing the page.";
+
+            }
+
+        }
+
+
+        /*
+            Load immediately.
+        */
+
+        loadDiscord();
+
+
+        /*
+            Refresh every 15 seconds.
+            This keeps the card reasonably live without
+            hammering the API.
+        */
+
+        setInterval(
+            loadDiscord,
+            15000
+        );
+
+
+        /*
+            Update activity timer without
+            repeatedly requesting the API.
+        */
+
+        setInterval(() => {
+
+            const timerElement =
+                document.querySelector(".discord-details");
+
+
+            /*
+                The main API refresh handles
+                the actual activity data.
+            */
+
+        }, 1000);
+
+
+        /* ==========================================
+           NAVBAR
+        ========================================== */
+
+        const nav =
+            document.querySelector("nav");
+
+
+        window.addEventListener(
+            "scroll",
+            () => {
+
+                if (window.scrollY > 30) {
+
+                    nav.style.background =
+                        "rgba(5,5,5,.9)";
+
+                } else {
+
+                    nav.style.background =
+                        "rgba(5,5,5,.72)";
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>
