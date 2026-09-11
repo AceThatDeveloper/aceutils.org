@@ -1,0 +1,1811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GAuth — AceUtils</title>
+
+    <meta
+        name="description"
+        content="GAuth — Best auth for Gorilla Tag. Protect your DLLs. All in one."
+    >
+
+    <link rel="icon" type="image/png" href="/auwebsitelogo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: #050505;
+            --background-two: #080808;
+            --panel: #0c0c0c;
+            --panel-hover: #111111;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-strong: rgba(255, 255, 255, 0.13);
+            --text: #f5f5f5;
+            --muted: #8b8b8b;
+            --dim: #555555;
+            --white: #ffffff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at 50% -10%,
+                    rgba(255, 255, 255, 0.07),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 10% 50%,
+                    rgba(255, 255, 255, 0.025),
+                    transparent 30%
+                ),
+                var(--background);
+            color: var(--text);
+            font-family: "Inter", Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font-family: inherit;
+        }
+
+        /* =========================
+           BACKGROUND
+        ========================= */
+
+        .background-grid {
+            position: fixed;
+            inset: 0;
+            z-index: -3;
+            pointer-events: none;
+
+            background-image:
+                linear-gradient(
+                    rgba(255, 255, 255, 0.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 55px 55px;
+
+            mask-image: linear-gradient(
+                to bottom,
+                black,
+                transparent 90%
+            );
+        }
+
+        .glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.025);
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        .glow-one {
+            top: -300px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .glow-two {
+            top: 600px;
+            right: -350px;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            width: min(1180px, calc(100% - 40px));
+            height: 70px;
+            margin: 18px auto 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 10px 0 8px;
+
+            background: rgba(10, 10, 10, 0.72);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            position: sticky;
+            top: 18px;
+            z-index: 50;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-left: 7px;
+        }
+
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #fff;
+            color: #000;
+
+            border-radius: 11px;
+
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .brand-name {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: -0.2px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-links a {
+            padding: 9px 11px;
+            border-radius: 9px;
+
+            color: #888;
+            font-size: 12px;
+            font-weight: 500;
+
+            transition: 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-discord {
+            padding: 10px 14px;
+
+            background: #fff;
+            color: #000;
+
+            border-radius: 9px;
+
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+
+            transition: 0.2s ease;
+        }
+
+        .nav-discord:hover {
+            background: #ddd;
+            transform: translateY(-1px);
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            width: min(1050px, calc(100% - 40px));
+            min-height: 720px;
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 850px;
+            padding: 90px 0 80px;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 8px 12px;
+
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.025);
+
+            border-radius: 999px;
+
+            color: #999;
+            font-size: 10px;
+            font-weight: 600;
+
+            margin-bottom: 25px;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        .hero h1 {
+            font-size: clamp(62px, 10vw, 125px);
+            line-height: 0.88;
+            letter-spacing: -7px;
+            font-weight: 800;
+
+            margin-bottom: 27px;
+        }
+
+        .hero h1 span {
+            display: block;
+        }
+
+        .hero h1 .outline {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,0.4);
+        }
+
+        .hero-description {
+            max-width: 590px;
+            margin: 0 auto;
+
+            color: #888;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .hero-description strong {
+            color: #ddd;
+            font-weight: 600;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+
+            margin-top: 32px;
+        }
+
+        .button-primary,
+        .button-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-width: 145px;
+            padding: 13px 18px;
+
+            border-radius: 10px;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            transition: 0.2s ease;
+        }
+
+        .button-primary {
+            background: #fff;
+            color: #000;
+        }
+
+        .button-primary:hover {
+            background: #ddd;
+            transform: translateY(-2px);
+        }
+
+        .button-secondary {
+            border: 1px solid var(--border-strong);
+            background: rgba(255,255,255,0.025);
+            color: #ccc;
+        }
+
+        .button-secondary:hover {
+            background: rgba(255,255,255,0.06);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           FLOATING CARD
+        ========================= */
+
+        .auth-preview {
+            position: absolute;
+            right: -20px;
+            bottom: 110px;
+
+            width: 230px;
+
+            background: rgba(12, 12, 12, 0.86);
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+            padding: 14px;
+
+            text-align: left;
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.45);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .auth-preview-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 13px;
+        }
+
+        .preview-title {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            color: #ddd;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .preview-icon {
+            width: 24px;
+            height: 24px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #fff;
+            color: #000;
+
+            border-radius: 7px;
+
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .online {
+            color: #888;
+            font-size: 8px;
+        }
+
+        .preview-line {
+            height: 8px;
+            width: 100%;
+
+            background: #1b1b1b;
+            border-radius: 5px;
+
+            margin-bottom: 7px;
+        }
+
+        .preview-line.short {
+            width: 65%;
+        }
+
+        .preview-status {
+            margin-top: 12px;
+
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            color: #777;
+            font-size: 8px;
+        }
+
+        .preview-status-dot {
+            width: 5px;
+            height: 5px;
+            background: #fff;
+            border-radius: 50%;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-9px);
+            }
+        }
+
+        /* =========================
+           SECTION
+        ========================= */
+
+        .section {
+            width: min(1050px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 100px 0;
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 30px;
+
+            margin-bottom: 30px;
+        }
+
+        .eyebrow {
+            color: #666;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+
+            margin-bottom: 10px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(30px, 5vw, 46px);
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .section-heading p {
+            max-width: 400px;
+            color: #777;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           FEATURES
+        ========================= */
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .feature {
+            min-height: 230px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.035),
+                    rgba(255,255,255,0.012)
+                );
+
+            border: 1px solid var(--border);
+            border-radius: 15px;
+
+            padding: 22px;
+
+            position: relative;
+            overflow: hidden;
+
+            transition: 0.25s ease;
+        }
+
+        .feature:hover {
+            border-color: var(--border-strong);
+            background: var(--panel-hover);
+            transform: translateY(-3px);
+        }
+
+        .feature-number {
+            color: #444;
+            font-size: 10px;
+            font-weight: 700;
+
+            position: absolute;
+            top: 22px;
+            right: 22px;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #171717;
+            border: 1px solid #292929;
+
+            border-radius: 11px;
+
+            color: #ddd;
+            font-size: 15px;
+
+            margin-bottom: 50px;
+        }
+
+        .feature h3 {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .feature p {
+            color: #777;
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           AUTH FLOW
+        ========================= */
+
+        .flow {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .flow-step {
+            padding: 24px;
+
+            background: #0b0b0b;
+            border: 1px solid var(--border);
+
+            border-radius: 14px;
+        }
+
+        .step-number {
+            color: #555;
+            font-size: 10px;
+            font-weight: 700;
+
+            margin-bottom: 28px;
+        }
+
+        .flow-step h3 {
+            font-size: 14px;
+            margin-bottom: 9px;
+        }
+
+        .flow-step p {
+            color: #777;
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           SECURITY PANEL
+        ========================= */
+
+        .security-panel {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 10px;
+        }
+
+        .security-main,
+        .security-side {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            background: #0b0b0b;
+        }
+
+        .security-main {
+            min-height: 350px;
+            padding: 30px;
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .security-main::after {
+            content: "";
+
+            position: absolute;
+            width: 250px;
+            height: 250px;
+
+            right: -100px;
+            bottom: -120px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.04);
+            filter: blur(40px);
+        }
+
+        .shield {
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid #333;
+            border-radius: 13px;
+
+            background: #141414;
+
+            margin-bottom: 65px;
+
+            font-size: 19px;
+        }
+
+        .security-main h3 {
+            font-size: 22px;
+            letter-spacing: -0.8px;
+            margin-bottom: 10px;
+        }
+
+        .security-main p {
+            max-width: 500px;
+
+            color: #777;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .security-side {
+            padding: 25px;
+        }
+
+        .security-item {
+            padding: 17px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .security-item:first-child {
+            padding-top: 0;
+        }
+
+        .security-item:last-child {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .security-item strong {
+            display: block;
+
+            color: #ddd;
+            font-size: 11px;
+
+            margin-bottom: 5px;
+        }
+
+        .security-item span {
+            color: #666;
+            font-size: 10px;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           CREDITS
+        ========================= */
+
+        .credits {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .creator {
+            padding: 25px;
+
+            border: 1px solid var(--border);
+            background: #0b0b0b;
+
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .creator-avatar {
+            width: 45px;
+            height: 45px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #fff;
+            color: #000;
+
+            border-radius: 12px;
+
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .creator-info strong {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .creator-info span {
+            color: #666;
+            font-size: 10px;
+        }
+
+        /* =========================
+           DISCORD CTA
+        ========================= */
+
+        .discord-section {
+            width: min(1050px, calc(100% - 40px));
+            margin: 40px auto 100px;
+        }
+
+        .discord-card {
+            position: relative;
+            overflow: hidden;
+
+            padding: 55px 45px;
+
+            border: 1px solid var(--border-strong);
+            border-radius: 18px;
+
+            background:
+                radial-gradient(
+                    circle at 90% 50%,
+                    rgba(255,255,255,0.06),
+                    transparent 35%
+                ),
+                #0b0b0b;
+
+            text-align: center;
+        }
+
+        .discord-card h2 {
+            font-size: clamp(28px, 5vw, 48px);
+            letter-spacing: -2px;
+            margin-bottom: 10px;
+        }
+
+        .discord-card p {
+            color: #777;
+            font-size: 12px;
+            line-height: 1.7;
+
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        .discord-button {
+            display: inline-flex;
+            margin-top: 25px;
+
+            padding: 13px 21px;
+
+            border-radius: 10px;
+
+            background: #fff;
+            color: #000;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            transition: 0.2s ease;
+        }
+
+        .discord-button:hover {
+            background: #ddd;
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            width: min(1050px, calc(100% - 40px));
+            margin: 0 auto;
+
+            padding: 30px 0 35px;
+
+            border-top: 1px solid var(--border);
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            color: #555;
+            font-size: 10px;
+        }
+
+        .footer-brand {
+            color: #888;
+            font-weight: 600;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 15px;
+        }
+
+        .footer-right a {
+            transition: 0.15s ease;
+        }
+
+        .footer-right a:hover {
+            color: #aaa;
+        }
+
+        /* =========================
+           REVEAL
+        ========================= */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition:
+                opacity 0.7s ease,
+                transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 850px) {
+
+            .navbar {
+                width: calc(100% - 20px);
+                margin-top: 10px;
+                top: 10px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                min-height: 650px;
+            }
+
+            .hero h1 {
+                letter-spacing: -4px;
+            }
+
+            .auth-preview {
+                display: none;
+            }
+
+            .features,
+            .flow {
+                grid-template-columns: 1fr;
+            }
+
+            .security-panel {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                height: 62px;
+            }
+
+            .nav-discord {
+                padding: 9px 10px;
+                font-size: 8px;
+            }
+
+            .brand-name {
+                font-size: 13px;
+            }
+
+            .hero {
+                width: calc(100% - 30px);
+            }
+
+            .hero-content {
+                padding-top: 70px;
+            }
+
+            .hero h1 {
+                font-size: clamp(52px, 17vw, 85px);
+                letter-spacing: -4px;
+            }
+
+            .hero-description {
+                font-size: 13px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .button-primary,
+            .button-secondary {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .section,
+            .discord-section {
+                width: calc(100% - 30px);
+                padding: 70px 0;
+            }
+
+            .section-heading {
+                display: block;
+            }
+
+            .section-heading p {
+                margin-top: 15px;
+            }
+
+            .security-main {
+                min-height: 300px;
+            }
+
+            .credits {
+                grid-template-columns: 1fr;
+            }
+
+            .discord-card {
+                padding: 40px 20px;
+            }
+
+            footer {
+                width: calc(100% - 30px);
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background-grid"></div>
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav class="navbar">
+
+        <a href="/" class="brand">
+
+            <div class="brand-icon">
+                A
+            </div>
+
+            <span class="brand-name">
+                AceUtils
+            </span>
+
+        </a>
+
+        <div class="nav-links">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="#features">
+                Features
+            </a>
+
+            <a href="#security">
+                Security
+            </a>
+
+            <a href="#credits">
+                Credits
+            </a>
+
+        </div>
+
+        <a
+            href="https://discord.gg/d4wYeVPCV"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="nav-discord"
+        >
+            JOIN DISCORD
+        </a>
+
+    </nav>
+
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
+    <section class="hero">
+
+        <div class="hero-content reveal">
+
+            <div class="status-pill">
+
+                <span class="status-dot"></span>
+
+                GAUTH · ACEUTILS
+
+            </div>
+
+            <h1>
+
+                <span>PROTECT</span>
+
+                <span class="outline">
+                    YOUR DLLS.
+                </span>
+
+                <span>ALL IN ONE.</span>
+
+            </h1>
+
+            <p class="hero-description">
+
+                <strong>GAuth</strong> is an authentication platform
+                designed for Gorilla Tag developers who want to add
+                protection and authorization to their DLLs without
+                building an entire system from scratch.
+
+            </p>
+
+            <div class="hero-buttons">
+
+                <a
+                    href="#features"
+                    class="button-primary"
+                >
+                    EXPLORE GAUTH
+                </a>
+
+                <a
+                    href="https://discord.gg/d4wYeVPCV"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="button-secondary"
+                >
+                    JOIN THE SERVER
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- Floating preview -->
+
+        <div class="auth-preview">
+
+            <div class="auth-preview-header">
+
+                <div class="preview-title">
+
+                    <div class="preview-icon">
+                        G
+                    </div>
+
+                    GAuth
+
+                </div>
+
+                <span class="online">
+                    ONLINE
+                </span>
+
+            </div>
+
+            <div class="preview-line"></div>
+            <div class="preview-line short"></div>
+            <div class="preview-line"></div>
+            <div class="preview-line short"></div>
+
+            <div class="preview-status">
+
+                <span class="preview-status-dot"></span>
+
+                Authentication ready
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FEATURES
+    ========================= -->
+
+    <section
+        class="section reveal"
+        id="features"
+    >
+
+        <div class="section-heading">
+
+            <div>
+
+                <div class="eyebrow">
+                    GAuth / Features
+                </div>
+
+                <h2>
+                    Everything<br>
+                    in one place.
+                </h2>
+
+            </div>
+
+            <p>
+                Built around the needs of Gorilla Tag developers.
+                GAuth gives developers a centralized way to handle
+                authentication and protected software access.
+            </p>
+
+        </div>
+
+
+        <div class="features">
+
+            <div class="feature">
+
+                <span class="feature-number">
+                    01
+                </span>
+
+                <div class="feature-icon">
+                    ◆
+                </div>
+
+                <h3>
+                    DLL Protection
+                </h3>
+
+                <p>
+                    Add an authentication layer to your DLL projects
+                    and control how protected software is accessed.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <span class="feature-number">
+                    02
+                </span>
+
+                <div class="feature-icon">
+                    ✓
+                </div>
+
+                <h3>
+                    Authentication
+                </h3>
+
+                <p>
+                    Verify authorized users before allowing your
+                    protected software to continue.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <span class="feature-number">
+                    03
+                </span>
+
+                <div class="feature-icon">
+                    +
+                </div>
+
+                <h3>
+                    All In One
+                </h3>
+
+                <p>
+                    Keep your authentication setup organized instead
+                    of creating separate systems for every project.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <span class="feature-number">
+                    04
+                </span>
+
+                <div class="feature-icon">
+                    #
+                </div>
+
+                <h3>
+                    Developer Focused
+                </h3>
+
+                <p>
+                    Designed specifically with Gorilla Tag mod
+                    developers and software creators in mind.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <span class="feature-number">
+                    05
+                </span>
+
+                <div class="feature-icon">
+                    /
+                </div>
+
+                <h3>
+                    Centralized
+                </h3>
+
+                <p>
+                    Build around a centralized authentication
+                    approach for your protected projects.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <span class="feature-number">
+                    06
+                </span>
+
+                <div class="feature-icon">
+                    →
+                </div>
+
+                <h3>
+                    Built To Expand
+                </h3>
+
+                <p>
+                    GAuth is designed as a foundation that can grow
+                    alongside the projects using it.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         HOW IT WORKS
+    ========================= -->
+
+    <section class="section reveal">
+
+        <div class="section-heading">
+
+            <div>
+
+                <div class="eyebrow">
+                    Simple Setup
+                </div>
+
+                <h2>
+                    Built to<br>
+                    stay simple.
+                </h2>
+
+            </div>
+
+            <p>
+                Authentication shouldn't require rebuilding your
+                entire project. GAuth focuses on keeping the
+                developer experience straightforward.
+            </p>
+
+        </div>
+
+
+        <div class="flow">
+
+            <div class="flow-step">
+
+                <div class="step-number">
+                    STEP 01
+                </div>
+
+                <h3>
+                    Create
+                </h3>
+
+                <p>
+                    Set up your project and configure the
+                    authentication information it needs.
+                </p>
+
+            </div>
+
+
+            <div class="flow-step">
+
+                <div class="step-number">
+                    STEP 02
+                </div>
+
+                <h3>
+                    Authenticate
+                </h3>
+
+                <p>
+                    Your protected software can check whether
+                    access has been authorized.
+                </p>
+
+            </div>
+
+
+            <div class="flow-step">
+
+                <div class="step-number">
+                    STEP 03
+                </div>
+
+                <h3>
+                    Protect
+                </h3>
+
+                <p>
+                    Keep unauthorized users from accessing
+                    functionality that requires authentication.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SECURITY
+    ========================= -->
+
+    <section
+        class="section reveal"
+        id="security"
+    >
+
+        <div class="section-heading">
+
+            <div>
+
+                <div class="eyebrow">
+                    Security
+                </div>
+
+                <h2>
+                    Your project.<br>
+                    Your control.
+                </h2>
+
+            </div>
+
+            <p>
+                GAuth is intended to give developers more control
+                over access to their protected software.
+            </p>
+
+        </div>
+
+
+        <div class="security-panel">
+
+            <div class="security-main">
+
+                <div class="shield">
+                    ◇
+                </div>
+
+                <h3>
+                    Authentication first.
+                </h3>
+
+                <p>
+                    Protect your software with an authentication
+                    layer between your DLL and the people who
+                    are allowed to use it.
+                </p>
+
+            </div>
+
+
+            <div class="security-side">
+
+                <div class="security-item">
+
+                    <strong>
+                        Access Control
+                    </strong>
+
+                    <span>
+                        Decide which users or keys should have
+                        access to your protected software.
+                    </span>
+
+                </div>
+
+
+                <div class="security-item">
+
+                    <strong>
+                        Developer Control
+                    </strong>
+
+                    <span>
+                        Keep authentication decisions connected
+                        to the projects you manage.
+                    </span>
+
+                </div>
+
+
+                <div class="security-item">
+
+                    <strong>
+                        Centralized System
+                    </strong>
+
+                    <span>
+                        Build multiple projects around the same
+                        authentication concept.
+                    </span>
+
+                </div>
+
+
+                <div class="security-item">
+
+                    <strong>
+                        Gorilla Tag Focused
+                    </strong>
+
+                    <span>
+                        Created with the Gorilla Tag development
+                        community in mind.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CREDITS
+    ========================= -->
+
+    <section
+        class="section reveal"
+        id="credits"
+    >
+
+        <div class="section-heading">
+
+            <div>
+
+                <div class="eyebrow">
+                    Credits
+                </div>
+
+                <h2>
+                    Made by<br>
+                    developers.
+                </h2>
+
+            </div>
+
+            <p>
+                GAuth is made by 1x and Scrypto for developers
+                working on Gorilla Tag projects.
+            </p>
+
+        </div>
+
+
+        <div class="credits">
+
+            <div class="creator">
+
+                <div class="creator-avatar">
+                    1X
+                </div>
+
+                <div class="creator-info">
+
+                    <strong>
+                        1x
+                    </strong>
+
+                    <span>
+                        Developer · AceUtils
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="creator">
+
+                <div class="creator-avatar">
+                    S
+                </div>
+
+                <div class="creator-info">
+
+                    <strong>
+                        Scrypto
+                    </strong>
+
+                    <span>
+                        Developer · GAuth
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         DISCORD
+    ========================= -->
+
+    <section class="discord-section reveal">
+
+        <div class="discord-card">
+
+            <div class="eyebrow">
+                GAuth Community
+            </div>
+
+            <h2>
+                Want GAuth?
+            </h2>
+
+            <p>
+                Join the GAuth Discord server for updates,
+                information, development discussion, and
+                everything related to the project.
+            </p>
+
+            <a
+                href="https://discord.gg/d4wYeVPCV"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="discord-button"
+            >
+                JOIN GAUTH DISCORD →
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        <div class="footer-brand">
+            GAuth · AceUtils
+        </div>
+
+        <div class="footer-right">
+
+            <a href="/">
+                AceUtils
+            </a>
+
+            <a
+                href="https://discord.gg/d4wYeVPCV"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Discord
+            </a>
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        /* =========================
+           SCROLL REVEAL
+        ========================= */
+
+        const revealElements =
+            document.querySelectorAll(".reveal");
+
+        const revealObserver =
+            new IntersectionObserver(
+                (entries) => {
+
+                    entries.forEach(entry => {
+
+                        if (entry.isIntersecting) {
+
+                            entry.target.classList.add(
+                                "visible"
+                            );
+
+                            revealObserver.unobserve(
+                                entry.target
+                            );
+
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.12
+                }
+            );
+
+
+        revealElements.forEach(element => {
+
+            revealObserver.observe(element);
+
+        });
+
+
+        /* =========================
+           SMOOTH ANCHOR SCROLL
+        ========================= */
+
+        document
+            .querySelectorAll('a[href^="#"]')
+            .forEach(link => {
+
+                link.addEventListener("click", event => {
+
+                    const targetId =
+                        link.getAttribute("href");
+
+                    const target =
+                        document.querySelector(targetId);
+
+                    if (!target) {
+                        return;
+                    }
+
+                    event.preventDefault();
+
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+
+                });
+
+            });
+
+
+        /* =========================
+           NAVBAR SCROLL EFFECT
+        ========================= */
+
+        const navbar =
+            document.querySelector(".navbar");
+
+        window.addEventListener(
+            "scroll",
+            () => {
+
+                if (window.scrollY > 20) {
+
+                    navbar.style.background =
+                        "rgba(8, 8, 8, 0.92)";
+
+                    navbar.style.borderColor =
+                        "rgba(255,255,255,0.12)";
+
+                } else {
+
+                    navbar.style.background =
+                        "rgba(10, 10, 10, 0.72)";
+
+                    navbar.style.borderColor =
+                        "rgba(255,255,255,0.08)";
+
+                }
+
+            },
+            {
+                passive: true
+            }
+        );
+
+    </script>
+
+</body>
+</html>
