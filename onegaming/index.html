@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>OneGaming — Community Warning | AceUtils</title>
+
+    <meta
+        name="description"
+        content="AceUtils community warning regarding OneGaming. Review the available screenshots and information before downloading software."
+    >
+
+    <link rel="icon" type="image/png" href="/auwebsitelogo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #050505;
+            --panel: #0b0b0b;
+            --panel2: #101010;
+            --border: rgba(255,255,255,.08);
+            --border2: rgba(255,255,255,.14);
+            --text: #f5f5f5;
+            --muted: #888;
+            --dim: #555;
+            --red: #ff4d4d;
+            --red-soft: rgba(255, 77, 77, .10);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background:
+                radial-gradient(
+                    circle at 50% -10%,
+                    rgba(255,255,255,.07),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at 100% 40%,
+                    rgba(255,60,60,.035),
+                    transparent 30%
+                ),
+                var(--bg);
+
+            color: var(--text);
+            font-family: Inter, Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* =========================
+           BACKGROUND
+        ========================= */
+
+        .grid {
+            position: fixed;
+            inset: 0;
+            z-index: -5;
+            pointer-events: none;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 55px 55px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent 92%
+                );
+        }
+
+        .glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: -4;
+        }
+
+        .glow.red {
+            background: rgba(255, 40, 40, .035);
+            top: 250px;
+            right: -300px;
+        }
+
+        .glow.white {
+            background: rgba(255,255,255,.025);
+            top: -300px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* =========================
+           NAV
+        ========================= */
+
+        .navbar {
+            width: min(1180px, calc(100% - 40px));
+            height: 70px;
+
+            margin: 18px auto 0;
+
+            padding: 0 9px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: rgba(10,10,10,.78);
+            border: 1px solid var(--border);
+
+            border-radius: 16px;
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            position: sticky;
+            top: 18px;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-left: 7px;
+        }
+
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: white;
+            color: black;
+
+            border-radius: 11px;
+
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .brand-name {
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nav-links a {
+            padding: 9px 11px;
+
+            color: #777;
+            border-radius: 9px;
+
+            font-size: 12px;
+            font-weight: 500;
+
+            transition: .2s ease;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background: rgba(255,255,255,.05);
+        }
+
+        .nav-warning {
+            padding: 10px 14px;
+
+            border-radius: 9px;
+
+            background: var(--red-soft);
+            border: 1px solid rgba(255,77,77,.18);
+
+            color: #ff7777;
+
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .5px;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            width: min(1050px, calc(100% - 40px));
+            min-height: 720px;
+
+            margin: 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            padding: 100px 0;
+        }
+
+        .warning-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 8px 13px;
+
+            background: var(--red-soft);
+            border: 1px solid rgba(255,77,77,.18);
+
+            border-radius: 999px;
+
+            color: #ff7777;
+
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .5px;
+
+            margin-bottom: 25px;
+        }
+
+        .warning-dot {
+            width: 6px;
+            height: 6px;
+
+            background: var(--red);
+            border-radius: 50%;
+
+            box-shadow: 0 0 12px rgba(255,77,77,.6);
+        }
+
+        .hero h1 {
+            font-size: clamp(58px, 10vw, 120px);
+            line-height: .88;
+
+            letter-spacing: -7px;
+            font-weight: 800;
+
+            margin-bottom: 28px;
+        }
+
+        .hero h1 .outline {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,.35);
+        }
+
+        .hero-description {
+            max-width: 650px;
+
+            margin: 0 auto;
+
+            color: #888;
+
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .hero-description strong {
+            color: #ddd;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+
+            margin-top: 30px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-width: 150px;
+
+            padding: 13px 18px;
+
+            border-radius: 10px;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            transition: .2s ease;
+        }
+
+        .button-primary {
+            background: white;
+            color: black;
+        }
+
+        .button-primary:hover {
+            background: #ddd;
+            transform: translateY(-2px);
+        }
+
+        .button-secondary {
+            background: rgba(255,255,255,.025);
+            border: 1px solid var(--border2);
+            color: #ccc;
+        }
+
+        .button-secondary:hover {
+            background: rgba(255,255,255,.06);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           GENERAL SECTIONS
+        ========================= */
+
+        .section {
+            width: min(1050px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 100px 0;
+        }
+
+        .eyebrow {
+            color: #666;
+
+            font-size: 10px;
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: clamp(30px, 5vw, 46px);
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .section-intro {
+            max-width: 500px;
+
+            color: #777;
+
+            font-size: 12px;
+            line-height: 1.8;
+
+            margin-top: 14px;
+        }
+
+        /* =========================
+           WARNING BOX
+        ========================= */
+
+        .warning-box {
+            margin-top: 30px;
+
+            padding: 25px;
+
+            border: 1px solid rgba(255,77,77,.18);
+            border-radius: 15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,77,77,.07),
+                    rgba(255,255,255,.015)
+                );
+        }
+
+        .warning-box-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            margin-bottom: 15px;
+        }
+
+        .warning-icon {
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background: var(--red-soft);
+            border: 1px solid rgba(255,77,77,.2);
+
+            color: #ff6a6a;
+
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .warning-box h3 {
+            font-size: 14px;
+        }
+
+        .warning-box p {
+            color: #888;
+
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        /* =========================
+           CLAIM CARDS
+        ========================= */
+
+        .claims {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 10px;
+
+            margin-top: 30px;
+        }
+
+        .claim {
+            min-height: 210px;
+
+            padding: 22px;
+
+            background: #0b0b0b;
+            border: 1px solid var(--border);
+
+            border-radius: 15px;
+
+            transition: .25s ease;
+        }
+
+        .claim:hover {
+            transform: translateY(-3px);
+            border-color: var(--border2);
+            background: #101010;
+        }
+
+        .claim-number {
+            color: #444;
+
+            font-size: 10px;
+            font-weight: 700;
+
+            margin-bottom: 35px;
+        }
+
+        .claim h3 {
+            font-size: 15px;
+            margin-bottom: 9px;
+        }
+
+        .claim p {
+            color: #777;
+
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        .claim-tag {
+            display: inline-block;
+
+            margin-top: 16px;
+            padding: 5px 8px;
+
+            border-radius: 6px;
+
+            background: rgba(255,255,255,.04);
+            border: 1px solid var(--border);
+
+            color: #888;
+
+            font-size: 8px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        /* =========================
+           EVIDENCE
+        ========================= */
+
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 10px;
+
+            margin-top: 30px;
+        }
+
+        .evidence-card {
+            overflow: hidden;
+
+            background: #0b0b0b;
+            border: 1px solid var(--border);
+
+            border-radius: 15px;
+        }
+
+        .evidence-image {
+            width: 100%;
+            aspect-ratio: 9 / 16;
+
+            background: #151515;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+        }
+
+        .evidence-image img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+        .evidence-placeholder {
+            padding: 25px;
+
+            text-align: center;
+
+            color: #555;
+
+            font-size: 10px;
+            line-height: 1.7;
+        }
+
+        .evidence-info {
+            padding: 17px;
+        }
+
+        .evidence-info strong {
+            display: block;
+
+            font-size: 11px;
+
+            margin-bottom: 5px;
+        }
+
+        .evidence-info span {
+            color: #666;
+
+            font-size: 9px;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           TIMELINE
+        ========================= */
+
+        .timeline {
+            margin-top: 30px;
+
+            border-left: 1px solid #242424;
+
+            padding-left: 25px;
+        }
+
+        .timeline-item {
+            position: relative;
+
+            padding-bottom: 28px;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-item::before {
+            content: "";
+
+            position: absolute;
+
+            left: -30px;
+            top: 4px;
+
+            width: 9px;
+            height: 9px;
+
+            border-radius: 50%;
+
+            background: #777;
+
+            box-shadow: 0 0 0 5px #080808;
+        }
+
+        .timeline-label {
+            color: #555;
+
+            font-size: 9px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+
+            margin-bottom: 7px;
+        }
+
+        .timeline-item h3 {
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .timeline-item p {
+            max-width: 700px;
+
+            color: #777;
+
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        /* =========================
+           SAFETY
+        ========================= */
+
+        .safety-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            gap: 10px;
+
+            margin-top: 30px;
+        }
+
+        .safety-card {
+            padding: 25px;
+
+            background: #0b0b0b;
+            border: 1px solid var(--border);
+
+            border-radius: 15px;
+        }
+
+        .safety-card h3 {
+            font-size: 14px;
+            margin-bottom: 14px;
+        }
+
+        .safety-card ul {
+            list-style: none;
+        }
+
+        .safety-card li {
+            padding: 10px 0;
+
+            border-bottom: 1px solid rgba(255,255,255,.05);
+
+            color: #777;
+
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .safety-card li:last-child {
+            border-bottom: 0;
+        }
+
+        .safety-card li::before {
+            content: "—";
+
+            color: #aaa;
+
+            margin-right: 8px;
+        }
+
+        /* =========================
+           DISCLAIMER
+        ========================= */
+
+        .disclaimer {
+            margin-top: 30px;
+
+            padding: 18px 20px;
+
+            border: 1px solid var(--border);
+            border-radius: 12px;
+
+            background: rgba(255,255,255,.018);
+
+            color: #666;
+
+            font-size: 10px;
+            line-height: 1.8;
+        }
+
+        .disclaimer strong {
+            color: #999;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            width: min(1050px, calc(100% - 40px));
+
+            margin: 0 auto;
+
+            padding: 30px 0 35px;
+
+            border-top: 1px solid var(--border);
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            color: #555;
+
+            font-size: 10px;
+        }
+
+        .footer-brand {
+            color: #888;
+            font-weight: 600;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer-links a:hover {
+            color: #aaa;
+        }
+
+        /* =========================
+           REVEAL
+        ========================= */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+
+            transition:
+                opacity .7s ease,
+                transform .7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 850px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .claims,
+            .evidence-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .safety-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                min-height: 650px;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                width: calc(100% - 20px);
+                height: 62px;
+
+                margin-top: 10px;
+                top: 10px;
+            }
+
+            .nav-warning {
+                padding: 9px 10px;
+                font-size: 8px;
+            }
+
+            .hero {
+                width: calc(100% - 30px);
+            }
+
+            .hero h1 {
+                font-size: clamp(52px, 17vw, 85px);
+                letter-spacing: -4px;
+            }
+
+            .hero-description {
+                font-size: 13px;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .button {
+                width: 100%;
+                max-width: 250px;
+            }
+
+            .section {
+                width: calc(100% - 30px);
+                padding: 70px 0;
+            }
+
+            footer {
+                width: calc(100% - 30px);
+
+                flex-direction: column;
+                gap: 12px;
+
+                text-align: center;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="grid"></div>
+
+    <div class="glow white"></div>
+    <div class="glow red"></div>
+
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav class="navbar">
+
+        <a href="/" class="brand">
+
+            <div class="brand-icon">
+                A
+            </div>
+
+            <span class="brand-name">
+                AceUtils
+            </span>
+
+        </a>
+
+
+        <div class="nav-links">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="#claims">
+                Concerns
+            </a>
+
+            <a href="#evidence">
+                Evidence
+            </a>
+
+            <a href="#safety">
+                Safety
+            </a>
+
+        </div>
+
+
+        <a
+            href="#evidence"
+            class="nav-warning"
+        >
+            COMMUNITY WARNING
+        </a>
+
+    </nav>
+
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
+    <section class="hero">
+
+        <div class="hero-content reveal">
+
+            <div class="warning-pill">
+
+                <span class="warning-dot"></span>
+
+                COMMUNITY WARNING
+
+            </div>
+
+
+            <h1>
+
+                ONEGAMING
+
+                <span class="outline">
+                    BE CAREFUL.
+                </span>
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                This page documents <strong>community concerns</strong>
+                surrounding software and statements associated with
+                OneGaming. Review the available evidence and use your
+                own judgment before downloading or running software.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <a
+                    href="#evidence"
+                    class="button button-primary"
+                >
+                    VIEW EVIDENCE
+                </a>
+
+                <a
+                    href="#safety"
+                    class="button button-secondary"
+                >
+                    STAY SAFE
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         NOTICE
+    ========================= -->
+
+    <section class="section reveal">
+
+        <div class="eyebrow">
+            Important
+        </div>
+
+        <h2 class="section-title">
+            Read before<br>
+            downloading.
+        </h2>
+
+        <p class="section-intro">
+            The screenshots supplied for this page contain messages
+            attributed to OneGamingv2. They should be considered
+            evidence of what is shown in the screenshots, not automatic
+            proof that software is malicious.
+        </p>
+
+
+        <div class="warning-box">
+
+            <div class="warning-box-top">
+
+                <div class="warning-icon">
+                    !
+                </div>
+
+                <h3>
+                    Use caution with unknown DLLs
+                </h3>
+
+            </div>
+
+            <p>
+                Never run an unknown DLL simply because someone says it
+                is safe. Review the source, scan files, check permissions,
+                and only use software you trust.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CONCERNS
+    ========================= -->
+
+    <section
+        class="section reveal"
+        id="claims"
+    >
+
+        <div class="eyebrow">
+            Community Concerns
+        </div>
+
+        <h2 class="section-title">
+            What people<br>
+            are concerned about.
+        </h2>
+
+        <p class="section-intro">
+            These categories describe concerns raised around the
+            screenshots and community discussion. They are not presented
+            as independently verified findings.
+        </p>
+
+
+        <div class="claims">
+
+            <div class="claim">
+
+                <div class="claim-number">
+                    01
+                </div>
+
+                <h3>
+                    RAT-related statement
+                </h3>
+
+                <p>
+                    One supplied screenshot shows a message from an
+                    account displayed as “OneGamingv2” saying
+                    “also adding 4000 rats trust.”
+                </p>
+
+                <span class="claim-tag">
+                    Screenshot evidence
+                </span>
+
+            </div>
+
+
+            <div class="claim">
+
+                <div class="claim-number">
+                    02
+                </div>
+
+                <h3>
+                    Malware concern
+                </h3>
+
+                <p>
+                    Another supplied screenshot shows “Malware” being
+                    given as a response when ideas for a website were
+                    being discussed.
+                </p>
+
+                <span class="claim-tag">
+                    Screenshot evidence
+                </span>
+
+            </div>
+
+
+            <div class="claim">
+
+                <div class="claim-number">
+                    03
+                </div>
+
+                <h3>
+                    Skidding allegations
+                </h3>
+
+                <p>
+                    There are community allegations regarding copied or
+                    reused work. These allegations are not independently
+                    verified on this page and should not be treated as
+                    established fact without additional evidence.
+                </p>
+
+                <span class="claim-tag">
+                    Unverified allegation
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         EVIDENCE
+    ========================= -->
+
+    <section
+        class="section reveal"
+        id="evidence"
+    >
+
+        <div class="eyebrow">
+            Evidence Archive
+        </div>
+
+        <h2 class="section-title">
+            See the<br>
+            screenshots.
+        </h2>
+
+        <p class="section-intro">
+            The following screenshots were supplied for this page.
+            They show Discord messages attributed to OneGamingv2.
+        </p>
+
+
+        <div class="evidence-grid">
+
+
+            <!-- EVIDENCE 01 -->
+
+            <div class="evidence-card">
+
+                <div class="evidence-image">
+
+                    <img
+                        src="/onegaming/evidence1.webp"
+                        alt="Discord screenshot showing a message attributed to OneGamingv2"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                    >
+
+                    <div
+                        class="evidence-placeholder"
+                        style="display:none;"
+                    >
+                        Add the first screenshot as:<br><br>
+                        <strong>
+                            /onegaming/evidence1.webp
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="evidence-info">
+
+                    <strong>
+                        Screenshot 01
+                    </strong>
+
+                    <span>
+                        Shows a message attributed to OneGamingv2
+                        mentioning “4000 rats.”
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- EVIDENCE 02 -->
+
+            <div class="evidence-card">
+
+                <div class="evidence-image">
+
+                    <img
+                        src="/onegaming/evidence2.webp"
+                        alt="Discord screenshot showing a malware-related message"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                    >
+
+                    <div
+                        class="evidence-placeholder"
+                        style="display:none;"
+                    >
+                        Add the second screenshot as:<br><br>
+                        <strong>
+                            /onegaming/evidence2.webp
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="evidence-info">
+
+                    <strong>
+                        Screenshot 02
+                    </strong>
+
+                    <span>
+                        Shows a message displayed as “Malware”
+                        in the supplied Discord conversation.
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- EVIDENCE 03 -->
+
+            <div class="evidence-card">
+
+                <div class="evidence-image">
+
+                    <img
+                        src="/onegaming/evidence3.webp"
+                        alt="Discord screenshot showing conversation involving OneGamingv2"
+                        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                    >
+
+                    <div
+                        class="evidence-placeholder"
+                        style="display:none;"
+                    >
+                        Add the third screenshot as:<br><br>
+                        <strong>
+                            /onegaming/evidence3.webp
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="evidence-info">
+
+                    <strong>
+                        Screenshot 03
+                    </strong>
+
+                    <span>
+                        Additional supplied Discord conversation
+                        involving the OneGamingv2 account.
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         TIMELINE
+    ========================= -->
+
+    <section class="section reveal">
+
+        <div class="eyebrow">
+            Documentation
+        </div>
+
+        <h2 class="section-title">
+            What the<br>
+            screenshots show.
+        </h2>
+
+
+        <div class="timeline">
+
+            <div class="timeline-item">
+
+                <div class="timeline-label">
+                    Evidence 01
+                </div>
+
+                <h3>
+                    OneGamingv2 Discord message
+                </h3>
+
+                <p>
+                    The supplied screenshot shows the account
+                    “OneGamingv2” discussing a DLL and later writing
+                    “also adding 4000 rats trust.”
+                </p>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <div class="timeline-label">
+                    Evidence 02
+                </div>
+
+                <h3>
+                    Malware reference
+                </h3>
+
+                <p>
+                    A second supplied screenshot shows a conversation
+                    where “Malware” appears as a response to a request
+                    for website ideas.
+                </p>
+
+            </div>
+
+
+            <div class="timeline-item">
+
+                <div class="timeline-label">
+                    Evidence 03
+                </div>
+
+                <h3>
+                    Additional conversation
+                </h3>
+
+                <p>
+                    The third screenshot shows a conversation involving
+                    the same displayed account and another developer.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SAFETY
+    ========================= -->
+
+    <section
+        class="section reveal"
+        id="safety"
+    >
+
+        <div class="eyebrow">
+            Stay Safe
+        </div>
+
+        <h2 class="section-title">
+            Protect your<br>
+            computer.
+        </h2>
+
+        <p class="section-intro">
+            Whether or not a specific allegation is proven, these are
+            good practices whenever you are downloading third-party
+            Gorilla Tag software.
+        </p>
+
+
+        <div class="safety-grid">
+
+
+            <div class="safety-card">
+
+                <h3>
+                    Before running a DLL
+                </h3>
+
+                <ul>
+
+                    <li>
+                        Only download from sources you trust.
+                    </li>
+
+                    <li>
+                        Scan unfamiliar files with reputable security tools.
+                    </li>
+
+                    <li>
+                        Check what the software actually does.
+                    </li>
+
+                    <li>
+                        Avoid suspicious downloaders or executables.
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <div class="safety-card">
+
+                <h3>
+                    If something looks suspicious
+                </h3>
+
+                <ul>
+
+                    <li>
+                        Do not run the file.
+                    </li>
+
+                    <li>
+                        Keep the original file for analysis if appropriate.
+                    </li>
+
+                    <li>
+                        Report suspicious software to the relevant platform.
+                    </li>
+
+                    <li>
+                        Ask trusted developers for a second opinion.
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+
+        <div class="disclaimer">
+
+            <strong>
+                Disclaimer:
+            </strong>
+
+            This page documents screenshots and community concerns
+            supplied to AceUtils. AceUtils does not claim that the
+            screenshots alone prove that OneGaming distributed malware,
+            RATs, or other malicious software. Claims that are not
+            independently verified are explicitly labeled as allegations.
+            The purpose of this page is to encourage caution and provide
+            documentation for the community.
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        <div class="footer-brand">
+            AceUtils · Community Documentation
+        </div>
+
+        <div class="footer-links">
+
+            <a href="/">
+                AceUtils
+            </a>
+
+            <a href="#evidence">
+                Evidence
+            </a>
+
+            <a href="#safety">
+                Safety
+            </a>
+
+        </div>
+
+    </footer>
+
+
+    <script>
+
+        /* =========================
+           SCROLL REVEAL
+        ========================= */
+
+        const elements =
+            document.querySelectorAll(".reveal");
+
+        const observer =
+            new IntersectionObserver(
+                entries => {
+
+                    entries.forEach(entry => {
+
+                        if (entry.isIntersecting) {
+
+                            entry.target.classList.add(
+                                "visible"
+                            );
+
+                            observer.unobserve(
+                                entry.target
+                            );
+
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.12
+                }
+            );
+
+
+        elements.forEach(element => {
+
+            observer.observe(element);
+
+        });
+
+
+        /* =========================
+           NAVBAR EFFECT
+        ========================= */
+
+        const navbar =
+            document.querySelector(".navbar");
+
+        window.addEventListener(
+            "scroll",
+            () => {
+
+                if (window.scrollY > 20) {
+
+                    navbar.style.background =
+                        "rgba(7,7,7,.94)";
+
+                    navbar.style.borderColor =
+                        "rgba(255,255,255,.12)";
+
+                } else {
+
+                    navbar.style.background =
+                        "rgba(10,10,10,.78)";
+
+                    navbar.style.borderColor =
+                        "rgba(255,255,255,.08)";
+
+                }
+
+            },
+            {
+                passive: true
+            }
+        );
+
+    </script>
+
+</body>
+</html>
