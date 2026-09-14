@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Scrypto — AceUtils</title>
+    <meta name="description" content="Scrypto — Developer, Gorilla Tag mod developer, and creator of GAuth and Parrot.client.">
+
+    <link rel="icon" type="image/png" href="/auwebsitelogo.png">
+    <link rel="shortcut icon" type="image/png" href="/auwebsitelogo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 50% -10%, rgba(255,255,255,.08), transparent 30%),
+                radial-gradient(circle at 10% 40%, rgba(255,255,255,.025), transparent 25%),
+                #040404;
+            color: #fff;
+            font-family: Inter, Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -2;
+            opacity: .18;
+            background-image:
+                linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+            background-size: 58px 58px;
+            mask-image: linear-gradient(to bottom, black, transparent 90%);
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 650px;
+            height: 650px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.025);
+            filter: blur(100px);
+            top: -300px;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(1180px, calc(100% - 30px));
+            height: 68px;
+            padding: 0 12px 0 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(255,255,255,.09);
+            background: rgba(10,10,10,.72);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            z-index: 1000;
+            box-shadow:
+                0 20px 50px rgba(0,0,0,.35),
+                inset 0 1px rgba(255,255,255,.03);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-weight: 800;
+        }
+
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 11px;
+            border: 1px solid rgba(255,255,255,.13);
+            background: linear-gradient(145deg, #191919, #080808);
+            box-shadow:
+                inset 0 1px rgba(255,255,255,.08),
+                0 0 25px rgba(255,255,255,.025);
+            font-size: 17px;
+            font-weight: 900;
+        }
+
+        .brand-name {
+            font-size: 15px;
+            letter-spacing: -.3px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 27px;
+        }
+
+        .nav-links a {
+            color: #8e8e8e;
+            font-size: 12px;
+            font-weight: 600;
+            transition: .2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+        }
+
+        .nav-discord {
+            padding: 12px 17px;
+            border-radius: 12px;
+            background: #fff;
+            color: #050505;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: .6px;
+            transition: .2s ease;
+        }
+
+        .nav-discord:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,255,255,.12);
+        }
+
+        .container {
+            width: min(1080px, calc(100% - 34px));
+            margin: auto;
+        }
+
+        .hero {
+            min-height: 700px;
+            padding-top: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-inner {
+            width: 100%;
+        }
+
+        .profile-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .avatar-shell {
+            width: 112px;
+            height: 112px;
+            padding: 4px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,.12);
+            background: rgba(255,255,255,.025);
+            box-shadow:
+                0 0 60px rgba(255,255,255,.04),
+                inset 0 0 30px rgba(255,255,255,.025);
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #111;
+        }
+
+        .profile-status {
+            margin-top: -13px;
+            margin-left: 78px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #242424;
+            border: 5px solid #040404;
+            position: relative;
+            z-index: 3;
+        }
+
+        .profile-status.online {
+            background: #23d96b;
+            box-shadow: 0 0 15px rgba(35,217,107,.55);
+        }
+
+        .profile-status.idle {
+            background: #f0a900;
+            box-shadow: 0 0 15px rgba(240,169,0,.4);
+        }
+
+        .profile-status.dnd {
+            background: #ed4245;
+            box-shadow: 0 0 15px rgba(237,66,69,.4);
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 13px;
+            border: 1px solid rgba(255,255,255,.08);
+            background: rgba(255,255,255,.025);
+            border-radius: 999px;
+            color: #9c9c9c;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .eyebrow-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #23d96b;
+            box-shadow: 0 0 10px rgba(35,217,107,.6);
+        }
+
+        .hero h1 {
+            margin-top: 22px;
+            font-size: clamp(48px, 9vw, 100px);
+            line-height: .9;
+            letter-spacing: -6px;
+            font-weight: 900;
+        }
+
+        .hero h1 span {
+            color: #666;
+        }
+
+        .hero-description {
+            width: min(650px, 100%);
+            margin: 27px auto 0;
+            color: #8c8c8c;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .hero-socials {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 28px;
+        }
+
+        .social {
+            padding: 11px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,.08);
+            background: rgba(255,255,255,.025);
+            color: #aaa;
+            font-size: 11px;
+            font-weight: 700;
+            transition: .2s ease;
+        }
+
+        .social:hover {
+            color: #fff;
+            border-color: rgba(255,255,255,.18);
+            transform: translateY(-2px);
+            background: rgba(255,255,255,.05);
+        }
+
+        section {
+            padding: 85px 0;
+        }
+
+        .section-label {
+            color: #686868;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            margin-bottom: 13px;
+        }
+
+        .section-title {
+            font-size: clamp(30px, 5vw, 52px);
+            letter-spacing: -2.8px;
+            line-height: 1;
+            font-weight: 850;
+        }
+
+        .section-subtitle {
+            color: #777;
+            font-size: 13px;
+            line-height: 1.7;
+            margin-top: 13px;
+            max-width: 600px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+            margin-top: 35px;
+        }
+
+        .card {
+            border: 1px solid rgba(255,255,255,.075);
+            background:
+                linear-gradient(145deg, rgba(255,255,255,.045), rgba(255,255,255,.015));
+            border-radius: 22px;
+            padding: 27px;
+            box-shadow:
+                inset 0 1px rgba(255,255,255,.035),
+                0 20px 60px rgba(0,0,0,.18);
+            transition: .25s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(255,255,255,.13);
+            transform: translateY(-3px);
+        }
+
+        .card-icon {
+            width: 43px;
+            height: 43px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 13px;
+            background: rgba(255,255,255,.045);
+            border: 1px solid rgba(255,255,255,.07);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 18px;
+            letter-spacing: -.6px;
+            margin-bottom: 9px;
+        }
+
+        .card p {
+            color: #7d7d7d;
+            font-size: 13px;
+            line-height: 1.75;
+        }
+
+        .project-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::after {
+            content: "";
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            right: -80px;
+            bottom: -90px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.035);
+            filter: blur(20px);
+        }
+
+        .project-role {
+            display: inline-flex;
+            margin-top: 18px;
+            padding: 7px 10px;
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 8px;
+            color: #b8b8b8;
+            background: rgba(255,255,255,.025);
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: .7px;
+            text-transform: uppercase;
+        }
+
+        .tech-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: 28px;
+        }
+
+        .tech {
+            padding: 10px 13px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,.07);
+            background: rgba(255,255,255,.025);
+            color: #999;
+            font-size: 11px;
+            font-weight: 650;
+            transition: .2s ease;
+        }
+
+        .tech:hover {
+            color: #fff;
+            border-color: rgba(255,255,255,.14);
+            background: rgba(255,255,255,.05);
+        }
+
+        .activity-section {
+            padding-top: 35px;
+        }
+
+        .activity-card {
+            margin-top: 30px;
+            min-height: 190px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-top {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .activity-image-wrap {
+            width: 72px;
+            height: 72px;
+            flex: 0 0 72px;
+            position: relative;
+        }
+
+        .activity-image {
+            width: 72px;
+            height: 72px;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,.09);
+            background: #111;
+            display: none;
+        }
+
+        .activity-placeholder {
+            width: 72px;
+            height: 72px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,.04);
+            border: 1px solid rgba(255,255,255,.08);
+            color: #777;
+            font-size: 23px;
+            font-weight: 900;
+        }
+
+        .activity-info {
+            min-width: 0;
+        }
+
+        .activity-type {
+            color: #777;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .activity-name {
+            font-size: 17px;
+            font-weight: 800;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .activity-details,
+        .activity-state {
+            color: #858585;
+            font-size: 12px;
+            line-height: 1.5;
+            margin-top: 4px;
+        }
+
+        .activity-time {
+            margin-top: 15px;
+            color: #666;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .activity-empty {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 130px;
+        }
+
+        .activity-empty strong {
+            font-size: 16px;
+            margin-bottom: 7px;
+        }
+
+        .activity-empty span {
+            color: #6d6d6d;
+            font-size: 12px;
+        }
+
+        .find-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 30px;
+        }
+
+        .find-card {
+            padding: 23px;
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,.075);
+            background: rgba(255,255,255,.025);
+            transition: .2s ease;
+        }
+
+        .find-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255,255,255,.14);
+            background: rgba(255,255,255,.04);
+        }
+
+        .find-card small {
+            display: block;
+            color: #5f5f5f;
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+            margin-bottom: 9px;
+        }
+
+        .find-card strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .find-card span {
+            display: block;
+            color: #777;
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+        .discord-cta {
+            margin-top: 50px;
+            padding: 55px 35px;
+            text-align: center;
+            border-radius: 25px;
+            border: 1px solid rgba(255,255,255,.08);
+            background:
+                radial-gradient(circle at 50% 0%, rgba(255,255,255,.07), transparent 50%),
+                rgba(255,255,255,.02);
+        }
+
+        .discord-cta h2 {
+            font-size: clamp(30px, 5vw, 48px);
+            letter-spacing: -2.5px;
+        }
+
+        .discord-cta p {
+            color: #777;
+            font-size: 13px;
+            margin: 13px auto 25px;
+            max-width: 500px;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            padding: 13px 20px;
+            border-radius: 12px;
+            background: #fff;
+            color: #050505;
+            font-size: 10px;
+            font-weight: 900;
+            letter-spacing: .7px;
+            transition: .2s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(255,255,255,.12);
+        }
+
+        footer {
+            padding: 35px 0 50px;
+            border-top: 1px solid rgba(255,255,255,.055);
+            color: #555;
+            font-size: 10px;
+        }
+
+        .footer-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .footer-right {
+            color: #444;
+        }
+
+        @media (max-width: 800px) {
+            .nav-links {
+                display: none;
+            }
+
+            .navbar {
+                height: 62px;
+            }
+
+            .hero {
+                min-height: 650px;
+                padding-top: 135px;
+            }
+
+            .hero h1 {
+                letter-spacing: -4px;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .find-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 65px 0;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .nav-discord {
+                display: none;
+            }
+
+            .navbar {
+                justify-content: center;
+            }
+
+            .hero-description {
+                font-size: 13px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <a href="/" class="brand">
+        <div class="brand-icon">A</div>
+        <span class="brand-name">AceUtils</span>
+    </a>
+
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/data/">Data</a>
+        <a href="/1x/">1X</a>
+        <a href="/wazy/">Wazy</a>
+        <a href="/gauth/">GAuth</a>
+        <a href="/scrypto/">Scrypto</a>
+    </div>
+
+    <a
+        href="https://discord.gg/2EKbnWCMX6"
+        target="_blank"
+        rel="noopener"
+        class="nav-discord"
+    >
+        GORILLA AUTH
+    </a>
+</nav>
+
+<main>
+
+    <section class="hero">
+        <div class="container hero-inner">
+
+            <div class="profile-wrap">
+                <div class="avatar-shell">
+                    <img
+                        id="discordAvatar"
+                        class="avatar"
+                        src="https://cdn.discordapp.com/embed/avatars/0.png"
+                        alt="Scrypto"
+                    >
+                </div>
+
+                <div id="profileStatus" class="profile-status"></div>
+            </div>
+
+            <div class="eyebrow">
+                <span id="statusDot" class="eyebrow-dot"></span>
+                <span id="statusText">Checking Discord status...</span>
+            </div>
+
+            <h1>
+                SCRYPTO<span>.</span>
+            </h1>
+
+            <p class="hero-description">
+                Developer in multiple languages, building software, tools,
+                Gorilla Tag projects, and more.
+            </p>
+
+            <div class="hero-socials">
+                <a
+                    class="social"
+                    href="https://www.youtube.com/@ScryptoGT"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    YouTube
+                </a>
+
+                <a
+                    class="social"
+                    href="https://github.com/Scrypto34"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    GitHub
+                </a>
+
+                <a
+                    class="social"
+                    href="https://discord.gg/2EKbnWCMX6"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    Gorilla Auth
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+
+    <section>
+        <div class="container">
+
+            <div class="section-label">01 — About</div>
+            <h2 class="section-title">WHO I AM.</h2>
+
+            <p class="section-subtitle">
+                I'm Scrypto. I'm a developer working across multiple
+                languages and different types of projects.
+            </p>
+
+            <div class="grid-2">
+
+                <div class="card">
+                    <div class="card-icon">01</div>
+
+                    <h3>Developer</h3>
+
+                    <p>
+                        I work with many different languages and tools,
+                        building software, mods, utilities and other
+                        projects.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">02</div>
+
+                    <h3>What I Like</h3>
+
+                    <p>
+                        Gorilla Tag and coding are a big part of what
+                        I work on and enjoy building around.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <section>
+        <div class="container">
+
+            <div class="section-label">02 — Projects</div>
+            <h2 class="section-title">WHAT I'M BUILDING.</h2>
+
+            <p class="section-subtitle">
+                Some of the projects I'm currently working on.
+            </p>
+
+            <div class="grid-2">
+
+                <div class="card project-card">
+                    <div class="card-icon">G</div>
+
+                    <h3>GAuth</h3>
+
+                    <p>
+                        Gorilla Authority with a collection of mods,
+                        tools and features built around Gorilla Tag.
+                    </p>
+
+                    <div class="project-role">
+                        Founder
+                    </div>
+                </div>
+
+
+                <div class="card project-card">
+                    <div class="card-icon">P</div>
+
+                    <h3>Parrot.client</h3>
+
+                    <p>
+                        A project focused on Gorilla Tag tools,
+                        development and features.
+                    </p>
+
+                    <div class="project-role">
+                        Main Developer · Not Owner
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <section>
+        <div class="container">
+
+            <div class="section-label">03 — Stack</div>
+            <h2 class="section-title">THINGS I USE.</h2>
+
+            <p class="section-subtitle">
+                Languages, software and development tools I work with.
+            </p>
+
+            <div class="tech-grid">
+                <div class="tech">C#</div>
+                <div class="tech">Python</div>
+                <div class="tech">JavaScript</div>
+                <div class="tech">Java</div>
+                <div class="tech">Node.js</div>
+                <div class="tech">Linux</div>
+                <div class="tech">Git</div>
+                <div class="tech">Rider</div>
+                <div class="tech">Visual Studio Code</div>
+                <div class="tech">Visual Studio</div>
+            </div>
+
+        </div>
+    </section>
+
+
+    <section class="activity-section">
+        <div class="container">
+
+            <div class="section-label">04 — Discord</div>
+            <h2 class="section-title">LIVE STATUS.</h2>
+
+            <p class="section-subtitle">
+                Scrypto's current Discord presence, activity and music.
+            </p>
+
+            <div class="card activity-card" id="activityCard">
+
+                <div class="activity-empty" id="activityEmpty">
+                    <strong>Loading Discord activity...</strong>
+                    <span>Connecting to live presence.</span>
+                </div>
+
+                <div id="activityContent" style="display:none;">
+
+                    <div class="activity-top">
+
+                        <div class="activity-image-wrap">
+                            <div
+                                id="activityPlaceholder"
+                                class="activity-placeholder"
+                            >
+                                S
+                            </div>
+
+                            <img
+                                id="activityImage"
+                                class="activity-image"
+                                alt="Discord activity"
+                            >
+                        </div>
+
+                        <div class="activity-info">
+
+                            <div
+                                id="activityType"
+                                class="activity-type"
+                            >
+                                ACTIVITY
+                            </div>
+
+                            <div
+                                id="activityName"
+                                class="activity-name"
+                            >
+                                Nothing
+                            </div>
+
+                            <div
+                                id="activityDetails"
+                                class="activity-details"
+                            ></div>
+
+                            <div
+                                id="activityState"
+                                class="activity-state"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        id="activityTime"
+                        class="activity-time"
+                    ></div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <section>
+        <div class="container">
+
+            <div class="section-label">05 — Links</div>
+            <h2 class="section-title">FIND ME.</h2>
+
+            <div class="find-grid">
+
+                <a
+                    class="find-card"
+                    href="https://www.youtube.com/@ScryptoGT"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    <small>YouTube</small>
+                    <strong>@ScryptoGT</strong>
+                    <span>Videos & content</span>
+                </a>
+
+                <a
+                    class="find-card"
+                    href="https://github.com/Scrypto34"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    <small>GitHub</small>
+                    <strong>@Scrypto34</strong>
+                    <span>Code & projects</span>
+                </a>
+
+                <a
+                    class="find-card"
+                    href="https://discord.gg/2EKbnWCMX6"
+                    target="_blank"
+                    rel="noopener"
+                >
+                    <small>Discord</small>
+                    <strong>Gorilla Auth Server</strong>
+                    <span>Join the community</span>
+                </a>
+
+            </div>
+
+
+            <div class="discord-cta">
+
+                <h2>WANT TO SEE MORE?</h2>
+
+                <p>
+                    Check out Gorilla Auth and follow the projects
+                    being built around it.
+                </p>
+
+                <a
+                    href="https://discord.gg/2EKbnWCMX6"
+                    target="_blank"
+                    rel="noopener"
+                    class="cta-button"
+                >
+                    JOIN GORILLA AUTH
+                </a>
+
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+
+<footer>
+    <div class="container footer-inner">
+
+        <div>
+            © 2026 AceUtils — Scrypto
+        </div>
+
+        <div class="footer-right">
+            Built with code.
+        </div>
+
+    </div>
+</footer>
+
+
+<script>
+    const DISCORD_ID = "1440634962452938793";
+
+    const LANYARD_SOCKET = "wss://api.lanyard.rest/socket";
+    const LANYARD_REST =
+        `https://api.lanyard.rest/v1/users/${DISCORD_ID}`;
+
+    let socket = null;
+    let heartbeat = null;
+    let reconnectTimer = null;
+    let reconnectAttempts = 0;
+    let currentPresence = null;
+
+
+    const statusText =
+        document.getElementById("statusText");
+
+    const statusDot =
+        document.getElementById("statusDot");
+
+    const profileStatus =
+        document.getElementById("profileStatus");
+
+    const discordAvatar =
+        document.getElementById("discordAvatar");
+
+    const activityEmpty =
+        document.getElementById("activityEmpty");
+
+    const activityContent =
+        document.getElementById("activityContent");
+
+    const activityType =
+        document.getElementById("activityType");
+
+    const activityName =
+        document.getElementById("activityName");
+
+    const activityDetails =
+        document.getElementById("activityDetails");
+
+    const activityState =
+        document.getElementById("activityState");
+
+    const activityTime =
+        document.getElementById("activityTime");
+
+    const activityImage =
+        document.getElementById("activityImage");
+
+    const activityPlaceholder =
+        document.getElementById("activityPlaceholder");
+
+
+    function setStatus(status) {
+
+        const normalized =
+            status || "offline";
+
+        profileStatus.className =
+            "profile-status " + normalized;
+
+        if (normalized === "online") {
+            statusText.textContent = "Online";
+        }
+        else if (normalized === "idle") {
+            statusText.textContent = "Idle";
+        }
+        else if (normalized === "dnd") {
+            statusText.textContent = "Do Not Disturb";
+        }
+        else {
+            statusText.textContent = "Offline";
+        }
+
+    }
+
+
+    function setLoading() {
+
+        activityEmpty.style.display = "flex";
+        activityContent.style.display = "none";
+
+        activityEmpty.innerHTML = `
+            <strong>Loading Discord activity...</strong>
+            <span>Connecting to live presence.</span>
+        `;
+
+    }
+
+
+    function setNoActivity() {
+
+        activityEmpty.style.display = "flex";
+        activityContent.style.display = "none";
+
+        activityEmpty.innerHTML = `
+            <strong>Nothing right now.</strong>
+            <span>No game, music or Discord activity is currently visible.</span>
+        `;
+
+        activityImage.style.display = "none";
+        activityPlaceholder.style.display = "flex";
+
+    }
+
+
+    function setActivityImage(url) {
+
+        if (!url) {
+
+            activityImage.style.display = "none";
+            activityPlaceholder.style.display = "flex";
+
+            return;
+        }
+
+        activityImage.onload = () => {
+
+            activityImage.style.display = "block";
+            activityPlaceholder.style.display = "none";
+
+        };
+
+        activityImage.onerror = () => {
+
+            activityImage.style.display = "none";
+            activityPlaceholder.style.display = "flex";
+
+        };
+
+        activityImage.src = url;
+
+    }
+
+
+    function resolveDiscordAsset(activity, assetKey) {
+
+        if (!assetKey) {
+            return null;
+        }
+
+        /*
+         * Discord application asset.
+         */
+        if (
+            activity.application_id &&
+            !assetKey.startsWith("mp:")
+        ) {
+
+            return `https://cdn.discordapp.com/app-assets/${activity.application_id}/${assetKey}.png`;
+
+        }
+
+        /*
+         * External Discord media asset.
+         */
+        if (assetKey.startsWith("mp:external/")) {
+
+            return "https://media.discordapp.net/" +
+                assetKey.substring("mp:external/".length);
+
+        }
+
+        return null;
+    }
+
+
+    function formatDuration(start, end) {
+
+        if (!start) {
+            return "";
+        }
+
+        const now = Date.now();
+
+        if (end) {
+
+            const remaining =
+                Math.max(0, end - now);
+
+            const seconds =
+                Math.floor(remaining / 1000);
+
+            const minutes =
+                Math.floor(seconds / 60);
+
+            const hours =
+                Math.floor(minutes / 60);
+
+            const mins =
+                minutes % 60;
+
+            const secs =
+                seconds % 60;
+
+            if (hours > 0) {
+
+                return `${hours}h ${mins}m remaining`;
+
+            }
+
+            if (minutes > 0) {
+
+                return `${mins}m ${secs}s remaining`;
+
+            }
+
+            return `${secs}s remaining`;
+
+        }
+
+        const elapsed =
+            Math.max(0, now - start);
+
+        const seconds =
+            Math.floor(elapsed / 1000);
+
+        const minutes =
+            Math.floor(seconds / 60);
+
+        const hours =
+            Math.floor(minutes / 60);
+
+        const mins =
+            minutes % 60;
+
+        if (hours > 0) {
+
+            return `Playing for ${hours}h ${mins}m`;
+
+        }
+
+        if (minutes > 0) {
+
+            return `Active for ${minutes}m`;
+
+        }
+
+        return `Active for ${seconds}s`;
+
+    }
+
+
+    function renderActivity(data) {
+
+        currentPresence = data;
+
+        setStatus(data?.discord_status || "offline");
+
+
+        /*
+         * Update Discord avatar if Lanyard gives us one.
+         */
+        if (
+            data?.discord_user &&
+            data.discord_user.avatar
+        ) {
+
+            const userId =
+                data.discord_user.id || DISCORD_ID;
+
+            const avatarHash =
+                data.discord_user.avatar;
+
+            const extension =
+                avatarHash.startsWith("a_")
+                    ? "gif"
+                    : "png";
+
+            discordAvatar.src =
+                `https://cdn.discordapp.com/avatars/${userId}/${avatarHash}.${extension}?size=256`;
+
+        }
+
+
+        /*
+         * Spotify is handled first.
+         *
+         * This is important because Lanyard provides
+         * dedicated Spotify data separately from normal
+         * Discord activities.
+         */
+        if (
+            data?.listening_to_spotify &&
+            data?.spotify
+        ) {
+
+            const spotify =
+                data.spotify;
+
+            activityEmpty.style.display = "none";
+            activityContent.style.display = "block";
+
+            activityType.textContent =
+                "LISTENING TO SPOTIFY";
+
+            activityName.textContent =
+                spotify.song || "Unknown song";
+
+            activityDetails.textContent =
+                spotify.artist
+                    ? `by ${spotify.artist}`
+                    : "";
+
+            activityState.textContent =
+                spotify.album
+                    ? spotify.album
+                    : "";
+
+            activityTime.textContent =
+                formatDuration(
+                    spotify.timestamps?.start,
+                    spotify.timestamps?.end
+                );
+
+            setActivityImage(
+                spotify.album_art_url
+            );
+
+            return;
+        }
+
+
+        /*
+         * Normal Discord Rich Presence.
+         *
+         * Type 4 is Discord custom status, so we don't
+         * treat that as a game/activity.
+         */
+        const activities =
+            Array.isArray(data?.activities)
+                ? data.activities.filter(
+                    activity => activity.type !== 4
+                )
+                : [];
+
+
+        if (!activities.length) {
+
+            setNoActivity();
+
+            return;
+        }
+
+
+        /*
+         * Prefer a real activity.
+         */
+        const activity =
+            activities.find(
+                a => a.type === 0
+            ) ||
+            activities[0];
+
+
+        activityEmpty.style.display = "none";
+        activityContent.style.display = "block";
+
+
+        const typeNames = {
+            0: "PLAYING",
+            1: "STREAMING",
+            2: "LISTENING",
+            3: "WATCHING",
+            5: "COMPETING"
+        };
+
+
+        activityType.textContent =
+            typeNames[activity.type] ||
+            "ACTIVITY";
+
+
+        activityName.textContent =
+            activity.name ||
+            "Unknown activity";
+
+
+        activityDetails.textContent =
+            activity.details ||
+            "";
+
+
+        activityState.textContent =
+            activity.state ||
+            "";
+
+
+        activityTime.textContent =
+            formatDuration(
+                activity.timestamps?.start,
+                activity.timestamps?.end
+            );
+
+
+        /*
+         * Activity artwork.
+         */
+        let imageUrl = null;
+
+
+        if (activity.assets?.large_image) {
+
+            imageUrl =
+                resolveDiscordAsset(
+                    activity,
+                    activity.assets.large_image
+                );
+
+        }
+
+
+        /*
+         * Try small image if large image isn't available.
+         */
+        if (
+            !imageUrl &&
+            activity.assets?.small_image
+        ) {
+
+            imageUrl =
+                resolveDiscordAsset(
+                    activity,
+                    activity.assets.small_image
+                );
+
+        }
+
+
+        setActivityImage(imageUrl);
+
+    }
+
+
+    async function loadRest() {
+
+        try {
+
+            const response =
+                await fetch(
+                    LANYARD_REST,
+                    {
+                        cache: "no-store"
+                    }
+                );
+
+            if (!response.ok) {
+                throw new Error(
+                    `HTTP ${response.status}`
+                );
+            }
+
+            const json =
+                await response.json();
+
+            if (json?.success && json?.data) {
+
+                renderActivity(json.data);
+
+            }
+            else {
+
+                setNoActivity();
+
+            }
+
+        }
+        catch (error) {
+
+            console.warn(
+                "Lanyard REST failed:",
+                error
+            );
+
+            setNoActivity();
+
+        }
+
+    }
+
+
+    function sendHeartbeat() {
+
+        if (
+            socket &&
+            socket.readyState === WebSocket.OPEN
+        ) {
+
+            socket.send(
+                JSON.stringify({
+                    op: 3,
+                    d: Date.now()
+                })
+            );
+
+        }
+
+    }
+
+
+    function subscribe() {
+
+        if (
+            socket &&
+            socket.readyState === WebSocket.OPEN
+        ) {
+
+            socket.send(
+                JSON.stringify({
+                    op: 2,
+                    d: {
+                        subscribe_to_id: DISCORD_ID
+                    }
+                })
+            );
+
+        }
+
+    }
+
+
+    function connectLanyard() {
+
+        if (
+            socket &&
+            (
+                socket.readyState === WebSocket.OPEN ||
+                socket.readyState === WebSocket.CONNECTING
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        clearTimeout(reconnectTimer);
+
+        setLoading();
+
+
+        try {
+
+            socket =
+                new WebSocket(
+                    LANYARD_SOCKET
+                );
+
+        }
+        catch (error) {
+
+            loadRest();
+            scheduleReconnect();
+
+            return;
+
+        }
+
+
+        socket.onopen = () => {
+
+            reconnectAttempts = 0;
+
+        };
+
+
+        socket.onmessage = event => {
+
+            let payload;
+
+            try {
+
+                payload =
+                    JSON.parse(event.data);
+
+            }
+            catch {
+
+                return;
+
+            }
+
+
+            /*
+             * Lanyard OP 1 = Hello.
+             */
+            if (payload.op === 1) {
+
+                const heartbeatInterval =
+                    payload.d?.heartbeat_interval ||
+                    30000;
+
+
+                clearInterval(heartbeat);
+
+
+                heartbeat =
+                    setInterval(
+                        sendHeartbeat,
+                        heartbeatInterval
+                    );
+
+
+                sendHeartbeat();
+
+                subscribe();
+
+                return;
+            }
+
+
+            /*
+             * OP 0 = event.
+             */
+            if (payload.op === 0) {
+
+                const eventName =
+                    payload.t;
+
+                if (
+                    eventName === "INIT_STATE" ||
+                    eventName === "PRESENCE_UPDATE"
+                ) {
+
+                    if (payload.d) {
+
+                        renderActivity(
+                            payload.d
+                        );
+
+                    }
+
+                }
+
+            }
+
+        };
+
+
+        socket.onerror = () => {
+
+            try {
+                socket.close();
+            }
+            catch {}
+
+        };
+
+
+        socket.onclose = () => {
+
+            clearInterval(heartbeat);
+
+            socket = null;
+
+            /*
+             * REST keeps the page useful even if
+             * the WebSocket disconnects.
+             */
+            loadRest();
+
+            scheduleReconnect();
+
+        };
+
+    }
+
+
+    function scheduleReconnect() {
+
+        clearTimeout(reconnectTimer);
+
+
+        const delay =
+            Math.min(
+                30000,
+                1000 *
+                Math.pow(
+                    1.6,
+                    reconnectAttempts
+                )
+            );
+
+
+        reconnectAttempts++;
+
+
+        reconnectTimer =
+            setTimeout(
+                connectLanyard,
+                delay
+            );
+
+    }
+
+
+    /*
+     * Initial REST load.
+     *
+     * This makes the page show the current status
+     * immediately while the WebSocket connects.
+     */
+    loadRest();
+
+
+    /*
+     * Start live connection.
+     */
+    connectLanyard();
+
+
+    /*
+     * Small REST safety refresh.
+     * The WebSocket remains the primary live source.
+     */
+    setInterval(
+        () => {
+
+            if (
+                !socket ||
+                socket.readyState !== WebSocket.OPEN
+            ) {
+
+                loadRest();
+
+            }
+
+        },
+        30000
+    );
+
+
+    /*
+     * Refresh elapsed/remaining activity time.
+     */
+    setInterval(
+        () => {
+
+            if (!currentPresence) {
+                return;
+            }
+
+            if (
+                currentPresence.listening_to_spotify &&
+                currentPresence.spotify
+            ) {
+
+                activityTime.textContent =
+                    formatDuration(
+                        currentPresence.spotify.timestamps?.start,
+                        currentPresence.spotify.timestamps?.end
+                    );
+
+                return;
+            }
+
+
+            const activities =
+                Array.isArray(
+                    currentPresence.activities
+                )
+                    ? currentPresence.activities.filter(
+                        a => a.type !== 4
+                    )
+                    : [];
+
+
+            if (!activities.length) {
+                return;
+            }
+
+
+            const activity =
+                activities.find(
+                    a => a.type === 0
+                ) ||
+                activities[0];
+
+
+            activityTime.textContent =
+                formatDuration(
+                    activity.timestamps?.start,
+                    activity.timestamps?.end
+                );
+
+        },
+        1000
+    );
+
+</script>
+
+</body>
+</html>
