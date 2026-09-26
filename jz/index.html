@@ -6,8 +6,10 @@
 
     <title>JZ — AceUtils</title>
 
-    <meta name="description" content="JZ — AceUtils. Home boy since the start.">
-    <meta name="theme-color" content="#050505">
+    <meta
+        name="description"
+        content="JZ — AceUtils. Home boy since the start."
+    >
 
     <link rel="icon" type="image/png" href="/auwebsitelogo.png">
     <link rel="shortcut icon" type="image/png" href="/auwebsitelogo.png">
@@ -21,17 +23,17 @@
 
         :root {
             --bg: #050505;
-            --bg2: #090909;
-            --card: rgba(13, 13, 13, 0.82);
-            --border: rgba(255, 255, 255, 0.09);
-            --border-hover: rgba(255, 255, 255, 0.18);
+            --card: rgba(12, 12, 12, 0.82);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.17);
+
             --text: #ffffff;
-            --muted: #8f8f8f;
+            --muted: #929292;
             --muted2: #5e5e5e;
+
             --green: #23d16b;
-            --red: #ed4245;
             --yellow: #faa61a;
-            --blue: #5865f2;
+            --red: #ed4245;
         }
 
         html {
@@ -40,12 +42,16 @@
 
         body {
             min-height: 100vh;
-            color: var(--text);
+
             background:
-                radial-gradient(circle at 50% -10%, rgba(255,255,255,0.08), transparent 35%),
-                radial-gradient(circle at 15% 50%, rgba(255,255,255,0.025), transparent 30%),
-                radial-gradient(circle at 85% 70%, rgba(255,255,255,0.025), transparent 30%),
-                var(--bg);
+                radial-gradient(
+                    circle at 50% -10%,
+                    rgba(255,255,255,0.075),
+                    transparent 36%
+                ),
+                #050505;
+
+            color: white;
 
             font-family:
                 Inter,
@@ -59,36 +65,25 @@
 
         body::before {
             content: "";
+
             position: fixed;
             inset: 0;
 
             background-image:
-                linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+                linear-gradient(
+                    rgba(255,255,255,0.018) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.018) 1px,
+                    transparent 1px
+                );
 
             background-size: 58px 58px;
 
             pointer-events: none;
-            z-index: -2;
-        }
 
-        body::after {
-            content: "";
-            position: fixed;
-            width: 500px;
-            height: 500px;
-
-            left: 50%;
-            top: 30%;
-
-            transform: translate(-50%, -50%);
-
-            background: rgba(255,255,255,0.025);
-            filter: blur(130px);
-
-            border-radius: 50%;
-
-            pointer-events: none;
             z-index: -1;
         }
 
@@ -97,10 +92,9 @@
             text-decoration: none;
         }
 
-        /* NAVBAR */
+        /* NAV */
 
         .navbar {
-            width: 100%;
             height: 72px;
 
             display: flex;
@@ -112,6 +106,7 @@
             border-bottom: 1px solid var(--border);
 
             background: rgba(5,5,5,0.72);
+
             backdrop-filter: blur(18px);
 
             position: sticky;
@@ -123,10 +118,10 @@
         .brand {
             display: flex;
             align-items: center;
-            gap: 11px;
+
+            gap: 10px;
 
             font-weight: 800;
-            letter-spacing: -0.02em;
         }
 
         .brand-icon {
@@ -138,14 +133,14 @@
 
             border-radius: 10px;
 
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.14);
 
             background:
-                linear-gradient(145deg, #1a1a1a, #080808);
-
-            box-shadow:
-                inset 0 1px rgba(255,255,255,0.08),
-                0 5px 25px rgba(0,0,0,0.35);
+                linear-gradient(
+                    145deg,
+                    #1a1a1a,
+                    #080808
+                );
 
             font-size: 16px;
         }
@@ -156,13 +151,15 @@
 
         .nav-links {
             display: flex;
-            align-items: center;
-            gap: 26px;
+
+            gap: 25px;
         }
 
         .nav-links a {
             color: #858585;
+
             font-size: 13px;
+
             transition: 0.2s ease;
         }
 
@@ -171,9 +168,9 @@
         }
 
         .nav-discord {
-            border: 1px solid rgba(255,255,255,0.13);
-
             padding: 10px 15px;
+
+            border: 1px solid rgba(255,255,255,0.12);
 
             border-radius: 10px;
 
@@ -181,73 +178,84 @@
             font-weight: 700;
 
             letter-spacing: 0.08em;
-
-            transition: 0.2s ease;
         }
 
         .nav-discord:hover {
-            border-color: rgba(255,255,255,0.3);
-            background: rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.25);
         }
 
-        /* MAIN */
+        /* CONTAINER */
 
         .container {
             width: min(1080px, calc(100% - 36px));
+
             margin: auto;
         }
 
+        /* HERO */
+
         .hero {
             text-align: center;
-            padding: 105px 0 70px;
+
+            padding: 105px 0 75px;
         }
 
         .eyebrow {
-            color: #777;
+            color: #696969;
+
             font-size: 11px;
             font-weight: 700;
+
             letter-spacing: 0.22em;
         }
 
         .hero h1 {
             margin-top: 18px;
 
-            font-size: clamp(65px, 12vw, 145px);
-            line-height: 0.83;
+            font-size: clamp(70px, 13vw, 145px);
+
+            line-height: 0.82;
 
             letter-spacing: -0.075em;
+
             font-weight: 900;
 
-            background: linear-gradient(
-                180deg,
-                #ffffff 0%,
-                #eeeeee 30%,
-                #777777 100%
-            );
+            background:
+                linear-gradient(
+                    180deg,
+                    #ffffff 0%,
+                    #ededed 35%,
+                    #707070 100%
+                );
 
             -webkit-background-clip: text;
             background-clip: text;
+
             color: transparent;
         }
 
         .hero p {
-            max-width: 600px;
+            max-width: 590px;
+
             margin: 30px auto 0;
 
             color: var(--muted);
 
             font-size: 15px;
-            line-height: 1.7;
+
+            line-height: 1.75;
         }
 
         .hero-badge {
             display: inline-flex;
             align-items: center;
+
             gap: 8px;
 
             margin-top: 28px;
 
-            padding: 8px 12px;
+            padding: 8px 13px;
 
             border-radius: 999px;
 
@@ -255,7 +263,7 @@
 
             background: rgba(255,255,255,0.025);
 
-            color: #a7a7a7;
+            color: #969696;
 
             font-size: 11px;
         }
@@ -268,31 +276,33 @@
 
             background: var(--green);
 
-            box-shadow: 0 0 12px rgba(35,209,107,0.7);
+            box-shadow:
+                0 0 12px rgba(35,209,107,0.7);
         }
 
-        /* SECTION */
+        /* SECTIONS */
 
         .section {
             margin-bottom: 90px;
         }
 
         .section-title {
-            color: #626262;
+            margin-bottom: 14px;
+
+            color: #5f5f5f;
 
             font-size: 10px;
             font-weight: 800;
 
             letter-spacing: 0.2em;
-
-            margin-bottom: 14px;
         }
 
         .section-heading {
-            font-size: 30px;
-            letter-spacing: -0.04em;
-
             margin-bottom: 22px;
+
+            font-size: 30px;
+
+            letter-spacing: -0.04em;
         }
 
         /* ABOUT */
@@ -301,6 +311,7 @@
             padding: 30px;
 
             border: 1px solid var(--border);
+
             border-radius: 20px;
 
             background:
@@ -311,14 +322,14 @@
                 );
 
             box-shadow:
-                0 30px 80px rgba(0,0,0,0.2),
-                inset 0 1px rgba(255,255,255,0.025);
+                0 30px 80px rgba(0,0,0,0.2);
         }
 
         .about-card p {
-            color: #a1a1a1;
+            color: #9b9b9b;
 
             font-size: 15px;
+
             line-height: 1.8;
         }
 
@@ -330,27 +341,29 @@
 
         .cards {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
             gap: 14px;
         }
 
         .card {
-            padding: 25px;
-
             min-height: 150px;
 
+            padding: 25px;
+
             border: 1px solid var(--border);
+
             border-radius: 18px;
 
             background: var(--card);
 
             transition:
-                transform 0.25s ease,
-                border-color 0.25s ease,
-                background 0.25s ease;
+                0.25s ease;
 
             box-shadow:
-                0 25px 70px rgba(0,0,0,0.16);
+                0 25px 70px rgba(0,0,0,0.15);
         }
 
         .card:hover {
@@ -358,7 +371,8 @@
 
             border-color: var(--border-hover);
 
-            background: rgba(18,18,18,0.92);
+            background:
+                rgba(18,18,18,0.92);
         }
 
         .card-number {
@@ -374,6 +388,7 @@
             margin-top: 25px;
 
             font-size: 19px;
+
             letter-spacing: -0.025em;
         }
 
@@ -383,19 +398,18 @@
             color: #7e7e7e;
 
             font-size: 13px;
+
             line-height: 1.6;
         }
 
         /* DISCORD */
 
         .discord-card {
-            position: relative;
-
             padding: 28px;
 
-            border-radius: 20px;
-
             border: 1px solid var(--border);
+
+            border-radius: 20px;
 
             background:
                 radial-gradient(
@@ -411,6 +425,7 @@
         .discord-top {
             display: flex;
             align-items: center;
+
             gap: 18px;
         }
 
@@ -449,6 +464,9 @@
 
         .status-dot.online {
             background: var(--green);
+
+            box-shadow:
+                0 0 12px rgba(35,209,107,0.55);
         }
 
         .status-dot.idle {
@@ -461,6 +479,7 @@
 
         .discord-name {
             font-size: 21px;
+
             font-weight: 800;
 
             letter-spacing: -0.03em;
@@ -482,32 +501,36 @@
             font-size: 12px;
         }
 
+        /* ACTIVITY */
+
         .activity {
             margin-top: 25px;
 
             padding: 16px;
 
             display: flex;
+
             gap: 14px;
 
             border: 1px solid rgba(255,255,255,0.07);
 
             border-radius: 14px;
 
-            background: rgba(255,255,255,0.025);
+            background:
+                rgba(255,255,255,0.025);
         }
 
         .activity-image {
             width: 62px;
             height: 62px;
 
+            flex-shrink: 0;
+
             border-radius: 12px;
 
             object-fit: cover;
 
             background: #171717;
-
-            flex-shrink: 0;
         }
 
         .activity-content {
@@ -532,7 +555,9 @@
             font-weight: 700;
 
             overflow: hidden;
+
             white-space: nowrap;
+
             text-overflow: ellipsis;
         }
 
@@ -545,7 +570,9 @@
             font-size: 12px;
 
             overflow: hidden;
+
             white-space: nowrap;
+
             text-overflow: ellipsis;
         }
 
@@ -563,28 +590,36 @@
             font-size: 13px;
         }
 
+        /* SPOTIFY */
+
         .spotify {
             margin-top: 12px;
 
             padding: 15px;
 
             display: flex;
+
             gap: 13px;
 
             border: 1px solid rgba(255,255,255,0.06);
 
             border-radius: 13px;
 
-            background: rgba(255,255,255,0.018);
+            background:
+                rgba(255,255,255,0.018);
         }
 
         .spotify img {
             width: 55px;
             height: 55px;
 
-            object-fit: cover;
+            flex-shrink: 0;
 
             border-radius: 8px;
+
+            object-fit: cover;
+
+            background: #111;
         }
 
         .spotify-label {
@@ -611,9 +646,58 @@
             font-size: 12px;
         }
 
+        .spotify-album {
+            margin-top: 3px;
+
+            color: #555;
+
+            font-size: 11px;
+        }
+
+        .spotify-progress {
+            margin-top: 10px;
+
+            width: 100%;
+            height: 3px;
+
+            background: #252525;
+
+            border-radius: 999px;
+
+            overflow: hidden;
+        }
+
+        .spotify-progress-bar {
+            width: 0%;
+
+            height: 100%;
+
+            background: #ffffff;
+
+            border-radius: 999px;
+
+            transition: width 0.5s linear;
+        }
+
+        .spotify-time {
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-top: 5px;
+
+            color: #555;
+
+            font-size: 9px;
+        }
+
+        /* FOOTER */
+
         .discord-footer {
             display: flex;
+
             align-items: center;
+
             justify-content: space-between;
 
             gap: 15px;
@@ -623,7 +707,9 @@
 
         .connection {
             display: flex;
+
             align-items: center;
+
             gap: 7px;
 
             color: #666;
@@ -638,6 +724,9 @@
             border-radius: 50%;
 
             background: var(--green);
+
+            box-shadow:
+                0 0 8px rgba(35,209,107,0.55);
         }
 
         .discord-profile {
@@ -650,6 +739,7 @@
             color: #aaa;
 
             font-size: 11px;
+
             font-weight: 700;
 
             transition: 0.2s ease;
@@ -657,11 +747,15 @@
 
         .discord-profile:hover {
             color: white;
-            border-color: rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.04);
+
+            border-color:
+                rgba(255,255,255,0.2);
+
+            background:
+                rgba(255,255,255,0.04);
         }
 
-        /* FRIEND */
+        /* FINAL */
 
         .friend-card {
             padding: 35px;
@@ -669,6 +763,7 @@
             text-align: center;
 
             border: 1px solid var(--border);
+
             border-radius: 22px;
 
             background:
@@ -694,10 +789,9 @@
             color: #7c7c7c;
 
             font-size: 14px;
+
             line-height: 1.7;
         }
-
-        /* FOOTER */
 
         footer {
             padding: 35px 20px 45px;
@@ -713,7 +807,7 @@
 
         /* MOBILE */
 
-        @media (max-width: 760px) {
+        @media(max-width:760px) {
 
             .navbar {
                 padding: 0 18px;
@@ -743,6 +837,7 @@
 
             .discord-footer {
                 align-items: flex-start;
+
                 flex-direction: column;
             }
         }
@@ -754,18 +849,46 @@
 <nav class="navbar">
 
     <a href="/" class="brand">
-        <div class="brand-icon">A</div>
-        <span class="brand-name">AceUtils</span>
+
+        <div class="brand-icon">
+            A
+        </div>
+
+        <span class="brand-name">
+            AceUtils
+        </span>
+
     </a>
 
+
     <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/data/">Data</a>
-        <a href="/1x/">1X</a>
-        <a href="/wazy/">Wazy</a>
-        <a href="/gauth/">GAuth</a>
-        <a href="/jz/">JZ</a>
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/data/">
+            Data
+        </a>
+
+        <a href="/1x/">
+            1X
+        </a>
+
+        <a href="/wazy/">
+            Wazy
+        </a>
+
+        <a href="/gauth/">
+            GAuth
+        </a>
+
+        <a href="/jz/">
+            JZ
+        </a>
+
     </div>
+
 
     <a
         href="https://discord.com/users/1201622679988482200"
@@ -779,8 +902,6 @@
 
 
 <main class="container">
-
-    <!-- HERO -->
 
     <section class="hero">
 
@@ -798,14 +919,15 @@
         </p>
 
         <div class="hero-badge">
+
             <span></span>
+
             FRIENDS SINCE THE START
+
         </div>
 
     </section>
 
-
-    <!-- WHO IS JZ -->
 
     <section class="section">
 
@@ -816,17 +938,16 @@
         <div class="about-card">
 
             <p>
-                <strong>JZ</strong> is one of my home boys and has been
-                around since the start. This page is just a little spot
-                on AceUtils for him.
+                <strong>JZ</strong>
+                is one of my home boys and has been around
+                since the start. This page is just a little
+                spot on AceUtils for him.
             </p>
 
         </div>
 
     </section>
 
-
-    <!-- THINGS -->
 
     <section class="section">
 
@@ -851,7 +972,8 @@
                 </h3>
 
                 <p>
-                    One of the people who's been here since the beginning.
+                    One of the people who's been here
+                    since the beginning.
                 </p>
 
             </div>
@@ -868,7 +990,7 @@
                 </h3>
 
                 <p>
-                    No recent addition — JZ has been around from the start.
+                    JZ has been around from the start.
                 </p>
 
             </div>
@@ -885,8 +1007,8 @@
                 </h3>
 
                 <p>
-                    Part of the people behind the community and everything
-                    that's been built along the way.
+                    Part of the people around the
+                    AceUtils community.
                 </p>
 
             </div>
@@ -903,7 +1025,7 @@
                 </h3>
 
                 <p>
-                    Just one of the boys. That's really all there is to say.
+                    Just one of the boys.
                 </p>
 
             </div>
@@ -913,13 +1035,14 @@
     </section>
 
 
-    <!-- DISCORD -->
+    <!-- LIVE DISCORD -->
 
     <section class="section">
 
         <div class="section-title">
             LIVE STATUS.
         </div>
+
 
         <div class="discord-card">
 
@@ -951,12 +1074,14 @@
                         JZ
                     </div>
 
+
                     <div
                         id="discordTag"
                         class="discord-tag"
                     >
-                        Discord
+                        Loading...
                     </div>
+
 
                     <div
                         id="presenceStatus"
@@ -970,6 +1095,8 @@
             </div>
 
 
+            <!-- DISCORD ACTIVITY -->
+
             <div
                 id="activity"
                 class="activity"
@@ -982,6 +1109,8 @@
             </div>
 
 
+            <!-- SPOTIFY -->
+
             <div
                 id="spotify"
                 class="spotify"
@@ -991,14 +1120,16 @@
                 <img
                     id="spotifyImage"
                     src=""
-                    alt="Spotify"
+                    alt="Spotify album art"
                 >
 
-                <div>
+
+                <div style="min-width:0;flex:1;">
 
                     <div class="spotify-label">
                         LISTENING TO SPOTIFY
                     </div>
+
 
                     <div
                         id="spotifySong"
@@ -1007,11 +1138,43 @@
                         —
                     </div>
 
+
                     <div
                         id="spotifyArtist"
                         class="spotify-artist"
                     >
                         —
+                    </div>
+
+
+                    <div
+                        id="spotifyAlbum"
+                        class="spotify-album"
+                    >
+                        —
+                    </div>
+
+
+                    <div class="spotify-progress">
+
+                        <div
+                            id="spotifyProgressBar"
+                            class="spotify-progress-bar"
+                        ></div>
+
+                    </div>
+
+
+                    <div class="spotify-time">
+
+                        <span id="spotifyCurrent">
+                            0:00
+                        </span>
+
+                        <span id="spotifyDuration">
+                            0:00
+                        </span>
+
                     </div>
 
                 </div>
@@ -1034,6 +1197,7 @@
 
                 </div>
 
+
                 <a
                     href="https://discord.com/users/1201622679988482200"
                     target="_blank"
@@ -1048,8 +1212,6 @@
 
     </section>
 
-
-    <!-- MESSAGE -->
 
     <section class="section">
 
@@ -1081,14 +1243,29 @@
 
 <script>
 
-    const DISCORD_ID = "1201622679988482200";
+    /*
+        JZ Discord ID
+    */
+
+    const DISCORD_ID =
+        "1201622679988482200";
+
+
+    /*
+        EXACT LANYARD ENDPOINTS
+    */
 
     const LANYARD_SOCKET =
         "wss://api.lanyard.rest/socket";
 
+
     const LANYARD_REST =
         `https://api.lanyard.rest/v1/users/${DISCORD_ID}`;
 
+
+    /*
+        STATE
+    */
 
     let socket = null;
 
@@ -1100,48 +1277,114 @@
 
     let activityTimer = null;
 
-    let currentActivityStart = null;
+    let spotifyTimer = null;
 
 
-    const discordAvatar =
-        document.getElementById("discordAvatar");
+    /*
+        ELEMENTS
+    */
 
-    const discordName =
-        document.getElementById("discordName");
+    const avatar =
+        document.getElementById(
+            "discordAvatar"
+        );
 
-    const discordTag =
-        document.getElementById("discordTag");
 
-    const presenceStatus =
-        document.getElementById("presenceStatus");
+    const name =
+        document.getElementById(
+            "discordName"
+        );
+
+
+    const tag =
+        document.getElementById(
+            "discordTag"
+        );
+
+
+    const status =
+        document.getElementById(
+            "presenceStatus"
+        );
+
 
     const statusDot =
-        document.getElementById("statusDot");
+        document.getElementById(
+            "statusDot"
+        );
+
 
     const activity =
-        document.getElementById("activity");
+        document.getElementById(
+            "activity"
+        );
+
 
     const spotify =
-        document.getElementById("spotify");
+        document.getElementById(
+            "spotify"
+        );
+
 
     const spotifyImage =
-        document.getElementById("spotifyImage");
+        document.getElementById(
+            "spotifyImage"
+        );
+
 
     const spotifySong =
-        document.getElementById("spotifySong");
+        document.getElementById(
+            "spotifySong"
+        );
+
 
     const spotifyArtist =
-        document.getElementById("spotifyArtist");
+        document.getElementById(
+            "spotifyArtist"
+        );
+
+
+    const spotifyAlbum =
+        document.getElementById(
+            "spotifyAlbum"
+        );
+
+
+    const spotifyProgressBar =
+        document.getElementById(
+            "spotifyProgressBar"
+        );
+
+
+    const spotifyCurrent =
+        document.getElementById(
+            "spotifyCurrent"
+        );
+
+
+    const spotifyDuration =
+        document.getElementById(
+            "spotifyDuration"
+        );
+
 
     const connectionText =
-        document.getElementById("connectionText");
+        document.getElementById(
+            "connectionText"
+        );
 
+
+    /*
+        AVATAR
+    */
 
     function getAvatar(user) {
 
         if (!user || !user.id) {
+
             return "https://cdn.discordapp.com/embed/avatars/0.png";
         }
+
 
         if (user.avatar) {
 
@@ -1150,57 +1393,121 @@
                     ? "gif"
                     : "png";
 
-            return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${extension}?size=256`;
+
+            return (
+                "https://cdn.discordapp.com/avatars/" +
+                user.id +
+                "/" +
+                user.avatar +
+                "." +
+                extension +
+                "?size=256"
+            );
         }
+
 
         const index =
-            (BigInt(user.id) >> 22n) % 6n;
+            Number(
+                BigInt(user.id) >> 22n
+            ) % 6;
 
-        return `https://cdn.discordapp.com/embed/avatars/${index}.png`;
+
+        return (
+            "https://cdn.discordapp.com/embed/avatars/" +
+            index +
+            ".png"
+        );
     }
 
 
-    function getStatusName(status) {
+    /*
+        ESCAPE TEXT
+    */
 
-        switch (status) {
+    function escapeHTML(value) {
 
-            case "online":
-                return "Online";
-
-            case "idle":
-                return "Idle";
-
-            case "dnd":
-                return "Do Not Disturb";
-
-            case "offline":
-            default:
-                return "Offline";
-        }
+        return String(value ?? "")
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
     }
 
 
-    function updateStatus(status) {
+    /*
+        STATUS
+    */
+
+    function updateStatus(currentStatus) {
 
         statusDot.className =
             "status-dot";
 
-        if (status === "online") {
-            statusDot.classList.add("online");
+
+        if (currentStatus === "online") {
+
+            statusDot.classList.add(
+                "online"
+            );
         }
 
-        if (status === "idle") {
-            statusDot.classList.add("idle");
+
+        else if (currentStatus === "idle") {
+
+            statusDot.classList.add(
+                "idle"
+            );
         }
 
-        if (status === "dnd") {
-            statusDot.classList.add("dnd");
+
+        else if (currentStatus === "dnd") {
+
+            statusDot.classList.add(
+                "dnd"
+            );
         }
 
-        presenceStatus.textContent =
-            getStatusName(status);
+
+        switch (currentStatus) {
+
+            case "online":
+
+                status.textContent =
+                    "Online";
+
+                break;
+
+
+            case "idle":
+
+                status.textContent =
+                    "Idle";
+
+                break;
+
+
+            case "dnd":
+
+                status.textContent =
+                    "Do Not Disturb";
+
+                break;
+
+
+            default:
+
+                status.textContent =
+                    "Offline";
+
+                break;
+        }
     }
 
+
+    /*
+        ACTIVITY TYPE
+    */
 
     function getActivityType(type) {
 
@@ -1230,23 +1537,73 @@
     }
 
 
-    function getActivityImage(activity) {
+    /*
+        ACTIVITY IMAGE
 
-        if (!activity) {
+        Handles:
+        mp:
+        https://
+        Spotify
+        Discord application assets
+    */
+
+    function getActivityImage(currentActivity) {
+
+        if (!currentActivity) {
             return null;
         }
 
 
         if (
-            activity.assets &&
-            activity.assets.large_image
+            currentActivity.type === 2 &&
+            currentActivity.name === "Spotify"
+        ) {
+
+            if (
+                currentActivity.assets &&
+                currentActivity.assets.large_image
+            ) {
+
+                const image =
+                    currentActivity.assets.large_image;
+
+
+                if (
+                    image.startsWith(
+                        "spotify:"
+                    )
+                ) {
+
+                    const imageId =
+                        image.replace(
+                            "spotify:",
+                            ""
+                        );
+
+
+                    return (
+                        "https://i.scdn.co/image/" +
+                        imageId
+                    );
+                }
+            }
+        }
+
+
+        if (
+            currentActivity.assets &&
+            currentActivity.assets.large_image
         ) {
 
             const image =
-                activity.assets.large_image;
+                currentActivity.assets.large_image;
 
 
-            if (image.startsWith("mp:")) {
+            if (
+                image.startsWith(
+                    "mp:"
+                )
+            ) {
 
                 return image.replace(
                     "mp:",
@@ -1256,41 +1613,63 @@
 
 
             if (
-                image.startsWith("http://") ||
-                image.startsWith("https://")
+                image.startsWith(
+                    "https://"
+                ) ||
+                image.startsWith(
+                    "http://"
+                )
             ) {
 
                 return image;
             }
 
 
-            if (activity.application_id) {
+            if (
+                currentActivity.application_id
+            ) {
 
-                return `https://cdn.discordapp.com/app-assets/${activity.application_id}/${image}.png?size=256`;
+                return (
+                    "https://cdn.discordapp.com/app-assets/" +
+                    currentActivity.application_id +
+                    "/" +
+                    image +
+                    ".png?size=256"
+                );
             }
         }
 
 
         if (
-            activity.assets &&
-            activity.assets.small_image &&
-            activity.application_id
+            currentActivity.assets &&
+            currentActivity.assets.small_image &&
+            currentActivity.application_id
         ) {
 
             const image =
-                activity.assets.small_image;
+                currentActivity.assets.small_image;
 
 
             if (
-                image.startsWith("http://") ||
-                image.startsWith("https://")
+                image.startsWith(
+                    "https://"
+                ) ||
+                image.startsWith(
+                    "http://"
+                )
             ) {
 
                 return image;
             }
 
 
-            return `https://cdn.discordapp.com/app-assets/${activity.application_id}/${image}.png?size=256`;
+            return (
+                "https://cdn.discordapp.com/app-assets/" +
+                currentActivity.application_id +
+                "/" +
+                image +
+                ".png?size=256"
+            );
         }
 
 
@@ -1298,31 +1677,30 @@
     }
 
 
-    function formatElapsed(start) {
+    /*
+        ELAPSED TIME
+    */
 
-        if (!start) {
-            return "";
+    function formatTime(milliseconds) {
+
+        if (
+            !milliseconds ||
+            milliseconds < 0
+        ) {
+
+            return "0:00";
         }
 
 
-        const elapsed =
-            Math.max(
-                0,
-                Date.now() - start
-            );
-
-
         const totalSeconds =
-            Math.floor(elapsed / 1000);
-
-
-        const hours =
-            Math.floor(totalSeconds / 3600);
+            Math.floor(
+                milliseconds / 1000
+            );
 
 
         const minutes =
             Math.floor(
-                (totalSeconds % 3600) / 60
+                totalSeconds / 60
             );
 
 
@@ -1330,28 +1708,24 @@
             totalSeconds % 60;
 
 
-        if (hours > 0) {
-
-            return `${hours}h ${minutes}m ${seconds}s`;
-        }
-
-
-        if (minutes > 0) {
-
-            return `${minutes}m ${seconds}s`;
-        }
-
-
-        return `${seconds}s`;
+        return (
+            minutes +
+            ":" +
+            String(seconds).padStart(
+                2,
+                "0"
+            )
+        );
     }
 
 
-    function updateActivityTimer() {
+    /*
+        DISCORD ACTIVITY TIMER
+    */
 
-        if (!currentActivityStart) {
-            return;
-        }
-
+    function updateActivityTimer(
+        start
+    ) {
 
         const timer =
             document.getElementById(
@@ -1359,17 +1733,29 @@
             );
 
 
-        if (timer) {
-
-            timer.textContent =
-                formatElapsed(
-                    currentActivityStart
-                );
+        if (!timer || !start) {
+            return;
         }
+
+
+        const elapsed =
+            Date.now() - start;
+
+
+        timer.textContent =
+            formatTime(
+                elapsed
+            );
     }
 
 
-    function renderActivity(currentActivity) {
+    /*
+        RENDER DISCORD ACTIVITY
+    */
+
+    function renderActivity(
+        currentActivity
+    ) {
 
         if (activityTimer) {
 
@@ -1381,15 +1767,16 @@
         }
 
 
-        currentActivityStart = null;
-
-
         if (!currentActivity) {
 
             activity.innerHTML = `
+
                 <div class="no-activity">
+
                     No current Discord activity.
+
                 </div>
+
             `;
 
             return;
@@ -1402,32 +1789,63 @@
             );
 
 
-        const imageHTML =
-            image
-                ? `<img class="activity-image" src="${image}" alt="">`
-                : `<div class="activity-image"></div>`;
+        let imageHTML = "";
+
+
+        if (image) {
+
+            imageHTML = `
+
+                <img
+                    class="activity-image"
+                    src="${escapeHTML(image)}"
+                    alt=""
+                    onerror="this.style.display='none'"
+                >
+
+            `;
+
+        } else {
+
+            imageHTML = `
+
+                <div class="activity-image"></div>
+
+            `;
+        }
 
 
         const details =
             currentActivity.details
-                ? `<div class="activity-details">${escapeHTML(currentActivity.details)}</div>`
+                ? `
+                    <div class="activity-details">
+                        ${escapeHTML(
+                            currentActivity.details
+                        )}
+                    </div>
+                `
                 : "";
 
 
         const state =
             currentActivity.state
-                ? `<div class="activity-state">${escapeHTML(currentActivity.state)}</div>`
+                ? `
+                    <div class="activity-state">
+                        ${escapeHTML(
+                            currentActivity.state
+                        )}
+                    </div>
+                `
                 : "";
 
 
         const start =
             currentActivity.timestamps &&
             currentActivity.timestamps.start
-                ? currentActivity.timestamps.start
+                ? Number(
+                    currentActivity.timestamps.start
+                )
                 : null;
-
-
-        currentActivityStart = start;
 
 
         activity.innerHTML = `
@@ -1437,40 +1855,51 @@
             <div class="activity-content">
 
                 <div class="activity-type">
+
                     ${escapeHTML(
                         getActivityType(
                             currentActivity.type
                         )
                     )}
+
                 </div>
 
+
                 <div class="activity-name">
+
                     ${escapeHTML(
                         currentActivity.name ||
                         "Unknown Activity"
                     )}
+
                 </div>
+
 
                 ${details}
 
                 ${state}
 
+
                 ${
                     start
                         ? `
-                            <div
-                                class="activity-time"
-                            >
+                            <div class="activity-time">
+
                                 <span id="activityTimer">
-                                    ${formatElapsed(start)}
+                                    ${formatTime(
+                                        Date.now() - start
+                                    )}
                                 </span>
+
                                 elapsed
+
                             </div>
                         `
                         : ""
                 }
 
             </div>
+
         `;
 
 
@@ -1478,63 +1907,230 @@
 
             activityTimer =
                 setInterval(
-                    updateActivityTimer,
+                    () => {
+
+                        updateActivityTimer(
+                            start
+                        );
+
+                    },
                     1000
                 );
         }
     }
 
 
-    function renderSpotify(presence) {
+    /*
+        SPOTIFY
+
+        Lanyard gives Spotify separately:
+        presence.listening_to_spotify
+        presence.spotify
+    */
+
+    function renderSpotify(
+        presence
+    ) {
+
+        if (spotifyTimer) {
+
+            clearInterval(
+                spotifyTimer
+            );
+
+            spotifyTimer = null;
+        }
+
 
         if (
-            presence.listening_to_spotify &&
-            presence.spotify
+            !presence ||
+            !presence.listening_to_spotify ||
+            !presence.spotify
         ) {
-
-            const data =
-                presence.spotify;
-
-
-            spotify.style.display =
-                "flex";
-
-
-            spotifyImage.src =
-                data.album_art_url || "";
-
-
-            spotifySong.textContent =
-                data.song || "Unknown song";
-
-
-            spotifyArtist.textContent =
-                data.artist || "Unknown artist";
-
-        } else {
 
             spotify.style.display =
                 "none";
-        }
-    }
-
-
-    function renderPresence(presence) {
-
-        if (!presence) {
-
-            updateStatus("offline");
-
-            discordTag.textContent =
-                "Discord";
-
-            renderActivity(null);
-
-            renderSpotify({});
 
             return;
         }
 
+
+        const data =
+            presence.spotify;
+
+
+        spotify.style.display =
+            "flex";
+
+
+        spotifyImage.src =
+            data.album_art_url ||
+            "";
+
+
+        spotifySong.textContent =
+            data.song ||
+            "Unknown song";
+
+
+        spotifyArtist.textContent =
+            data.artist ||
+            "Unknown artist";
+
+
+        spotifyAlbum.textContent =
+            data.album ||
+            "";
+
+
+        const start =
+            data.timestamps &&
+            data.timestamps.start
+                ? Number(
+                    data.timestamps.start
+                )
+                : null;
+
+
+        const end =
+            data.timestamps &&
+            data.timestamps.end
+                ? Number(
+                    data.timestamps.end
+                )
+                : null;
+
+
+        function updateSpotify() {
+
+            if (!start) {
+
+                spotifyCurrent.textContent =
+                    "0:00";
+
+                spotifyDuration.textContent =
+                    end
+                        ? formatTime(
+                            end - start
+                        )
+                        : "—";
+
+                spotifyProgressBar.style.width =
+                    "0%";
+
+                return;
+            }
+
+
+            const now =
+                Date.now();
+
+
+            let current =
+                now - start;
+
+
+            if (current < 0) {
+                current = 0;
+            }
+
+
+            const duration =
+                end && end > start
+                    ? end - start
+                    : null;
+
+
+            if (
+                duration &&
+                current > duration
+            ) {
+
+                current =
+                    duration;
+            }
+
+
+            spotifyCurrent.textContent =
+                formatTime(
+                    current
+                );
+
+
+            spotifyDuration.textContent =
+                duration
+                    ? formatTime(
+                        duration
+                    )
+                    : "—";
+
+
+            if (duration) {
+
+                const percent =
+                    Math.min(
+                        100,
+                        Math.max(
+                            0,
+                            (current / duration) * 100
+                        )
+                    );
+
+
+                spotifyProgressBar.style.width =
+                    percent + "%";
+
+            } else {
+
+                spotifyProgressBar.style.width =
+                    "0%";
+            }
+        }
+
+
+        updateSpotify();
+
+
+        spotifyTimer =
+            setInterval(
+                updateSpotify,
+                1000
+            );
+    }
+
+
+    /*
+        FULL PRESENCE RENDER
+    */
+
+    function renderPresence(
+        presence
+    ) {
+
+        if (!presence) {
+
+            updateStatus(
+                "offline"
+            );
+
+
+            renderActivity(
+                null
+            );
+
+
+            renderSpotify(
+                null
+            );
+
+
+            return;
+        }
+
+
+        /*
+            USER
+        */
 
         const user =
             presence.discord_user;
@@ -1542,29 +2138,39 @@
 
         if (user) {
 
-            discordAvatar.src =
-                getAvatar(user);
+            avatar.src =
+                getAvatar(
+                    user
+                );
 
 
-            discordName.textContent =
+            name.textContent =
                 user.global_name ||
                 user.display_name ||
                 user.username ||
                 "JZ";
 
 
-            discordTag.textContent =
+            tag.textContent =
                 user.username
-                    ? `@${user.username}`
+                    ? "@" + user.username
                     : "Discord";
         }
 
+
+        /*
+            STATUS
+        */
 
         updateStatus(
             presence.discord_status ||
             "offline"
         );
 
+
+        /*
+            ACTIVITIES
+        */
 
         const activities =
             Array.isArray(
@@ -1574,35 +2180,63 @@
                 : [];
 
 
+        /*
+            Ignore Discord custom status
+            when choosing the main activity.
+        */
+
         const realActivities =
             activities.filter(
-                item => item.type !== 4
+                item =>
+                    item &&
+                    item.type !== 4
             );
 
 
         const customStatus =
             activities.find(
-                item => item.type === 4
+                item =>
+                    item &&
+                    item.type === 4
             );
 
 
-        if (realActivities.length > 0) {
+        /*
+            MAIN ACTIVITY
+        */
+
+        if (
+            realActivities.length >
+            0
+        ) {
 
             renderActivity(
                 realActivities[0]
             );
 
-        } else if (customStatus) {
+        }
+
+        else if (
+            customStatus
+        ) {
 
             renderActivity(
                 customStatus
             );
 
-        } else {
-
-            renderActivity(null);
         }
 
+        else {
+
+            renderActivity(
+                null
+            );
+        }
+
+
+        /*
+            SPOTIFY
+        */
 
         renderSpotify(
             presence
@@ -1610,16 +2244,12 @@
     }
 
 
-    function escapeHTML(value) {
+    /*
+        REST FALLBACK
 
-        return String(value)
-            .replaceAll("&", "&amp;")
-            .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;")
-            .replaceAll('"', "&quot;")
-            .replaceAll("'", "&#039;");
-    }
-
+        This loads immediately before
+        WebSocket connection is established.
+    */
 
     async function fetchFallback() {
 
@@ -1635,8 +2265,9 @@
 
 
             if (!response.ok) {
+
                 throw new Error(
-                    "Lanyard REST request failed"
+                    "Lanyard REST failed"
                 );
             }
 
@@ -1645,31 +2276,43 @@
                 await response.json();
 
 
-            if (json.success) {
+            if (
+                json &&
+                json.success &&
+                json.data
+            ) {
 
                 renderPresence(
                     json.data
                 );
             }
 
-        } catch (error) {
+        }
+
+        catch (error) {
 
             console.warn(
-                "Lanyard REST failed:",
+                "Lanyard REST error:",
                 error
             );
         }
     }
 
 
+    /*
+        LANYARD WEBSOCKET
+    */
+
     function connectLanyard() {
 
-        if (socket) {
+        try {
 
-            try {
+            if (socket) {
+
                 socket.close();
-            } catch {}
-        }
+            }
+
+        } catch {}
 
 
         socket =
@@ -1689,136 +2332,180 @@
         };
 
 
-        socket.onmessage = event => {
+        socket.onmessage =
+            event => {
 
-            let message;
-
-
-            try {
-
-                message =
-                    JSON.parse(
-                        event.data
-                    );
-
-            } catch {
-
-                return;
-            }
+                let message;
 
 
-            if (message.op === 1) {
+                try {
 
-                const interval =
-                    message.d &&
-                    message.d.heartbeat_interval
-                        ? message.d.heartbeat_interval
-                        : 30000;
+                    message =
+                        JSON.parse(
+                            event.data
+                        );
 
+                }
 
-                socket.send(
-                    JSON.stringify({
+                catch {
 
-                        op: 2,
-
-                        d: {
-
-                            subscribe_to_ids: [
-                                DISCORD_ID
-                            ]
-
-                        }
-
-                    })
-                );
-
-
-                if (heartbeat) {
-
-                    clearInterval(
-                        heartbeat
-                    );
+                    return;
                 }
 
 
-                heartbeat =
-                    setInterval(
-                        () => {
-
-                            if (
-                                socket &&
-                                socket.readyState === WebSocket.OPEN
-                            ) {
-
-                                socket.send(
-                                    JSON.stringify({
-                                        op: 3
-                                    })
-                                );
-                            }
-
-                        },
-                        interval
-                    );
-
-
-                return;
-            }
-
-
-            if (
-                message.op === 0 &&
-                message.t === "INIT_STATE"
-            ) {
-
-                const presence =
-                    message.d &&
-                    (
-                        message.d[
-                            DISCORD_ID
-                        ] ||
-                        message.d
-                    );
-
-
-                renderPresence(
-                    presence
-                );
-
-
-                return;
-            }
-
-
-            if (
-                message.op === 0 &&
-                message.t === "PRESENCE_UPDATE"
-            ) {
-
-                const data =
-                    message.d;
-
+                /*
+                    HELLO
+                */
 
                 if (
-                    data &&
-                    (
-                        !data.user_id ||
-                        data.user_id === DISCORD_ID
-                    )
+                    message.op === 1
                 ) {
 
-                    renderPresence(
-                        data
+                    const interval =
+                        message.d &&
+                        message.d.heartbeat_interval
+                            ? Number(
+                                message.d.heartbeat_interval
+                            )
+                            : 30000;
+
+
+                    /*
+                        EXACTLY LIKE
+                        THE 1X PAGE:
+                        subscribe_to_ids
+                    */
+
+                    socket.send(
+                        JSON.stringify({
+
+                            op: 2,
+
+                            d: {
+
+                                subscribe_to_ids: [
+                                    DISCORD_ID
+                                ]
+
+                            }
+
+                        })
                     );
+
+
+                    if (heartbeat) {
+
+                        clearInterval(
+                            heartbeat
+                        );
+                    }
+
+
+                    heartbeat =
+                        setInterval(
+                            () => {
+
+                                if (
+                                    socket &&
+                                    socket.readyState ===
+                                    WebSocket.OPEN
+                                ) {
+
+                                    socket.send(
+                                        JSON.stringify({
+                                            op: 3
+                                        })
+                                    );
+                                }
+
+                            },
+                            interval
+                        );
+
+
+                    return;
                 }
-            }
-        };
+
+
+                /*
+                    INITIAL STATE
+
+                    IMPORTANT:
+
+                    With subscribe_to_ids,
+                    INIT_STATE is:
+
+                    d: {
+                        "USER_ID": presence
+                    }
+
+                    Not just d itself.
+                */
+
+                if (
+                    message.op === 0 &&
+                    message.t === "INIT_STATE"
+                ) {
+
+                    const data =
+                        message.d;
+
+
+                    if (
+                        data &&
+                        data[DISCORD_ID]
+                    ) {
+
+                        renderPresence(
+                            data[DISCORD_ID]
+                        );
+
+                    }
+
+
+                    return;
+                }
+
+
+                /*
+                    LIVE PRESENCE UPDATE
+
+                    PRESENCE_UPDATE has
+                    the presence directly.
+                */
+
+                if (
+                    message.op === 0 &&
+                    message.t ===
+                    "PRESENCE_UPDATE"
+                ) {
+
+                    const presence =
+                        message.d;
+
+
+                    if (
+                        presence &&
+                        (
+                            !presence.user_id ||
+                            presence.user_id ===
+                            DISCORD_ID
+                        )
+                    ) {
+
+                        renderPresence(
+                            presence
+                        );
+                    }
+                }
+
+            };
 
 
         socket.onclose = () => {
 
             connectionText.textContent =
-                "Reconnecting...";
+                "Reconnecting to Discord...";
 
 
             if (heartbeat) {
@@ -1830,6 +2517,11 @@
                 heartbeat = null;
             }
 
+
+            /*
+                REST fallback while
+                WebSocket reconnects.
+            */
 
             fetchFallback();
 
@@ -1863,7 +2555,11 @@
 
 
     /*
-        Initial Discord presence load.
+        START
+
+        REST first so the page doesn't
+        sit on "offline" while WebSocket
+        connects.
     */
 
     fetchFallback();
