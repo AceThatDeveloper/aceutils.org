@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>JZ — AceUtils</title>
+
+    <meta name="description" content="JZ — AceUtils. Home boy since the start.">
+    <meta name="theme-color" content="#050505">
+
+    <link rel="icon" type="image/png" href="/auwebsitelogo.png">
+    <link rel="shortcut icon" type="image/png" href="/auwebsitelogo.png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #050505;
+            --bg2: #090909;
+            --card: rgba(13, 13, 13, 0.82);
+            --border: rgba(255, 255, 255, 0.09);
+            --border-hover: rgba(255, 255, 255, 0.18);
+            --text: #ffffff;
+            --muted: #8f8f8f;
+            --muted2: #5e5e5e;
+            --green: #23d16b;
+            --red: #ed4245;
+            --yellow: #faa61a;
+            --blue: #5865f2;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 50% -10%, rgba(255,255,255,0.08), transparent 35%),
+                radial-gradient(circle at 15% 50%, rgba(255,255,255,0.025), transparent 30%),
+                radial-gradient(circle at 85% 70%, rgba(255,255,255,0.025), transparent 30%),
+                var(--bg);
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            background-image:
+                linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+
+            background-size: 58px 58px;
+
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 500px;
+            height: 500px;
+
+            left: 50%;
+            top: 30%;
+
+            transform: translate(-50%, -50%);
+
+            background: rgba(255,255,255,0.025);
+            filter: blur(130px);
+
+            border-radius: 50%;
+
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            width: 100%;
+            height: 72px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 32px;
+
+            border-bottom: 1px solid var(--border);
+
+            background: rgba(5,5,5,0.72);
+            backdrop-filter: blur(18px);
+
+            position: sticky;
+            top: 0;
+
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .brand-icon {
+            width: 35px;
+            height: 35px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 10px;
+
+            border: 1px solid rgba(255,255,255,0.15);
+
+            background:
+                linear-gradient(145deg, #1a1a1a, #080808);
+
+            box-shadow:
+                inset 0 1px rgba(255,255,255,0.08),
+                0 5px 25px rgba(0,0,0,0.35);
+
+            font-size: 16px;
+        }
+
+        .brand-name {
+            font-size: 16px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 26px;
+        }
+
+        .nav-links a {
+            color: #858585;
+            font-size: 13px;
+            transition: 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .nav-discord {
+            border: 1px solid rgba(255,255,255,0.13);
+
+            padding: 10px 15px;
+
+            border-radius: 10px;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            letter-spacing: 0.08em;
+
+            transition: 0.2s ease;
+        }
+
+        .nav-discord:hover {
+            border-color: rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.06);
+        }
+
+        /* MAIN */
+
+        .container {
+            width: min(1080px, calc(100% - 36px));
+            margin: auto;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 105px 0 70px;
+        }
+
+        .eyebrow {
+            color: #777;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+        }
+
+        .hero h1 {
+            margin-top: 18px;
+
+            font-size: clamp(65px, 12vw, 145px);
+            line-height: 0.83;
+
+            letter-spacing: -0.075em;
+            font-weight: 900;
+
+            background: linear-gradient(
+                180deg,
+                #ffffff 0%,
+                #eeeeee 30%,
+                #777777 100%
+            );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            max-width: 600px;
+            margin: 30px auto 0;
+
+            color: var(--muted);
+
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            margin-top: 28px;
+
+            padding: 8px 12px;
+
+            border-radius: 999px;
+
+            border: 1px solid var(--border);
+
+            background: rgba(255,255,255,0.025);
+
+            color: #a7a7a7;
+
+            font-size: 11px;
+        }
+
+        .hero-badge span {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: var(--green);
+
+            box-shadow: 0 0 12px rgba(35,209,107,0.7);
+        }
+
+        /* SECTION */
+
+        .section {
+            margin-bottom: 90px;
+        }
+
+        .section-title {
+            color: #626262;
+
+            font-size: 10px;
+            font-weight: 800;
+
+            letter-spacing: 0.2em;
+
+            margin-bottom: 14px;
+        }
+
+        .section-heading {
+            font-size: 30px;
+            letter-spacing: -0.04em;
+
+            margin-bottom: 22px;
+        }
+
+        /* ABOUT */
+
+        .about-card {
+            padding: 30px;
+
+            border: 1px solid var(--border);
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.035),
+                    rgba(255,255,255,0.008)
+                );
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.2),
+                inset 0 1px rgba(255,255,255,0.025);
+        }
+
+        .about-card p {
+            color: #a1a1a1;
+
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .about-card strong {
+            color: white;
+        }
+
+        /* CARDS */
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .card {
+            padding: 25px;
+
+            min-height: 150px;
+
+            border: 1px solid var(--border);
+            border-radius: 18px;
+
+            background: var(--card);
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                background 0.25s ease;
+
+            box-shadow:
+                0 25px 70px rgba(0,0,0,0.16);
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+
+            border-color: var(--border-hover);
+
+            background: rgba(18,18,18,0.92);
+        }
+
+        .card-number {
+            color: #4d4d4d;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            letter-spacing: 0.1em;
+        }
+
+        .card h3 {
+            margin-top: 25px;
+
+            font-size: 19px;
+            letter-spacing: -0.025em;
+        }
+
+        .card p {
+            margin-top: 8px;
+
+            color: #7e7e7e;
+
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* DISCORD */
+
+        .discord-card {
+            position: relative;
+
+            padding: 28px;
+
+            border-radius: 20px;
+
+            border: 1px solid var(--border);
+
+            background:
+                radial-gradient(
+                    circle at 90% 0%,
+                    rgba(88,101,242,0.13),
+                    transparent 35%
+                ),
+                rgba(11,11,11,0.88);
+
+            overflow: hidden;
+        }
+
+        .discord-top {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .avatar-wrap {
+            position: relative;
+        }
+
+        .discord-avatar {
+            width: 74px;
+            height: 74px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            border: 2px solid rgba(255,255,255,0.08);
+
+            background: #111;
+        }
+
+        .status-dot {
+            position: absolute;
+
+            right: 1px;
+            bottom: 2px;
+
+            width: 17px;
+            height: 17px;
+
+            border-radius: 50%;
+
+            border: 4px solid #0b0b0b;
+
+            background: #747474;
+        }
+
+        .status-dot.online {
+            background: var(--green);
+        }
+
+        .status-dot.idle {
+            background: var(--yellow);
+        }
+
+        .status-dot.dnd {
+            background: var(--red);
+        }
+
+        .discord-name {
+            font-size: 21px;
+            font-weight: 800;
+
+            letter-spacing: -0.03em;
+        }
+
+        .discord-tag {
+            margin-top: 5px;
+
+            color: #6f6f6f;
+
+            font-size: 12px;
+        }
+
+        .presence-status {
+            margin-top: 8px;
+
+            color: #929292;
+
+            font-size: 12px;
+        }
+
+        .activity {
+            margin-top: 25px;
+
+            padding: 16px;
+
+            display: flex;
+            gap: 14px;
+
+            border: 1px solid rgba(255,255,255,0.07);
+
+            border-radius: 14px;
+
+            background: rgba(255,255,255,0.025);
+        }
+
+        .activity-image {
+            width: 62px;
+            height: 62px;
+
+            border-radius: 12px;
+
+            object-fit: cover;
+
+            background: #171717;
+
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            min-width: 0;
+        }
+
+        .activity-type {
+            color: #666;
+
+            font-size: 10px;
+            font-weight: 800;
+
+            letter-spacing: 0.1em;
+
+            text-transform: uppercase;
+        }
+
+        .activity-name {
+            margin-top: 5px;
+
+            font-size: 15px;
+            font-weight: 700;
+
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .activity-details,
+        .activity-state {
+            margin-top: 3px;
+
+            color: #777;
+
+            font-size: 12px;
+
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .activity-time {
+            margin-top: 7px;
+
+            color: #555;
+
+            font-size: 11px;
+        }
+
+        .no-activity {
+            color: #686868;
+
+            font-size: 13px;
+        }
+
+        .spotify {
+            margin-top: 12px;
+
+            padding: 15px;
+
+            display: flex;
+            gap: 13px;
+
+            border: 1px solid rgba(255,255,255,0.06);
+
+            border-radius: 13px;
+
+            background: rgba(255,255,255,0.018);
+        }
+
+        .spotify img {
+            width: 55px;
+            height: 55px;
+
+            object-fit: cover;
+
+            border-radius: 8px;
+        }
+
+        .spotify-label {
+            color: #666;
+
+            font-size: 9px;
+            font-weight: 800;
+
+            letter-spacing: 0.1em;
+        }
+
+        .spotify-song {
+            margin-top: 4px;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .spotify-artist {
+            margin-top: 3px;
+
+            color: #777;
+
+            font-size: 12px;
+        }
+
+        .discord-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-top: 20px;
+        }
+
+        .connection {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            color: #666;
+
+            font-size: 11px;
+        }
+
+        .connection-dot {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: var(--green);
+        }
+
+        .discord-profile {
+            padding: 9px 13px;
+
+            border-radius: 10px;
+
+            border: 1px solid rgba(255,255,255,0.09);
+
+            color: #aaa;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            transition: 0.2s ease;
+        }
+
+        .discord-profile:hover {
+            color: white;
+            border-color: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.04);
+        }
+
+        /* FRIEND */
+
+        .friend-card {
+            padding: 35px;
+
+            text-align: center;
+
+            border: 1px solid var(--border);
+            border-radius: 22px;
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(255,255,255,0.06),
+                    transparent 50%
+                ),
+                rgba(10,10,10,0.8);
+        }
+
+        .friend-card h2 {
+            font-size: clamp(30px, 5vw, 50px);
+
+            letter-spacing: -0.05em;
+        }
+
+        .friend-card p {
+            max-width: 550px;
+
+            margin: 14px auto 0;
+
+            color: #7c7c7c;
+
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        /* FOOTER */
+
+        footer {
+            padding: 35px 20px 45px;
+
+            border-top: 1px solid var(--border);
+
+            text-align: center;
+
+            color: #4e4e4e;
+
+            font-size: 11px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 760px) {
+
+            .navbar {
+                padding: 0 18px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 80px 0 55px;
+            }
+
+            .hero h1 {
+                font-size: 75px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .about-card,
+            .discord-card,
+            .friend-card {
+                padding: 22px;
+            }
+
+            .discord-footer {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <a href="/" class="brand">
+        <div class="brand-icon">A</div>
+        <span class="brand-name">AceUtils</span>
+    </a>
+
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/data/">Data</a>
+        <a href="/1x/">1X</a>
+        <a href="/wazy/">Wazy</a>
+        <a href="/gauth/">GAuth</a>
+        <a href="/jz/">JZ</a>
+    </div>
+
+    <a
+        href="https://discord.com/users/1201622679988482200"
+        target="_blank"
+        class="nav-discord"
+    >
+        DISCORD
+    </a>
+
+</nav>
+
+
+<main class="container">
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="eyebrow">
+            ACEUTILS / FRIENDS
+        </div>
+
+        <h1>
+            JZ.
+        </h1>
+
+        <p>
+            My home boy since the start.
+            Been here from the beginning and still here.
+        </p>
+
+        <div class="hero-badge">
+            <span></span>
+            FRIENDS SINCE THE START
+        </div>
+
+    </section>
+
+
+    <!-- WHO IS JZ -->
+
+    <section class="section">
+
+        <div class="section-title">
+            WHO IS JZ.
+        </div>
+
+        <div class="about-card">
+
+            <p>
+                <strong>JZ</strong> is one of my home boys and has been
+                around since the start. This page is just a little spot
+                on AceUtils for him.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- THINGS -->
+
+    <section class="section">
+
+        <div class="section-title">
+            ABOUT HIM.
+        </div>
+
+        <h2 class="section-heading">
+            THE BOY.
+        </h2>
+
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="card-number">
+                    01
+                </div>
+
+                <h3>
+                    Home Boy
+                </h3>
+
+                <p>
+                    One of the people who's been here since the beginning.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-number">
+                    02
+                </div>
+
+                <h3>
+                    Since The Start
+                </h3>
+
+                <p>
+                    No recent addition — JZ has been around from the start.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-number">
+                    03
+                </div>
+
+                <h3>
+                    AceUtils
+                </h3>
+
+                <p>
+                    Part of the people behind the community and everything
+                    that's been built along the way.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-number">
+                    04
+                </div>
+
+                <h3>
+                    Real One
+                </h3>
+
+                <p>
+                    Just one of the boys. That's really all there is to say.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DISCORD -->
+
+    <section class="section">
+
+        <div class="section-title">
+            LIVE STATUS.
+        </div>
+
+        <div class="discord-card">
+
+            <div class="discord-top">
+
+                <div class="avatar-wrap">
+
+                    <img
+                        id="discordAvatar"
+                        class="discord-avatar"
+                        src="https://cdn.discordapp.com/embed/avatars/0.png"
+                        alt="JZ"
+                    >
+
+                    <div
+                        id="statusDot"
+                        class="status-dot"
+                    ></div>
+
+                </div>
+
+
+                <div>
+
+                    <div
+                        id="discordName"
+                        class="discord-name"
+                    >
+                        JZ
+                    </div>
+
+                    <div
+                        id="discordTag"
+                        class="discord-tag"
+                    >
+                        Discord
+                    </div>
+
+                    <div
+                        id="presenceStatus"
+                        class="presence-status"
+                    >
+                        Loading Discord status...
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div
+                id="activity"
+                class="activity"
+            >
+
+                <div class="no-activity">
+                    Loading activity...
+                </div>
+
+            </div>
+
+
+            <div
+                id="spotify"
+                class="spotify"
+                style="display:none;"
+            >
+
+                <img
+                    id="spotifyImage"
+                    src=""
+                    alt="Spotify"
+                >
+
+                <div>
+
+                    <div class="spotify-label">
+                        LISTENING TO SPOTIFY
+                    </div>
+
+                    <div
+                        id="spotifySong"
+                        class="spotify-song"
+                    >
+                        —
+                    </div>
+
+                    <div
+                        id="spotifyArtist"
+                        class="spotify-artist"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="discord-footer">
+
+                <div class="connection">
+
+                    <span
+                        id="connectionDot"
+                        class="connection-dot"
+                    ></span>
+
+                    <span id="connectionText">
+                        Connecting to Discord presence...
+                    </span>
+
+                </div>
+
+                <a
+                    href="https://discord.com/users/1201622679988482200"
+                    target="_blank"
+                    class="discord-profile"
+                >
+                    VIEW DISCORD
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MESSAGE -->
+
+    <section class="section">
+
+        <div class="friend-card">
+
+            <h2>
+                SINCE DAY ONE.
+            </h2>
+
+            <p>
+                JZ has been one of my home boys since the start.
+                Nothing complicated. Just someone who's been there
+                through the whole thing.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    © 2026 AceUtils · JZ
+
+</footer>
+
+
+<script>
+
+    const DISCORD_ID = "1201622679988482200";
+
+    const LANYARD_SOCKET =
+        "wss://api.lanyard.rest/socket";
+
+    const LANYARD_REST =
+        `https://api.lanyard.rest/v1/users/${DISCORD_ID}`;
+
+
+    let socket = null;
+
+    let heartbeat = null;
+
+    let reconnectTimer = null;
+
+    let reconnectDelay = 2000;
+
+    let activityTimer = null;
+
+    let currentActivityStart = null;
+
+
+    const discordAvatar =
+        document.getElementById("discordAvatar");
+
+    const discordName =
+        document.getElementById("discordName");
+
+    const discordTag =
+        document.getElementById("discordTag");
+
+    const presenceStatus =
+        document.getElementById("presenceStatus");
+
+    const statusDot =
+        document.getElementById("statusDot");
+
+    const activity =
+        document.getElementById("activity");
+
+    const spotify =
+        document.getElementById("spotify");
+
+    const spotifyImage =
+        document.getElementById("spotifyImage");
+
+    const spotifySong =
+        document.getElementById("spotifySong");
+
+    const spotifyArtist =
+        document.getElementById("spotifyArtist");
+
+    const connectionText =
+        document.getElementById("connectionText");
+
+
+    function getAvatar(user) {
+
+        if (!user || !user.id) {
+            return "https://cdn.discordapp.com/embed/avatars/0.png";
+        }
+
+        if (user.avatar) {
+
+            const extension =
+                user.avatar.startsWith("a_")
+                    ? "gif"
+                    : "png";
+
+            return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${extension}?size=256`;
+        }
+
+        const index =
+            (BigInt(user.id) >> 22n) % 6n;
+
+        return `https://cdn.discordapp.com/embed/avatars/${index}.png`;
+    }
+
+
+    function getStatusName(status) {
+
+        switch (status) {
+
+            case "online":
+                return "Online";
+
+            case "idle":
+                return "Idle";
+
+            case "dnd":
+                return "Do Not Disturb";
+
+            case "offline":
+            default:
+                return "Offline";
+        }
+    }
+
+
+    function updateStatus(status) {
+
+        statusDot.className =
+            "status-dot";
+
+        if (status === "online") {
+            statusDot.classList.add("online");
+        }
+
+        if (status === "idle") {
+            statusDot.classList.add("idle");
+        }
+
+        if (status === "dnd") {
+            statusDot.classList.add("dnd");
+        }
+
+        presenceStatus.textContent =
+            getStatusName(status);
+    }
+
+
+    function getActivityType(type) {
+
+        switch (type) {
+
+            case 0:
+                return "Playing";
+
+            case 1:
+                return "Streaming";
+
+            case 2:
+                return "Listening";
+
+            case 3:
+                return "Watching";
+
+            case 4:
+                return "Custom Status";
+
+            case 5:
+                return "Competing";
+
+            default:
+                return "Activity";
+        }
+    }
+
+
+    function getActivityImage(activity) {
+
+        if (!activity) {
+            return null;
+        }
+
+
+        if (
+            activity.assets &&
+            activity.assets.large_image
+        ) {
+
+            const image =
+                activity.assets.large_image;
+
+
+            if (image.startsWith("mp:")) {
+
+                return image.replace(
+                    "mp:",
+                    ""
+                );
+            }
+
+
+            if (
+                image.startsWith("http://") ||
+                image.startsWith("https://")
+            ) {
+
+                return image;
+            }
+
+
+            if (activity.application_id) {
+
+                return `https://cdn.discordapp.com/app-assets/${activity.application_id}/${image}.png?size=256`;
+            }
+        }
+
+
+        if (
+            activity.assets &&
+            activity.assets.small_image &&
+            activity.application_id
+        ) {
+
+            const image =
+                activity.assets.small_image;
+
+
+            if (
+                image.startsWith("http://") ||
+                image.startsWith("https://")
+            ) {
+
+                return image;
+            }
+
+
+            return `https://cdn.discordapp.com/app-assets/${activity.application_id}/${image}.png?size=256`;
+        }
+
+
+        return null;
+    }
+
+
+    function formatElapsed(start) {
+
+        if (!start) {
+            return "";
+        }
+
+
+        const elapsed =
+            Math.max(
+                0,
+                Date.now() - start
+            );
+
+
+        const totalSeconds =
+            Math.floor(elapsed / 1000);
+
+
+        const hours =
+            Math.floor(totalSeconds / 3600);
+
+
+        const minutes =
+            Math.floor(
+                (totalSeconds % 3600) / 60
+            );
+
+
+        const seconds =
+            totalSeconds % 60;
+
+
+        if (hours > 0) {
+
+            return `${hours}h ${minutes}m ${seconds}s`;
+        }
+
+
+        if (minutes > 0) {
+
+            return `${minutes}m ${seconds}s`;
+        }
+
+
+        return `${seconds}s`;
+    }
+
+
+    function updateActivityTimer() {
+
+        if (!currentActivityStart) {
+            return;
+        }
+
+
+        const timer =
+            document.getElementById(
+                "activityTimer"
+            );
+
+
+        if (timer) {
+
+            timer.textContent =
+                formatElapsed(
+                    currentActivityStart
+                );
+        }
+    }
+
+
+    function renderActivity(currentActivity) {
+
+        if (activityTimer) {
+
+            clearInterval(
+                activityTimer
+            );
+
+            activityTimer = null;
+        }
+
+
+        currentActivityStart = null;
+
+
+        if (!currentActivity) {
+
+            activity.innerHTML = `
+                <div class="no-activity">
+                    No current Discord activity.
+                </div>
+            `;
+
+            return;
+        }
+
+
+        const image =
+            getActivityImage(
+                currentActivity
+            );
+
+
+        const imageHTML =
+            image
+                ? `<img class="activity-image" src="${image}" alt="">`
+                : `<div class="activity-image"></div>`;
+
+
+        const details =
+            currentActivity.details
+                ? `<div class="activity-details">${escapeHTML(currentActivity.details)}</div>`
+                : "";
+
+
+        const state =
+            currentActivity.state
+                ? `<div class="activity-state">${escapeHTML(currentActivity.state)}</div>`
+                : "";
+
+
+        const start =
+            currentActivity.timestamps &&
+            currentActivity.timestamps.start
+                ? currentActivity.timestamps.start
+                : null;
+
+
+        currentActivityStart = start;
+
+
+        activity.innerHTML = `
+
+            ${imageHTML}
+
+            <div class="activity-content">
+
+                <div class="activity-type">
+                    ${escapeHTML(
+                        getActivityType(
+                            currentActivity.type
+                        )
+                    )}
+                </div>
+
+                <div class="activity-name">
+                    ${escapeHTML(
+                        currentActivity.name ||
+                        "Unknown Activity"
+                    )}
+                </div>
+
+                ${details}
+
+                ${state}
+
+                ${
+                    start
+                        ? `
+                            <div
+                                class="activity-time"
+                            >
+                                <span id="activityTimer">
+                                    ${formatElapsed(start)}
+                                </span>
+                                elapsed
+                            </div>
+                        `
+                        : ""
+                }
+
+            </div>
+        `;
+
+
+        if (start) {
+
+            activityTimer =
+                setInterval(
+                    updateActivityTimer,
+                    1000
+                );
+        }
+    }
+
+
+    function renderSpotify(presence) {
+
+        if (
+            presence.listening_to_spotify &&
+            presence.spotify
+        ) {
+
+            const data =
+                presence.spotify;
+
+
+            spotify.style.display =
+                "flex";
+
+
+            spotifyImage.src =
+                data.album_art_url || "";
+
+
+            spotifySong.textContent =
+                data.song || "Unknown song";
+
+
+            spotifyArtist.textContent =
+                data.artist || "Unknown artist";
+
+        } else {
+
+            spotify.style.display =
+                "none";
+        }
+    }
+
+
+    function renderPresence(presence) {
+
+        if (!presence) {
+
+            updateStatus("offline");
+
+            discordTag.textContent =
+                "Discord";
+
+            renderActivity(null);
+
+            renderSpotify({});
+
+            return;
+        }
+
+
+        const user =
+            presence.discord_user;
+
+
+        if (user) {
+
+            discordAvatar.src =
+                getAvatar(user);
+
+
+            discordName.textContent =
+                user.global_name ||
+                user.display_name ||
+                user.username ||
+                "JZ";
+
+
+            discordTag.textContent =
+                user.username
+                    ? `@${user.username}`
+                    : "Discord";
+        }
+
+
+        updateStatus(
+            presence.discord_status ||
+            "offline"
+        );
+
+
+        const activities =
+            Array.isArray(
+                presence.activities
+            )
+                ? presence.activities
+                : [];
+
+
+        const realActivities =
+            activities.filter(
+                item => item.type !== 4
+            );
+
+
+        const customStatus =
+            activities.find(
+                item => item.type === 4
+            );
+
+
+        if (realActivities.length > 0) {
+
+            renderActivity(
+                realActivities[0]
+            );
+
+        } else if (customStatus) {
+
+            renderActivity(
+                customStatus
+            );
+
+        } else {
+
+            renderActivity(null);
+        }
+
+
+        renderSpotify(
+            presence
+        );
+    }
+
+
+    function escapeHTML(value) {
+
+        return String(value)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+    }
+
+
+    async function fetchFallback() {
+
+        try {
+
+            const response =
+                await fetch(
+                    LANYARD_REST,
+                    {
+                        cache: "no-store"
+                    }
+                );
+
+
+            if (!response.ok) {
+                throw new Error(
+                    "Lanyard REST request failed"
+                );
+            }
+
+
+            const json =
+                await response.json();
+
+
+            if (json.success) {
+
+                renderPresence(
+                    json.data
+                );
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "Lanyard REST failed:",
+                error
+            );
+        }
+    }
+
+
+    function connectLanyard() {
+
+        if (socket) {
+
+            try {
+                socket.close();
+            } catch {}
+        }
+
+
+        socket =
+            new WebSocket(
+                LANYARD_SOCKET
+            );
+
+
+        socket.onopen = () => {
+
+            connectionText.textContent =
+                "Live Discord connection";
+
+
+            reconnectDelay =
+                2000;
+        };
+
+
+        socket.onmessage = event => {
+
+            let message;
+
+
+            try {
+
+                message =
+                    JSON.parse(
+                        event.data
+                    );
+
+            } catch {
+
+                return;
+            }
+
+
+            if (message.op === 1) {
+
+                const interval =
+                    message.d &&
+                    message.d.heartbeat_interval
+                        ? message.d.heartbeat_interval
+                        : 30000;
+
+
+                socket.send(
+                    JSON.stringify({
+
+                        op: 2,
+
+                        d: {
+
+                            subscribe_to_ids: [
+                                DISCORD_ID
+                            ]
+
+                        }
+
+                    })
+                );
+
+
+                if (heartbeat) {
+
+                    clearInterval(
+                        heartbeat
+                    );
+                }
+
+
+                heartbeat =
+                    setInterval(
+                        () => {
+
+                            if (
+                                socket &&
+                                socket.readyState === WebSocket.OPEN
+                            ) {
+
+                                socket.send(
+                                    JSON.stringify({
+                                        op: 3
+                                    })
+                                );
+                            }
+
+                        },
+                        interval
+                    );
+
+
+                return;
+            }
+
+
+            if (
+                message.op === 0 &&
+                message.t === "INIT_STATE"
+            ) {
+
+                const presence =
+                    message.d &&
+                    (
+                        message.d[
+                            DISCORD_ID
+                        ] ||
+                        message.d
+                    );
+
+
+                renderPresence(
+                    presence
+                );
+
+
+                return;
+            }
+
+
+            if (
+                message.op === 0 &&
+                message.t === "PRESENCE_UPDATE"
+            ) {
+
+                const data =
+                    message.d;
+
+
+                if (
+                    data &&
+                    (
+                        !data.user_id ||
+                        data.user_id === DISCORD_ID
+                    )
+                ) {
+
+                    renderPresence(
+                        data
+                    );
+                }
+            }
+        };
+
+
+        socket.onclose = () => {
+
+            connectionText.textContent =
+                "Reconnecting...";
+
+
+            if (heartbeat) {
+
+                clearInterval(
+                    heartbeat
+                );
+
+                heartbeat = null;
+            }
+
+
+            fetchFallback();
+
+
+            clearTimeout(
+                reconnectTimer
+            );
+
+
+            reconnectTimer =
+                setTimeout(
+                    connectLanyard,
+                    reconnectDelay
+                );
+
+
+            reconnectDelay =
+                Math.min(
+                    reconnectDelay * 1.5,
+                    30000
+                );
+        };
+
+
+        socket.onerror = () => {
+
+            connectionText.textContent =
+                "Discord connection error";
+        };
+    }
+
+
+    /*
+        Initial Discord presence load.
+    */
+
+    fetchFallback();
+
+    connectLanyard();
+
+</script>
+
+</body>
+</html>
