@@ -95,5 +95,8 @@
     "F1A846A0B44E9C69": "Cat Craze",
     "D1B352029BB4F9E3": "Zellix"
     "D17270A44BA546C7" : "1x/ace"
+    "BF1D6517C14FAD3D": "Lucid",
+    "9B72392CE6DCE55E": "RJ The Shade",
+    "213A9CA002C907D6": "ElectronicWall 3"
   }
 }
