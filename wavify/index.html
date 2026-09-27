@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Wavify — AceUtils</title>
+
+    <link rel="icon" type="image/png" href="/auwebsitelogo.png">
+    <link rel="shortcut icon" type="image/png" href="/auwebsitelogo.png">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #040404;
+            --panel: rgba(255,255,255,.035);
+            --border: rgba(255,255,255,.08);
+            --text: #fff;
+            --muted: #777;
+            --green: #1ed760;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(
+                    circle at 50% -10%,
+                    rgba(255,255,255,.08),
+                    transparent 35%
+                ),
+                #040404;
+
+            color: var(--text);
+            font-family: Inter, sans-serif;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,.025) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.025) 1px,
+                    transparent 1px
+                );
+
+            background-size: 58px 58px;
+
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* ================================
+           NAVBAR
+        ================================= */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+
+            height: 76px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            background: rgba(4,4,4,.78);
+            backdrop-filter: blur(20px);
+
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .brand-icon {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background: white;
+            color: black;
+
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        .brand-name {
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: #777;
+            font-size: 11px;
+            font-weight: 700;
+
+            transition: .2s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: white;
+        }
+
+        .nav-discord {
+            padding: 10px 15px;
+
+            border: 1px solid var(--border);
+            border-radius: 10px;
+
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: .8px;
+
+            transition: .2s ease;
+        }
+
+        .nav-discord:hover {
+            background: white;
+            color: black;
+        }
+
+        /* ================================
+           HERO
+        ================================= */
+
+        .hero {
+            max-width: 1150px;
+            margin: auto;
+
+            padding: 100px 25px 55px;
+        }
+
+        .label {
+            margin-bottom: 18px;
+
+            color: #666;
+
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 3px;
+        }
+
+        .hero h1 {
+            font-size: clamp(52px, 9vw, 110px);
+            line-height: .86;
+            letter-spacing: -6px;
+            font-weight: 900;
+        }
+
+        .hero h1 span {
+            color: #555;
+        }
+
+        .hero p {
+            max-width: 600px;
+
+            margin-top: 30px;
+
+            color: #777;
+
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* ================================
+           PLAYER
+        ================================= */
+
+        .player-section {
+            max-width: 1150px;
+            margin: auto;
+            padding: 0 25px 70px;
+        }
+
+        .player {
+            position: relative;
+            overflow: hidden;
+
+            padding: 28px;
+
+            border: 1px solid var(--border);
+            border-radius: 25px;
+
+            background:
+                radial-gradient(
+                    circle at 100% 0%,
+                    rgba(30,215,96,.09),
+                    transparent 35%
+                ),
+                rgba(255,255,255,.035);
+
+            box-shadow:
+                0 25px 80px rgba(0,0,0,.3);
+        }
+
+        .player-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 25px;
+        }
+
+        .player-title {
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .spotify-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: var(--green);
+            box-shadow: 0 0 15px rgba(30,215,96,.6);
+        }
+
+        .embed-wrap {
+            overflow: hidden;
+
+            border-radius: 16px;
+
+            background: #111;
+
+            min-height: 152px;
+        }
+
+        .embed-wrap iframe {
+            display: block;
+
+            width: 100%;
+            height: 152px;
+
+            border: 0;
+        }
+
+        /* ================================
+           URL BOX
+        ================================= */
+
+        .url-box {
+            display: flex;
+            gap: 10px;
+
+            margin-top: 18px;
+        }
+
+        .url-input {
+            flex: 1;
+
+            min-width: 0;
+
+            padding: 15px 17px;
+
+            background: rgba(255,255,255,.04);
+
+            border: 1px solid var(--border);
+            border-radius: 12px;
+
+            outline: none;
+
+            color: white;
+
+            font-family: Inter, sans-serif;
+            font-size: 12px;
+
+            transition: .2s ease;
+        }
+
+        .url-input:focus {
+            border-color: rgba(255,255,255,.2);
+        }
+
+        .load-btn {
+            padding: 0 20px;
+
+            border: 0;
+            border-radius: 12px;
+
+            background: white;
+            color: black;
+
+            font-family: Inter, sans-serif;
+            font-size: 10px;
+            font-weight: 900;
+
+            cursor: pointer;
+
+            transition: .2s ease;
+        }
+
+        .load-btn:hover {
+            transform: translateY(-1px);
+            background: #ddd;
+        }
+
+        .hint {
+            margin-top: 10px;
+
+            color: #555;
+
+            font-size: 9px;
+        }
+
+        /* ================================
+           CARDS
+        ================================= */
+
+        .features {
+            max-width: 1150px;
+            margin: auto;
+
+            padding: 0 25px 100px;
+        }
+
+        .section-label {
+            margin-bottom: 15px;
+
+            color: #555;
+
+            font-size: 9px;
+            font-weight: 800;
+
+            letter-spacing: 3px;
+        }
+
+        .features h2 {
+            margin-bottom: 30px;
+
+            font-size: 35px;
+            letter-spacing: -2px;
+        }
+
+        .features-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+        }
+
+        .feature {
+            padding: 25px;
+
+            border: 1px solid var(--border);
+            border-radius: 18px;
+
+            background: var(--panel);
+
+            transition: .25s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255,255,255,.15);
+        }
+
+        .feature-icon {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 20px;
+
+            border-radius: 11px;
+
+            background: rgba(255,255,255,.06);
+
+            font-size: 17px;
+        }
+
+        .feature h3 {
+            margin-bottom: 8px;
+
+            font-size: 14px;
+        }
+
+        .feature p {
+            color: #666;
+
+            font-size: 10px;
+            line-height: 1.7;
+        }
+
+        /* ================================
+           FOOTER
+        ================================= */
+
+        footer {
+            padding: 35px 6%;
+
+            border-top: 1px solid rgba(255,255,255,.06);
+
+            color: #444;
+
+            text-align: center;
+
+            font-size: 9px;
+            letter-spacing: 1px;
+        }
+
+        /* ================================
+           MOBILE
+        ================================= */
+
+        @media(max-width: 750px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 70px;
+            }
+
+            .hero h1 {
+                letter-spacing: -4px;
+            }
+
+            .url-box {
+                flex-direction: column;
+            }
+
+            .load-btn {
+                height: 48px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- ================================
+         NAVBAR
+    ================================= -->
+
+    <nav class="navbar">
+
+        <a href="/" class="brand">
+
+            <div class="brand-icon">
+                A
+            </div>
+
+            <span class="brand-name">
+                AceUtils
+            </span>
+
+        </a>
+
+        <div class="nav-links">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="/data/">
+                Data
+            </a>
+
+            <a href="/1x/">
+                1X
+            </a>
+
+            <a href="/wazy/">
+                Wazy
+            </a>
+
+            <a href="/gauth/">
+                GAuth
+            </a>
+
+            <a href="/wavify/" class="active">
+                Wavify
+            </a>
+
+        </div>
+
+        <a
+            href="https://discord.gg/5zrcJRqQd5"
+            target="_blank"
+            class="nav-discord"
+        >
+            DISCORD
+        </a>
+
+    </nav>
+
+
+    <!-- ================================
+         HERO
+    ================================= -->
+
+    <section class="hero">
+
+        <div class="label">
+            ACEUTILS MUSIC
+        </div>
+
+        <h1>
+            WAVI<span>FY.</span>
+        </h1>
+
+        <p>
+            A simple music hub built around Spotify.
+            Paste a Spotify track, album, or playlist
+            and load it directly into Wavify.
+        </p>
+
+    </section>
+
+
+    <!-- ================================
+         PLAYER
+    ================================= -->
+
+    <section class="player-section">
+
+        <div class="player">
+
+            <div class="player-top">
+
+                <div class="player-title">
+                    NOW PLAYING
+                </div>
+
+                <div class="spotify-dot"></div>
+
+            </div>
+
+
+            <div class="embed-wrap">
+
+                <iframe
+                    id="spotifyPlayer"
+                    src="https://open.spotify.com/embed/track/4uLU6hMCjMI75M1A2tKUQC"
+                    allow="
+                        autoplay;
+                        clipboard-write;
+                        encrypted-media;
+                        fullscreen;
+                        picture-in-picture
+                    "
+                    loading="lazy"
+                ></iframe>
+
+            </div>
+
+
+            <div class="url-box">
+
+                <input
+                    id="spotifyUrl"
+                    class="url-input"
+                    type="text"
+                    placeholder="Paste a Spotify track, album, or playlist URL..."
+                    autocomplete="off"
+                >
+
+                <button
+                    class="load-btn"
+                    onclick="loadSpotify()"
+                >
+                    LOAD
+                </button>
+
+            </div>
+
+            <div class="hint">
+                Example: https://open.spotify.com/track/...
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================
+         FEATURES
+    ================================= -->
+
+    <section class="features">
+
+        <div class="section-label">
+            WAVIFY
+        </div>
+
+        <h2>
+            MUSIC. SIMPLE.
+        </h2>
+
+
+        <div class="features-grid">
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🎵
+                </div>
+
+                <h3>
+                    Spotify
+                </h3>
+
+                <p>
+                    Load Spotify tracks, albums,
+                    playlists and more directly
+                    inside Wavify.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🔗
+                </div>
+
+                <h3>
+                    Paste a URL
+                </h3>
+
+                <p>
+                    Drop a Spotify URL into the
+                    box and Wavify converts it
+                    into the embedded player.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    ⚡
+                </div>
+
+                <h3>
+                    No Account Here
+                </h3>
+
+                <p>
+                    Wavify itself doesn't require
+                    an AceUtils account or backend.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+
+        WAVIFY · ACEUTILS
+
+    </footer>
+
+
+    <script>
+
+        function loadSpotify() {
+
+            const input =
+                document.getElementById(
+                    "spotifyUrl"
+                );
+
+            const player =
+                document.getElementById(
+                    "spotifyPlayer"
+                );
+
+            const value =
+                input.value.trim();
+
+
+            if (!value) {
+
+                return;
+
+            }
+
+
+            try {
+
+                const url =
+                    new URL(value);
+
+
+                if (
+                    !url.hostname.includes(
+                        "spotify.com"
+                    )
+                ) {
+
+                    alert(
+                        "Please enter a Spotify URL."
+                    );
+
+                    return;
+
+                }
+
+
+                const parts =
+                    url.pathname
+                        .split("/")
+                        .filter(Boolean);
+
+
+                /*
+                    Spotify URLs normally look like:
+
+                    /track/ID
+                    /album/ID
+                    /playlist/ID
+                    /artist/ID
+                */
+
+                if (
+                    parts.length < 2
+                ) {
+
+                    alert(
+                        "That doesn't look like a Spotify track, album, or playlist."
+                    );
+
+                    return;
+
+                }
+
+
+                const type =
+                    parts[0];
+
+                const id =
+                    parts[1];
+
+
+                const allowedTypes = [
+                    "track",
+                    "album",
+                    "playlist",
+                    "artist",
+                    "show",
+                    "episode"
+                ];
+
+
+                if (
+                    !allowedTypes.includes(
+                        type
+                    )
+                ) {
+
+                    alert(
+                        "That Spotify URL type isn't supported."
+                    );
+
+                    return;
+
+                }
+
+
+                player.src =
+                    `https://open.spotify.com/embed/${type}/${id}`;
+
+
+            } catch {
+
+                alert(
+                    "Please enter a valid Spotify URL."
+                );
+
+            }
+
+        }
+
+
+        document
+            .getElementById("spotifyUrl")
+            .addEventListener(
+                "keydown",
+                function(event) {
+
+                    if (
+                        event.key === "Enter"
+                    ) {
+
+                        loadSpotify();
+
+                    }
+
+                }
+            );
+
+    </script>
+
+</body>
+</html>
