@@ -37,5 +37,7 @@
     "UsingGalacticMenu": "Galactic Menu",
     "AtlasNetworkedConsent": "Atlas",
     "ShizukuModMenu": "Shizuku Menu",
-    "Femboy Client": "Femboy Client"
+    "Femboy Client": "Femboy Client",
+    "Seralyth NetworkMenu": "Seralyth Remake",
+    "Lexi's WalkSimulator": "Lexi's Walksim"
   }
