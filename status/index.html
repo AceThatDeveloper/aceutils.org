@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Status | AceUtils</title>
+<style>
+:root{--bg:#0d1117;--card:#161b22;--line:#30363d;--text:#e6edf3;--muted:#8b949e;--ok:#3fb950;--bad:#f85149;--warn:#d29922}
+@media (prefers-color-scheme:light){:root{--bg:#f6f8fa;--card:#fff;--line:#d0d7de;--text:#1f2328;--muted:#656d76;--ok:#1a7f37;--bad:#cf222e;--warn:#9a6700}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.card{width:100%;max-width:460px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:32px 28px;text-align:center}
+h1{margin:0 0 4px;font-size:1.2rem}
+.sub{color:var(--muted);font-size:.9rem;margin-bottom:28px}
+.dot{width:72px;height:72px;border-radius:50%;margin:0 auto 18px;background:var(--warn);box-shadow:0 0 0 8px color-mix(in srgb,var(--warn) 20%,transparent)}
+.dot.ok{background:var(--ok);box-shadow:0 0 0 8px color-mix(in srgb,var(--ok) 20%,transparent)}
+.dot.bad{background:var(--bad);box-shadow:0 0 0 8px color-mix(in srgb,var(--bad) 20%,transparent)}
+.dot.load{animation:p 1.2s infinite}
+@keyframes p{50%{opacity:.4}}
+#label{font-size:1.6rem;font-weight:700;margin-bottom:6px}
+#msg{color:var(--muted);font-size:.95rem;min-height:1.3em;word-break:break-word}
+.meta{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:.8rem;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+button{background:none;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:6px 12px;font:inherit;font-size:.8rem;cursor:pointer}
+button:hover{border-color:var(--muted)}
+</style>
+</head>
+<body>
+<main class="card">
+  <h1>AceUtils Mod Status</h1>
+  <div class="sub">aceutils.org/status</div>
+  <div id="dot" class="dot load"></div>
+  <div id="label">Checking…</div>
+  <div id="msg"></div>
+  <div class="meta">
+    <span id="time">Not checked yet</span>
+    <button id="btn" type="button">Refresh</button>
+  </div>
+</main>
+<script>
+const STATUS_URL = "https://mod-kill-gate.base44.app/";
+const REFRESH_MS = 30000;
+const TIMEOUT_MS = 8000;
+
+const $ = id => document.getElementById(id);
+function show(state, label, msg){
+  $("dot").className = "dot " + state;
+  $("label").textContent = label;
+  $("msg").textContent = msg || "";
+  $("time").textContent = "Last checked " + new Date().toLocaleTimeString();
+}
+
+function ping(mode){
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
+  const url = STATUS_URL + (STATUS_URL.includes("?") ? "&" : "?") + "_=" + Date.now();
+  return fetch(url, { mode, cache: "no-store", signal: ctrl.signal }).finally(() => clearTimeout(t));
+}
+
+async function check(){
+  $("btn").disabled = true;
+  const start = performance.now();
+  try{
+    let res;
+    try { res = await ping("cors"); }          // readable response (works if CORS allowed)
+    catch { res = await ping("no-cors"); }     // fallback: only tells us the server answered
+    const ms = Math.round(performance.now() - start);
+    if (res.type !== "opaque" && !res.ok){
+      show("bad", "Offline", "Server responded with an error (HTTP " + res.status + ").");
+    } else {
+      show("ok", "Online", "The mod server is up and responding (" + ms + " ms).");
+    }
+  }catch(e){
+    show("bad", "Offline", e.name === "AbortError" ? "The server didn't respond in time." : "Couldn't connect to the mod server.");
+  }finally{ $("btn").disabled = false; }
+}
+$("btn").onclick = check;
+check();
+setInterval(check, REFRESH_MS);
+</script>
+</body>
+</html>
