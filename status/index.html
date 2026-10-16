@@ -37,6 +37,8 @@ button:hover{border-color:var(--muted)}
   </div>
 </main>
 <script>
+// Put the URL that returns the kill switch state here (JSON like {"active": true}).
+// The root app URL only loads the website, so it can't tell you the switch state.
 const STATUS_URL = "https://mod-kill-gate.base44.app/";
 const REFRESH_MS = 30000;
 const TIMEOUT_MS = 8000;
@@ -49,29 +51,51 @@ function show(state, label, msg){
   $("time").textContent = "Last checked " + new Date().toLocaleTimeString();
 }
 
-function ping(mode){
-  const ctrl = new AbortController();
-  const t = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
-  const url = STATUS_URL + (STATUS_URL.includes("?") ? "&" : "?") + "_=" + Date.now();
-  return fetch(url, { mode, cache: "no-store", signal: ctrl.signal }).finally(() => clearTimeout(t));
+function fromText(s){
+  s = String(s).toLowerCase();
+  if (/(shut ?down|killed|disabled|inactive|offline|stopped|down|off|false)/.test(s)) return false;
+  if (/(active|enabled|online|running|operational|alive|on|true|ok)/.test(s)) return true;
+  return null;
+}
+function interpret(data){
+  if (data && typeof data === "object"){
+    const keys = ["active","enabled","is_active","isActive","online","alive","running","status","state","killed","kill","kill_switch","killSwitch","shutdown","shut_down","disabled"];
+    for (const k of keys){
+      if (!(k in data)) continue;
+      const v = data[k], neg = /kill|shut|disabled/i.test(k);
+      if (typeof v === "boolean") return { up: neg ? !v : v, msg: data.message || "" };
+      const r = fromText(v);
+      if (r !== null) return { up: neg ? !r : r, msg: data.message || String(v) };
+    }
+    for (const k in data){ if (data[k] && typeof data[k] === "object"){ const r = interpret(data[k]); if (r) return r; } }
+  }
+  return null;
 }
 
 async function check(){
   $("btn").disabled = true;
-  const start = performance.now();
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
+  const url = STATUS_URL + (STATUS_URL.includes("?") ? "&" : "?") + "_=" + Date.now();
   try{
     let res;
-    try { res = await ping("cors"); }          // readable response (works if CORS allowed)
-    catch { res = await ping("no-cors"); }     // fallback: only tells us the server answered
-    const ms = Math.round(performance.now() - start);
-    if (res.type !== "opaque" && !res.ok){
-      show("bad", "Offline", "Server responded with an error (HTTP " + res.status + ").");
-    } else {
-      show("ok", "Online", "The mod server is up and responding (" + ms + " ms).");
+    try { res = await fetch(url, { cache:"no-store", signal: ctrl.signal }); }
+    catch(e){
+      if (e.name === "AbortError") throw e;
+      // Blocked by CORS or server down: see if the server at least answers
+      await fetch(url, { mode:"no-cors", cache:"no-store", signal: ctrl.signal });
+      return show("", "Can't read status", "The server is up, but the browser is blocked from reading the kill switch (CORS). Enable CORS on the status endpoint.");
     }
+    if (!res.ok) return show("bad", "Offline", "Server responded with an error (HTTP " + res.status + ").");
+    const text = await res.text();
+    let data = null; try { data = JSON.parse(text); } catch {}
+    const r = data ? interpret(data) : null;
+    if (!r) return show("", "Can't read status", "The server is up, but this URL doesn't return a kill switch value. Point STATUS_URL at a JSON endpoint.");
+    r.up ? show("ok", "Active", r.msg || "The mod is running normally.")
+         : show("bad", "Shut Down", r.msg || "The mod has been disabled.");
   }catch(e){
-    show("bad", "Offline", e.name === "AbortError" ? "The server didn't respond in time." : "Couldn't connect to the mod server.");
-  }finally{ $("btn").disabled = false; }
+    show("bad", "Offline", e.name === "AbortError" ? "The server didn't respond in time." : "Couldn't connect to the status server.");
+  }finally{ clearTimeout(t); $("btn").disabled = false; }
 }
 $("btn").onclick = check;
 check();
